@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">GoalNepal</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_league">League</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_closed">Close</string>
+    <string name="title_activity_match">Match Details</string>
+    <string name="title_activity_news_details">News Details</string>
+    <string name="title_activity_tv">Videos</string>
+    <string name="title_activity_radio">Radio</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_gallery">Gallery</string>
+
+
+    <!-- FOr youtube player  begining -->
+
+
+
+
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="img_desc">Image</string>
+    <string name="loadmore">Load More</string>
+    <string name="aboutus">About Us</string>
+    <string name="first">First</string>
+    <!-- youtube api key -->
+    <string name="youtube_api_key">AIzaSyBujbWUBbjHgLJPTtQSWGN7-EMq00b4VB0</string>
+    <string name="youtube_dev_key">AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI</string>
+    <!-- menu -->
+    <string name="menu_about">Disclaimer</string>
+    <string name="menu_rateapp">Rate App</string>
+    <!-- connection -->
+    <string name="conn_msg1">Internal server error</string>
+    <string name="conn_msg2">Switch on your internet</string>
+    <string name="conn_msg3">No Network Connection!!!</string>
+    <string name="conn_msg4">Internet Connection Error</string>
+    <string name="loading">Loading..</string>
+    <!-- FOr youtube player  ends -->
+
+
+
+
+    <!-- for profile view begining -->
+
+    <string name="notificationEnableText">Enable Notification</string>
+    <string name="favourite_text">Favourite Tournaments</string>
+    <string name="favourite_tournatment_text">Redbull A Division</string>
+    <!-- for profile view end -->
+
+
+    <!--- NAVIGATION DRAWER MENU -->
+    <string name="home">&#xe600;</string>
+    <string name="radio">&#xe603;</string>
+    <string name="video">&#xe602;</string>
+    <string name="gallery">&#xe601;</string>
+    <string name="leagues">&#xe604;</string>
+    <string name="title_activity_preference">Select Cups</string>
+</resources>

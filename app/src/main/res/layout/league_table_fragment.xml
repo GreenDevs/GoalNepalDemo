@@ -1,0 +1,151 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:weightSum="1"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#01579B"
+        android:orientation="horizontal"
+
+
+        >
+
+        <TextView
+            android:id="@+id/teamPosition"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            />
+
+        <ImageView
+            android:id="@+id/teampic"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+
+            />
+
+        <TextView
+            android:id="@+id/team_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textSize="10sp"
+
+
+
+            android:textColor="#fff"
+            />
+
+        <TextView
+            android:id="@+id/matchPlayed"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="MP"
+            android:textColor="#fff"
+            android:textSize="10sp"
+           
+
+
+        />
+
+        <TextView
+            android:id="@+id/won"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="W"
+            android:textSize="10sp"
+            android:textColor="#fff"
+            />
+
+        <TextView
+            android:id="@+id/draw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="D"
+            android:textSize="10sp"
+            android:textColor="#fff"
+            />
+
+        <TextView
+            android:id="@+id/lost"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="L"
+
+            android:textSize="10sp"
+            android:textColor="#fff"
+            />
+
+
+        <TextView
+            android:id="@+id/goalFinised"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GF"
+            android:textSize="10sp"
+            android:textColor="#fff"
+            />
+
+        <TextView
+            android:id="@+id/goalAccepted"
+
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GA"
+            android:textSize="10sp"
+            android:textColor="#fff"
+           />
+
+        <TextView
+            android:id="@+id/goalDiff"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="GD"
+
+            android:textSize="10sp"
+            android:textColor="#fff"
+           
+
+        />
+
+        <TextView
+            android:id="@+id/points"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="PTS"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/league_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        />
+
+</LinearLayout>

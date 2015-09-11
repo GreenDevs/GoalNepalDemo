@@ -1,0 +1,154 @@
+package com.crackdevelopers.goalnepal.Leagues;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.crackdevelopers.goalnepal.R;
+import com.crackdevelopers.goalnepal.Volley.CacheRequest;
+import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by trees on 8/24/15.
+ * kjlsjdlfsd
+ * laskdf
+ * klsdsd
+ * kads
+ * adssd
+ *
+ */
+public class LeagueTeams extends Fragment
+{
+    private static final String URL="http://www.goalnepal.com/json_participatingTeams.php?tournament_id=";
+    private final long TOURNAMENT_ID=LeagueActivity.TOURNAMENT_ID;
+    private static final String PARTICIPATING_TEAMS ="participating_teams";
+    private static final String TEAM_ID="clubId";
+    private static final String TEAM_ICON="club_logo";
+    private static final String TEAM_NAME="club_name";
+    private static final String TEAM_SHORT_NAME="short_name";
+    private LeagueTeamsAdapter mAdapter;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        View view=inflater.inflate(R.layout.league_teams_fragment, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) 
+    {
+        super.onActivityCreated(savedInstanceState);
+
+        mAdapter=new LeagueTeamsAdapter();
+        RecyclerView teamList=(RecyclerView)getActivity().findViewById(R.id.team_list);
+        teamList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        teamList.setAdapter(mAdapter);
+        sendTeamsRequest();
+    }
+
+
+
+    private void sendTeamsRequest()
+    {
+        CacheRequest teamsRequest=new CacheRequest(Request.Method.GET, URL+TOURNAMENT_ID,
+
+                new Response.Listener<NetworkResponse>()
+                {
+                    @Override
+                    public void onResponse(NetworkResponse response)
+                    {
+                        try
+                        {
+                            final String jsonString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            JSONObject jsonObject=new JSONObject(jsonString);
+                            List<ParticipatingTeamsRow> teams=parseResponse(jsonObject);
+
+                            mAdapter.updateData(teams);
+                        }
+                        catch (UnsupportedEncodingException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+                ,
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                });
+        RequestQueue queue= VolleySingleton.getInstance().getQueue();
+        teamsRequest.setTag(this);
+        queue.add(teamsRequest);
+    }
+
+
+    private List<ParticipatingTeamsRow> parseResponse(JSONObject rootJson)
+    {
+        List<ParticipatingTeamsRow> tempGoals=new ArrayList<>();
+
+        if(rootJson!=null)
+        {
+            if(rootJson.length()!=0)
+            {
+                if(rootJson.has(PARTICIPATING_TEAMS))
+                {
+                    try
+                    {
+                        JSONArray teams=rootJson.getJSONArray(PARTICIPATING_TEAMS);
+
+                        for(int i=0;i<teams.length();i++)
+                        {
+                            JSONObject team=teams.getJSONObject(i);
+
+                            String team_name="", team_short_name="", icon_url=""; long team_id=0;
+
+                            if(team.has(TEAM_ICON)) icon_url=team.getString(TEAM_ICON);
+                            if(team.has(TEAM_NAME)) team_name=team.getString(TEAM_NAME);
+                            if(team.has(TEAM_SHORT_NAME)) team_short_name=team.getString(TEAM_SHORT_NAME);
+                            if(team.has(TEAM_ID)) team_id=team.getLong(TEAM_ID);
+
+
+                            tempGoals.add(new ParticipatingTeamsRow(icon_url, team_name, team_short_name, team_id));
+                        }
+                    }
+                    catch (JSONException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        return tempGoals;
+    }
+}

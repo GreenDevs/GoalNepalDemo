@@ -1,0 +1,61 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        >
+
+        <include
+            layout="@layout/app_bar"
+            android:id="@+id/app_bar"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+
+
+                <ImageView
+                    android:id="@+id/news_image"
+                    android:src="@drawable/front_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    />
+
+                <TextView
+                    android:id="@+id/news_date"
+                    android:layout_margin="10dp"
+                    android:text="Friday, August 28 - 12:30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/news_title"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:text="PREIVEW: AC Mlan - Empoli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <TextView
+                    android:id="@+id/news_text"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+        </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+            <include
+                android:id="@+id/app_bar"
+                layout="@layout/match_app_bar"
+
+                />
+
+            <io.karim.MaterialTabs
+                android:id="@+id/material_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="?attr/colorPrimary"
+                app:mtSameWeightTabs="true"
+                app:mtPaddingMiddle="false"
+                app:mtTextColorSelected="@color/selected_tab"
+                android:elevation="@dimen/tab_elevation"
+                app:mtIndicatorColor="@color/selected_tab"
+                app:mtIndicatorHeight="@dimen/underlineHeight"
+                />
+
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            />
+
+ </LinearLayout>

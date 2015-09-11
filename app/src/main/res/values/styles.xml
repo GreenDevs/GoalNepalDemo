@@ -1,0 +1,18 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="AppParent">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppParent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+    </style>
+
+    <style name="app_bar_theme" parent="ThemeOverlay.AppCompat.Dark">
+
+    </style>
+
+
+</resources>

@@ -1,0 +1,67 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff"
+    >
+
+    <RelativeLayout
+        android:id="@+id/profileLogin"
+        android:tag="Profile"
+        android:onClick="listClicked"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:elevation="10dp"
+        android:paddingTop="30dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/nava_bagr">
+
+
+
+        <ImageView
+            android:layout_alignParentLeft="true"
+            android:layout_width="90dp"
+            android:id="@+id/user_icon"
+            android:layout_height="90dp"
+            android:background="@drawable/user"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_icon"
+            android:layout_alignParentLeft="true"
+            android:textColor="#ccc"
+            android:text="javanuxenergy@gmail.com"
+            />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/gal"
+        android:onClick="galleryClicked"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:text="GALLERY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:id="@+id/pref"
+        android:onClick="galleryClicked"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:text="PREFERENCES"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/nav_recycler"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+</LinearLayout>
