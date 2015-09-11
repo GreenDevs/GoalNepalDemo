@@ -7,11 +7,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import com.crackdevelopers.goalnepal.Adapters.MainPagerAdapter;
 import com.crackdevelopers.goalnepal.Miscallenous.Gallery.GalleryActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.Radio.RadioActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.videos.VideoListActivity;
 import com.crackdevelopers.goalnepal.NavigationDrawer.NagivationDrawer;
 
 import io.karim.MaterialTabs;
@@ -59,6 +60,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.pref:
                 startActivity(new Intent(this, PreferenceActivity.class));
                 break;
+
+            case R.id.radio :
+                startActivity(new Intent(this, RadioActivity.class));
+                break;
+
+            case R.id.videos :
+                startActivity(new Intent(this, VideoListActivity.class));
 
         }
 

@@ -1,123 +1,134 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Radio;
 
 
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnBufferingUpdateListener;
-import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.crackdevelopers.goalnepal.R;
 
-import java.io.IOException;
-
-public class RadioActivity extends AppCompatActivity {
-
-    private TextView playSeekBar;
-
-    private Button buttonPlay;
-
-    private Button buttonStopPlay;
-
-    private MediaPlayer player;
+import co.mobiwise.library.RadioListener;
+import co.mobiwise.library.RadioManager;
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_radio);
-        getSupportActionBar().setTitle(R.string.title_activity_radio);
+    public  class RadioActivity extends AppCompatActivity implements RadioListener {
 
-        initializeUIElements();
+        /**
+         * Example radio stream URL
+         */
+        private final String RADIO_URL = "http://206.51.239.96:8129";
 
-        initializeMediaPlayer();
-    }
+        /**
+         * Radio Manager initialization
+         */
+        RadioManager mRadioManager = RadioManager.with(this);
 
-    private void initializeUIElements() {
+        Button mButtonControl;
+        TextView mTextViewControl;
 
-        playSeekBar = (TextView) findViewById(R.id.progressbarRadio);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_radio);
+            Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
+            setSupportActionBar(toolbar);
+            if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        playSeekBar.setVisibility(View.INVISIBLE);
+            /**
+             * Register this class to manager. @onRadioStarted, @onRadioStopped and @onMetaDataReceived
+             * Listeners will be notified.
+             */
+            mRadioManager.registerListener(this);
 
-        buttonPlay = (Button) findViewById(R.id.playRadio);
+            /**
+             * initialize layout widgets to play, pause radio.
+             */
+            initializeUI();
 
-
-        buttonStopPlay = (Button) findViewById(R.id.pauseRadio);
-        buttonStopPlay.setEnabled(false);
-
-
-    }
-
-    public void onClick(View v) {
-        if (v == buttonPlay) {
-            startPlaying();
-        } else if (v == buttonStopPlay) {
-            stopPlaying();
-        }
-    }
-
-
-    private void startPlaying() {
-     buttonStopPlay.setEnabled(true);
-        buttonPlay.setEnabled(false);
-
-      playSeekBar.setVisibility(View.VISIBLE);
-
-        player.prepareAsync();
-
-        player.setOnPreparedListener(new OnPreparedListener() {
-
-            public void onPrepared(MediaPlayer mp) {
-                player.start();
-            }
-        });
-
-    }
-
-    private void stopPlaying() {
-        if (player.isPlaying()) {
-            player.stop();
-            player.release();
-            initializeMediaPlayer();
         }
 
-        buttonPlay.setEnabled(true);
-        buttonStopPlay.setEnabled(false);
-        playSeekBar.setVisibility(View.INVISIBLE);
-    }
+        public void initializeUI(){
+            mButtonControl = (Button) findViewById(R.id.playRadio);
+            mTextViewControl = (TextView) findViewById(R.id.progressbarRadio);
 
-    private void initializeMediaPlayer() {
-        player = new MediaPlayer();
-        try {
-            player.setDataSource("http://popplers5.bandcamp.com/download/track?enc=mp3-128&id=1269403107&stream=1");
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        player.setOnBufferingUpdateListener(new OnBufferingUpdateListener() {
-
-            public void onBufferingUpdate(MediaPlayer mp, int percent) {
-                Log.i("percent", ""+percent);
-                if(percent>10) {
-
+            mButtonControl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!mRadioManager.isPlaying())
+                        mRadioManager.startRadio(RADIO_URL);
+                    else
+                        mRadioManager.stopRadio();
                 }
-              playSeekBar.setText(percent+"%");
+            });
+        }
 
+        @Override
+        protected void onStart() {
+            super.onStart();
+            /**
+             * Remember to connect manager to start service.
+             */
+            mRadioManager.connect();
+        }
+
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+            /**
+             * Remember to disconnect from manager.
+             */
+            mRadioManager.disconnect();
+        }
+
+        //@Override
+        public void onRadioConnected() {
+            // Called when the service is connected, allowing, for example, for starting the stream as soon as possible
+            // mRadioManager.startRadio(RADIO_URL);
+        }
+
+        @Override
+        public void onRadioStarted() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //TODO Do UI works here.
+                    mTextViewControl.setText("RADIO STATE : PLAYING...");
+                }
+            });
+        }
+
+        @Override
+        public void onRadioStopped() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //TODO Do UI works here
+                    mTextViewControl.setText("RADIO STATE : STOPPED.");
+                }
+            });
+        }
+
+        @Override
+        public void onMetaDataReceived(String s, String s1) {
+            //TODO Check metadata values. Singer name, song name or whatever you have.
+        }
+
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item)
+        {
+            int id=item.getItemId();
+            if(id==android.R.id.home)
+            {
+                this.finish();
+                return  true;
             }
-        });
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+            return super.onOptionsItemSelected(item);
+        }
 
     }
-}
