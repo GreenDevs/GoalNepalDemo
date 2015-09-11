@@ -9,18 +9,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.crackdevelopers.goalnepal.R;
+import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,16 +78,26 @@ public class AlbumActivity extends AppCompatActivity
 
     private void sendJsonRequest()
     {
-        JsonObjectRequest albumRequest=new JsonObjectRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
+        CacheRequest albumRequest=new CacheRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
 
-                new Response.Listener<JSONObject>()
+                new Response.Listener<NetworkResponse>()
                 {
                     @Override
-                    public void onResponse(JSONObject response)
+                    public void onResponse(NetworkResponse response)
                     {
-                        mAdapter.setData(parseJson(response));
+                        try
+                        {
+                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            JSONObject responseJson=new JSONObject(jsonResponseString);
+                            mAdapter.setData(parseJson(responseJson));
+                        }
+                        catch (UnsupportedEncodingException | JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
                     }
-                },
+                }
+                ,
                 new Response.ErrorListener()
                 {
                     @Override
@@ -92,6 +106,7 @@ public class AlbumActivity extends AppCompatActivity
 
                     }
                 });
+
 
         albumRequest.setTag(this);
         RequestQueue queue=VolleySingleton.getInstance().getQueue();
