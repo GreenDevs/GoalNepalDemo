@@ -40,11 +40,15 @@
             android:name=".Miscallenous.Profile.ProfileActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".Miscallenous.Gallery.GalleryActivity"
+            android:name=".Miscallenous.Gallery.AlbumActivity"
             android:label="@string/title_activity_gallery" />
         <activity
             android:name=".Miscallenous.Preferences.PreferenceActivity"
             android:label="@string/title_activity_preference" >
+        </activity>
+        <activity
+            android:name=".Miscallenous.Gallery.PhotosActivity"
+            android:label="@string/title_activity_photos" >
         </activity>
     </application>
 

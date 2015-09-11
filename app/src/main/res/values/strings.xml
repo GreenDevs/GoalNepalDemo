@@ -15,7 +15,7 @@
     <string name="title_activity_tv">Videos</string>
     <string name="title_activity_radio">Radio</string>
     <string name="title_activity_login">Login</string>
-    <string name="title_activity_gallery">Gallery</string>
+    <string name="title_activity_gallery">Albums</string>
 
 
     <!-- FOr youtube player  begining -->
@@ -60,4 +60,7 @@
     <string name="gallery">&#xe601;</string>
     <string name="leagues">&#xe604;</string>
     <string name="title_activity_preference">Select Cups</string>
+
+    <string name="album_image_des">album</string>
+    <string name="title_activity_photos">PhotosActivity</string>
 </resources>
