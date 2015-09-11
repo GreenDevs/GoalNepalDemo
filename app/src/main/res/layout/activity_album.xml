@@ -11,10 +11,10 @@
         layout="@layout/app_bar"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:padding="10dp"
+        android:id="@+id/album_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-
 
 </LinearLayout>

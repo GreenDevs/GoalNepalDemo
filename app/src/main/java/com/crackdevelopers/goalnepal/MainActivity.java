@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.crackdevelopers.goalnepal.Adapters.MainPagerAdapter;
-import com.crackdevelopers.goalnepal.Miscallenous.Gallery.GalleryActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.Gallery.AlbumActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Radio.RadioActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.videos.VideoListActivity;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         switch(v.getId())
         {
             case R.id.gal:
-                startActivity(new Intent(this, GalleryActivity.class));
+                startActivity(new Intent(this, AlbumActivity.class));
                 break;
 
             case R.id.pref:
