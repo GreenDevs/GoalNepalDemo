@@ -139,7 +139,7 @@ import co.mobiwise.library.RadioManager;
             stackBuilder.addNextIntent(resultIntent);
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
                     PendingIntent.FLAG_UPDATE_CURRENT);
-            remoteViews.setOnClickPendingIntent(R.id.button1, resultPendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.notification_layout, resultPendingIntent);
 
 
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

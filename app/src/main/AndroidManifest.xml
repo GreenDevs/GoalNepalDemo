@@ -35,7 +35,10 @@
         <activity
             android:name=".Miscallenous.Radio.RadioActivity"
             android:label="@string/title_activity_radio"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+
+
+
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         </activity>
         <activity
             android:name=".Miscallenous.Profile.ProfileActivity"
@@ -47,6 +50,9 @@
             android:name=".Miscallenous.Preferences.PreferenceActivity"
             android:label="@string/title_activity_preference" >
         </activity>
+
+
     </application>
+    
 
 </manifest>
