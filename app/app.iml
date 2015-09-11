@@ -77,6 +77,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.bignerdranch.android/expandablerecyclerview/1.0.3/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.iammert/RadioPlayerService/4ab6bafbbf/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.kanytu/android-parallax-recyclerview/v1.4/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.timehop.stickyheadersrecyclerview/library/0.4.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.yalantis/phoenix/1.2.2/jars" />
@@ -109,6 +110,7 @@
     <orderEntry type="library" exported="" name="YouTubeAndroidPlayerApi" level="project" />
     <orderEntry type="library" exported="" name="expandablerecyclerview-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="RadioPlayerService-4ab6bafbbf" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="materialtabs-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="phoenix-1.2.2" level="project" />

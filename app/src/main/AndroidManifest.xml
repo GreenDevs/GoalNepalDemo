@@ -29,12 +29,12 @@
             android:name=".News.NewsDetailsActivity"
             android:label="@string/title_activity_news_details" />
         <activity
-            android:name=".Miscallenous.videos.VideosActivity"
+            android:name=".Miscallenous.videos.VideoListActivity"
             android:label="@string/title_activity_tv" />
         <activity
             android:name=".Miscallenous.Radio.RadioActivity"
             android:label="@string/title_activity_radio"
-            android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         </activity>
         <activity
             android:name=".Miscallenous.Profile.ProfileActivity"

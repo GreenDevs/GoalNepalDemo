@@ -56,6 +56,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+
+
+    <TextView
+        android:id="@+id/videos"
+
+        android:onClick="galleryClicked"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:text="Video Gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <TextView
+        android:id="@+id/radio"
+        android:onClick="galleryClicked"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:text="Goal Nepal Radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/nav_recycler"
         android:paddingLeft="10dp"
