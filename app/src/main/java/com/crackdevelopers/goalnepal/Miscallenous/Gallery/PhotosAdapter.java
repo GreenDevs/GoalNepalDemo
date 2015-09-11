@@ -72,15 +72,20 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder
+    {
         TextView title;
         ImageView thumnail;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView)
+        {
             super(itemView);
 
+            itemView.setOnClickListener((PhotosActivity)context);
             title = (TextView) itemView.findViewById(R.id.album_item_title);
             thumnail = (ImageView) itemView.findViewById(R.id.album_item_image);
         }
+
+
     }
 }

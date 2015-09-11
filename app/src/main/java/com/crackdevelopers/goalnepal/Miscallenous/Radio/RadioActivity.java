@@ -1,12 +1,19 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Radio;
 
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.crackdevelopers.goalnepal.R;
@@ -16,6 +23,7 @@ import co.mobiwise.library.RadioManager;
 
 
     public  class RadioActivity extends AppCompatActivity implements RadioListener {
+        NotificationManager mNotificationManager;
 
         /**
          * Example radio stream URL
@@ -95,10 +103,50 @@ import co.mobiwise.library.RadioManager;
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    //TODO Do UI works here.
+
+
+
+
                     mTextViewControl.setText("RADIO STATE : PLAYING...");
+                    setNotification();
                 }
             });
+
+                 }
+
+        private void setNotification() {
+
+
+            RemoteViews remoteViews = new RemoteViews(getPackageName(),
+                    R.layout.notification_layout);
+            NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(
+                    this).setSmallIcon(R.mipmap.ic_launcher).setContent(
+                    remoteViews);
+            mBuilder.setOngoing(true);
+
+
+            // Creates an explicit intent for an Activity in your app
+            Intent resultIntent = new Intent(this, RadioActivity.class);
+            // The stack builder object will contain an artificial back stack for
+            // the
+            // started Activity.
+            // This ensures that navigating backward from the Activity leads out of
+            // your application to the Home screen.
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            // Adds the back stack for the Intent (but not the Intent itself)
+            stackBuilder.addParentStack(RadioActivity.class);
+            // Adds the Intent that starts the Activity to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
+            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.notification_layout, resultPendingIntent);
+
+
+            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(100, mBuilder.build());
+
+
         }
 
         @Override
@@ -110,6 +158,7 @@ import co.mobiwise.library.RadioManager;
                     mTextViewControl.setText("RADIO STATE : STOPPED.");
                 }
             });
+            mNotificationManager.cancelAll();
         }
 
         @Override
