@@ -9,32 +9,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.crackdevelopers.goalnepal.R;
-import com.crackdevelopers.goalnepal.Volley.CacheRequest;
-import com.yalantis.phoenix.PullToRefreshView;
-import android.widget.ImageView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.crackdevelopers.goalnepal.R;
+import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.yalantis.phoenix.PullToRefreshView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by trees on 8/21/15.
@@ -83,7 +76,7 @@ public class LatestFragment extends Fragment
     private LayoutInflater inflater;
     private RequestQueue requestQueue;
     private ArrayList<NewsSingleRow> newsData;
-    private LatestNewsAdapter latestNewsAdapter;
+    private CloneAdapter latestNewsAdapter;
     private boolean loading = true;
 
 
@@ -121,7 +114,7 @@ public class LatestFragment extends Fragment
         newsData=new ArrayList<>();
         final LinearLayoutManager manager=new LinearLayoutManager(context);
         latestNews.setLayoutManager(manager);
-        latestNewsAdapter = new LatestNewsAdapter(newsData,context);
+        latestNewsAdapter = new CloneAdapter(context);
         latestNews.setAdapter(latestNewsAdapter);
 
 
