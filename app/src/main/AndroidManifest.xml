@@ -50,6 +50,10 @@
             android:name=".Miscallenous.Gallery.PhotosActivity"
             android:label="@string/title_activity_photos" >
         </activity>
+        <activity
+            android:name=".Miscallenous.Gallery.PhotosPagerActivity"
+            android:label="@string/title_activity_photos_pager" >
+        </activity>
     </application>
 
 </manifest>
