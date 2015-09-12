@@ -22,6 +22,57 @@ public class VideoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_list);
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
+        mYouTubeThumbnailLoader = new YouTubeThumbnailLoader() {
+            @Override
+            public void setOnThumbnailLoadedListener(OnThumbnailLoadedListener onThumbnailLoadedListener) {
+
+            }
+
+            @Override
+            public void setVideo(String s) {
+
+            }
+
+            @Override
+            public void setPlaylist(String s) {
+
+            }
+
+            @Override
+            public void setPlaylist(String s, int i) {
+
+            }
+
+            @Override
+            public void next() {
+
+            }
+
+            @Override
+            public void previous() {
+
+            }
+
+            @Override
+            public void first() {
+
+            }
+
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return false;
+            }
+
+            @Override
+            public void release() {
+
+            }
+        };
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mYouTubeThumbnailView = (YouTubeThumbnailView)findViewById(R.id.videoThumbalil);
@@ -34,6 +85,7 @@ public class VideoListActivity extends AppCompatActivity {
 
                /* String videoId = (String) view.getTag();
                 loaders.put(youTubeThumbnailView, youTubeThumbnailLoader);*/
+
                 youTubeThumbnailView.setImageResource(R.drawable.chelse);
                 youTubeThumbnailLoader.setVideo("Cvfvn27Akxk");
             }
@@ -61,6 +113,12 @@ public class VideoListActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mYouTubeThumbnailLoader.release();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id=item.getItemId();
@@ -76,6 +134,14 @@ public class VideoListActivity extends AppCompatActivity {
     protected void onStop()
     {
         super.onStop();
+        mYouTubeThumbnailLoader.release();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
 
     }
 }
