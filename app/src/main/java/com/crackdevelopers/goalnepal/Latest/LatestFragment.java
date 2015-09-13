@@ -76,7 +76,7 @@ public class LatestFragment extends Fragment
     private LayoutInflater inflater;
     private RequestQueue requestQueue;
     private ArrayList<NewsSingleRow> newsData;
-    private CloneAdapter latestNewsAdapter;
+    private LatestNewsAdapter latestNewsAdapter;
     private boolean loading = true;
 
 
@@ -114,7 +114,7 @@ public class LatestFragment extends Fragment
         newsData=new ArrayList<>();
         final LinearLayoutManager manager=new LinearLayoutManager(context);
         latestNews.setLayoutManager(manager);
-        latestNewsAdapter = new CloneAdapter(context);
+        latestNewsAdapter = new LatestNewsAdapter(context);
         latestNews.setAdapter(latestNewsAdapter);
 
 
