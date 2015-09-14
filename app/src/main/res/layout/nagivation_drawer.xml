@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/profileLogin"
         android:tag="Profile"
-        android:onClick="listClicked"
+
         android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:elevation="10dp"
