@@ -9,6 +9,7 @@
     >
 
     <LinearLayout
+        android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:orientation="vertical"
         android:layout_weight="1"
@@ -25,8 +26,8 @@
 
         <ImageView
             android:id="@+id/commentary_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             />
     </LinearLayout>
 
@@ -40,6 +41,7 @@
             android:id="@+id/commentary_text"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:layout_marginBottom="10dp"
             android:text="Rafina provided the assist. Bayern are still making runs, still loking to penetarte for another hamburg just look battered and desperate for the final whistle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

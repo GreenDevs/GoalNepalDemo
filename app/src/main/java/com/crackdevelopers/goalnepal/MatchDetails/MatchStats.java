@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,18 @@ public class MatchStats extends Fragment
     private static final String PLAYER_NAME="playerName";
     private static final String TEAM="team_AorB";
     private static final String URL="http://www.goalnepal.com/json_goals.php?match_id=";
-    private static final String MATCH_ID="1875";
-
+    private long MATCH_ID;
     private MatchStatsAdapter mAdapter;
+    private RequestQueue queue;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        MATCH_ID=MatchActivity.MATCH_ID;
+        queue= VolleySingleton.getInstance().getQueue();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -68,6 +78,21 @@ public class MatchStats extends Fragment
     }
 
 
+    @Override
+    public void onStart()
+    {
+        super.onPause();
+        sendScoreRequest();
+
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onResume();
+        queue.cancelAll(this);
+
+    }
     private void sendScoreRequest()
     {
         CacheRequest goalsRequest=new CacheRequest(Request.Method.GET, URL+MATCH_ID,
@@ -105,7 +130,7 @@ public class MatchStats extends Fragment
 
                     }
                 });
-        RequestQueue queue= VolleySingleton.getInstance().getQueue();
+
         goalsRequest.setTag(this);
         queue.add(goalsRequest);
     }
@@ -131,8 +156,11 @@ public class MatchStats extends Fragment
 
                             String playerName="", teamGroup="", minute="";
                             if(goal.has(PLAYER_NAME)) playerName=goal.getString(PLAYER_NAME);
-                            if(goal.has(TEAM))  teamGroup="Team "+goal.getString(TEAM);
+                            if(goal.has(TEAM))  teamGroup=goal.getString(TEAM);
                             if(goal.has(MINUTE)) minute=goal.getString(MINUTE)+"'";
+
+                            if(teamGroup.equals("A")) {teamGroup= MatchActivity.TEAM_A;}
+                            if(teamGroup.equals("B")) {teamGroup= MatchActivity.TEAM_B;}
 
                             tempGoals.add(new GoalScoredRow(playerName, minute, teamGroup));
                         }

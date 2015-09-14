@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,13 +40,22 @@ import java.util.List;
 public class LeagueTeams extends Fragment
 {
     private static final String URL="http://www.goalnepal.com/json_participatingTeams.php?tournament_id=";
-    private final long TOURNAMENT_ID=LeagueActivity.TOURNAMENT_ID;
+    private long TOURNAMENT_ID;
     private static final String PARTICIPATING_TEAMS ="participating_teams";
     private static final String TEAM_ID="clubId";
     private static final String TEAM_ICON="club_logo";
     private static final String TEAM_NAME="club_name";
     private static final String TEAM_SHORT_NAME="short_name";
     private LeagueTeamsAdapter mAdapter;
+    private RequestQueue queue;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        TOURNAMENT_ID=LeagueActivity.TOURNAMENT_ID;
+        queue= VolleySingleton.getInstance().getQueue();
+    }
 
     @Nullable
     @Override
@@ -68,6 +78,21 @@ public class LeagueTeams extends Fragment
     }
 
 
+    @Override
+    public void onStart()
+    {
+        super.onPause();
+        sendTeamsRequest();
+
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onResume();
+        queue.cancelAll(this);
+
+    }
 
     private void sendTeamsRequest()
     {
@@ -106,7 +131,7 @@ public class LeagueTeams extends Fragment
 
                     }
                 });
-        RequestQueue queue= VolleySingleton.getInstance().getQueue();
+
         teamsRequest.setTag(this);
         queue.add(teamsRequest);
     }

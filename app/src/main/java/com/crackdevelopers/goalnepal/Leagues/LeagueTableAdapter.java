@@ -139,7 +139,7 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
     @Override
     public StickyHolder onCreateHeaderViewHolder(ViewGroup viewGroup)
     {
-        return new StickyHolder(inflater.inflate(R.layout.sticky_layout, viewGroup, false));
+        return new StickyHolder(inflater.inflate(R.layout.table_sticky, viewGroup, false));
     }
 
     @Override

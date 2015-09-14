@@ -27,8 +27,10 @@ public class MatchActivity extends ActionBarActivity
     private static final String MATCH_CLUB_NAME_B="club_name_b";
     private static final String MATCH_ICON_A="match_icon_url_a";
     private static final String MATCH_ICON_B="match_icon_url_b";
-    private static final String MATCH_ID="match_id";
-    private static long match_id=-1;
+    private static final String MATCH_ID_KEY="match_id";
+    static long MATCH_ID=-1;
+    static String TEAM_A="";
+    static String TEAM_B="";
     
     
     @Override
@@ -61,9 +63,11 @@ public class MatchActivity extends ActionBarActivity
     {
         Bundle bundle=getIntent().getBundleExtra(MATCH_BUNDLE);
 
-        match_id=bundle.getLong(MATCH_ID,-1);
-        ((TextView)toolbar.findViewById(R.id.match_nameA)).setText(bundle.getString(MATCH_CLUB_NAME_A, ""));
-        ((TextView)toolbar.findViewById(R.id.match_nameB)).setText(bundle.getString(MATCH_CLUB_NAME_B,""));
+        MATCH_ID=bundle.getLong(MATCH_ID_KEY, -1);
+        TEAM_A=bundle.getString(MATCH_CLUB_NAME_A, "");
+        TEAM_B=bundle.getString(MATCH_CLUB_NAME_B,"");
+        ((TextView)toolbar.findViewById(R.id.match_nameA)).setText(TEAM_A);
+        ((TextView)toolbar.findViewById(R.id.match_nameB)).setText(TEAM_B);
 
         ((TextView)toolbar.findViewById(R.id.match_score)).setText(bundle.getString(MATCH_SCORE_A,"")+" : "+bundle.getString(MATCH_SCORE_B,""));
 

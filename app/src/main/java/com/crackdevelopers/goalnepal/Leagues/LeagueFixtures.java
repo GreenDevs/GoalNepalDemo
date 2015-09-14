@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -35,7 +37,7 @@ import java.util.List;
 public class LeagueFixtures extends Fragment
 {
     private static final String URL="http://www.goalnepal.com/json_fixtures_2015.php?tournament_id=";
-    private final long TOURNAMENT_ID=LeagueActivity.TOURNAMENT_ID;
+    private long TOURNAMENT_ID;
     private static final String CLUB_A_NAME="clubA";
     private static final String CLUB_B_NAME="clubB";
     private static final String CLUB_A_SCORE="score_of_clubA";
@@ -47,12 +49,23 @@ public class LeagueFixtures extends Fragment
     private static final String MATCH_STATUS="match_status";
     private static final String MATCHES="matches";
     private static final String TITLE="title";
+    private static final String MATCH_ID="id";
     private static final String FIXTURES="fixtures";
 
     private RecyclerView leagueFixtures;
     private Context context;
     private LeagueFixtureAdapter leagueFixtureAdapter;
+    private RequestQueue queue;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        TOURNAMENT_ID=LeagueActivity.TOURNAMENT_ID;
+        queue= VolleySingleton.getInstance().getQueue();
+
+    }
 
     @Nullable
     @Override
@@ -78,21 +91,19 @@ public class LeagueFixtures extends Fragment
         ///STICKY ADAPTER THAT MANAGES THE STICKY
         leagueFixtureAdapter.registerAdapterDataObserver
                 (
-                        new RecyclerView.AdapterDataObserver()
-                        {
+                        new RecyclerView.AdapterDataObserver() {
                             @Override
-                            public void onChanged()
-                            {
+                            public void onChanged() {
                                 decoration.invalidateHeaders();
                             }
                         }
                 );
 
 
-        sendTableReuest();
+        sendFixtureReuest();
 
     }
-    private void sendTableReuest()
+    private void sendFixtureReuest()
     {
         CacheRequest fixtureRequest=new CacheRequest(Request.Method.GET, URL+TOURNAMENT_ID,
 
@@ -126,9 +137,26 @@ public class LeagueFixtures extends Fragment
                     }
                 });
 
-        RequestQueue queue= VolleySingleton.getInstance().getQueue();
+
         fixtureRequest.setTag(this);
         queue.add(fixtureRequest);
+    }
+
+
+    @Override
+    public void onStart()
+    {
+        super.onPause();
+        sendFixtureReuest();
+
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onResume();
+        queue.cancelAll(this);
+
     }
 
 
@@ -154,15 +182,14 @@ public class LeagueFixtures extends Fragment
                             if(fixture.has(TITLE)) title=fixture.getString(TITLE);
                             if(fixture.has(MATCHES))
                             {
-                                matches=fixture.getJSONArray(MATCHES)
-                                ;
+                                matches=fixture.getJSONArray(MATCHES);
 
                                 for(int j=0;j<matches.length();j++)
                                 {
                                     JSONObject match=matches.getJSONObject(j);
 
                                     String club_a_name="", club_b_name="", club_a_score="-", club_b_score="-", club_a_icon="", club_b_icon="",
-                                            match_date="", match_time="", match_status="";
+                                            match_date="", match_time="", match_status=""; long match_id=-1;
 
                                     if(match.has(CLUB_A_NAME)) club_a_name=match.getString(CLUB_A_NAME);
                                     if(match.has(CLUB_B_NAME)) club_b_name=match.getString(CLUB_B_NAME);
@@ -171,6 +198,7 @@ public class LeagueFixtures extends Fragment
                                     if(match.has(MATCH_DATE)) match_date=match.getString(MATCH_DATE);
                                     if(match.has(MATCH_TIME)) match_time=match.getString(MATCH_TIME);
                                     if(match.has(MATCH_STATUS)) match_status=match.getString(MATCH_STATUS);
+                                    if(match.has(MATCH_ID))     match_id=match.getLong(MATCH_ID);
                                     if(match_status.equals("Played"))
                                     {
                                         if(match.has(CLUB_A_SCORE)) club_a_score=match.getString(CLUB_A_SCORE);
@@ -178,12 +206,14 @@ public class LeagueFixtures extends Fragment
                                     }
 
                                     tempList.add(new FixtureRow(club_a_name, club_b_name, club_a_score, club_b_score,
-                                            club_a_icon, club_b_icon, match_date, match_time, title));
+                                            club_a_icon, club_b_icon, match_date, match_time, title, match_id));
+
                                 }
                             }
 
-
                         }
+
+
                     }
                     catch (JSONException e)
                     {

@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.crackdevelopers.goalnepal.R;
+import com.crackdevelopers.goalnepal.Utility.Utility;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 
 import org.json.JSONArray;
@@ -65,10 +66,18 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView albumGrid=(RecyclerView)findViewById(R.id.album_recycler);
-        albumGrid.setLayoutManager(new GridLayoutManager(context, 3));
+        RecyclerView photosGrid=(RecyclerView)findViewById(R.id.album_recycler);
+
+        if(Utility.isTablet(context))
+        {
+            photosGrid.setLayoutManager(new GridLayoutManager(context,3));
+        }
+        else
+        {
+            photosGrid.setLayoutManager(new GridLayoutManager(context, 2));
+        }
         mAdapter=new PhotosAdapter(context);
-        albumGrid.setAdapter(mAdapter);
+        photosGrid.setAdapter(mAdapter);
         sendJsonRequest();
 
     }

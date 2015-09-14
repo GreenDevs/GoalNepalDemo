@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,6 +33,14 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
     private List<FixtureRow> data;
     private List<String> stickyData;
 
+    private static final String MATCH_BUNDLE="match_bundle";
+    private static final String MATCH_SCORE_A="score_A";
+    private static final String MATCH_SCORE_B="score_B";
+    private static final String MATCH_CLUB_NAME_A="club_name_a";
+    private static final String MATCH_CLUB_NAME_B="club_name_b";
+    private static final String MATCH_ICON_A="match_icon_url_a";
+    private static final String MATCH_ICON_B="match_icon_url_b";
+    private static final String MATCH_ID="match_id";
 
     public LeagueFixtureAdapter(Context context)
     {
@@ -45,6 +55,7 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
     {
         this.data=data;
 
+        stickyData.clear();
         for(FixtureRow item:data)
         {
             stickyData.add(item.stage_title);
@@ -143,21 +154,21 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
         @Override
         public void onClick(View v)
         {
-//            Intent intent=new Intent(context, MatchActivity.class);
-//            Bundle bundle=new Bundle();
-//
-//            bundle.putString(MATCH_CLUB_NAME_A, data.get(getPosition()).nameA);
-//            bundle.putString(MATCH_CLUB_NAME_B, data.get(getPosition()).nameB);
-//
-//            bundle.putString(MATCH_ICON_A, data.get(getPosition()).iconA);
-//            bundle.putString(MATCH_ICON_B, data.get(getPosition()).iconB);
-//
-//            bundle.putString(MATCH_SCORE_A, data.get(getPosition()).scoreA);
-//            bundle.putString(MATCH_SCORE_B, data.get(getPosition()).scoreB);
-//            bundle.putLong(MATCH_ID, data.get(getPosition()).match_id);
-//            intent.putExtra(MATCH_BUNDLE, bundle);
-//
-//            context.startActivity(intent);
+            Intent intent=new Intent(context, MatchActivity.class);
+            Bundle bundle=new Bundle();
+            FixtureRow item=data.get(getAdapterPosition());
+            bundle.putString(MATCH_CLUB_NAME_A, item.club_a_name);
+            bundle.putString(MATCH_CLUB_NAME_B, item.club_b_name);
+
+            bundle.putString(MATCH_ICON_A, item.club_a_icon);
+            bundle.putString(MATCH_ICON_B, item.club_b_icon);
+
+            bundle.putString(MATCH_SCORE_A, item.club_a_score);
+            bundle.putString(MATCH_SCORE_B, item.club_b_score);
+            bundle.putLong(MATCH_ID, item.match_id);
+            intent.putExtra(MATCH_BUNDLE, bundle);
+
+            context.startActivity(intent);
         }
     }
     @Override
@@ -169,7 +180,12 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
         }
         else
         {
-            return stickyData.get(position).charAt(0);
+            char returnchar=':';
+            for(char c:stickyData.get(position).toCharArray())
+            {
+                returnchar+=c;
+            }
+            return returnchar;
         }
     }
 

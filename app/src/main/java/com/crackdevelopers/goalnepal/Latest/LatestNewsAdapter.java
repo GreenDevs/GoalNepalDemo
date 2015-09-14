@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.News.NewsDetailsActivity;
@@ -34,7 +33,7 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.My
         this.context = context;
     }
 
-    public void setData(List data)
+    public void setData(List<NewsSingleRow> data)
     {
         this.data=data;
         notifyItemRangeChanged(0, data.size());
@@ -47,7 +46,8 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.My
         {
             data.add((NewsSingleRow)scrollItem);
         }
-        notifyItemRangeInserted(previousSize + 1, scrollData.size());
+        notifyItemRangeInserted(previousSize, scrollData.size());
+
     }
 
     @Override
@@ -59,36 +59,39 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.My
     @Override
     public void onBindViewHolder(final LatestNewsAdapter.MyViewHolder viewHolder, int i)
     {
-        viewHolder.title.setText(data.get(i).subtitle);
-        viewHolder.details.setText(data.get(i).title);
-        viewHolder.image.setImageResource(R.mipmap.ic_launcher);
 
-        ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
-        //IMAGE BINDING USING VOLLEY IMAGE LOADER
-        String imageUrl=data.get(i).imageUrl;
-        if(imageUrl!=null)
-        {
-            imageLoader.get(imageUrl,
-
-                    new ImageLoader.ImageListener()
-                    {
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate)
-                        {
-                             viewHolder.image.setImageBitmap(response.getBitmap());
-                        }
-
-                        @Override
-                        public void onErrorResponse(VolleyError error)
-                        {
-                            viewHolder.image.setImageResource(R.mipmap.ic_launcher);
-                        }
-                    });
-        }
-        else
-        {
+            NewsSingleRow item=data.get(i);
+            viewHolder.title.setText(item.subtitle);
+            viewHolder.details.setText(item.title);
             viewHolder.image.setImageResource(R.mipmap.ic_launcher);
-        }
+
+            ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
+
+            //IMAGE BINDING USING VOLLEY IMAGE LOADER
+            String imageUrl=item.imageUrl;
+            if(imageUrl!=null)
+            {
+                imageLoader.get(imageUrl,
+
+                        new ImageLoader.ImageListener()
+                        {
+                            @Override
+                            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate)
+                            {
+                                 viewHolder.image.setImageBitmap(response.getBitmap());
+                            }
+
+                            @Override
+                            public void onErrorResponse(VolleyError error)
+                            {
+                                viewHolder.image.setImageResource(R.mipmap.ic_launcher);
+                            }
+                        });
+            }
+            else
+            {
+                viewHolder.image.setImageResource(R.mipmap.ic_launcher);
+            }
 
 
     }
@@ -119,7 +122,7 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.My
         {
             Intent intent=new Intent(context, NewsDetailsActivity.class);
             Bundle bundle=new Bundle();
-            NewsSingleRow row=data.get(getPosition());
+            NewsSingleRow row=data.get(getAdapterPosition());
             bundle.putString(NewsDetailsActivity.IMAGE_ID, row.imageId);
             bundle.putString(NewsDetailsActivity.NEWS_DATE, row.date);
             bundle.putString(NewsDetailsActivity.NEWS_TITLE, row.subtitle);

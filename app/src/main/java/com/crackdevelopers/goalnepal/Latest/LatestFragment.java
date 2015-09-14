@@ -180,7 +180,12 @@ public class LatestFragment extends Fragment
     {
         super.onPause();
         sendNewsRequest();
+    }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
     }
 
     @Override
@@ -188,7 +193,6 @@ public class LatestFragment extends Fragment
     {
         super.onResume();
         requestQueue.cancelAll(this);
-
     }
 
     private void sendNewsRequest()
@@ -206,10 +210,7 @@ public class LatestFragment extends Fragment
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             latestNewsAdapter.setData(parseNews(responseJson));
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        } catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }

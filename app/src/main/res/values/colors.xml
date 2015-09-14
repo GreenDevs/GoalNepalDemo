@@ -20,4 +20,23 @@
     <color name="uncheck">#ccc</color>
     <color name="check">#009688</color>
 
+
+    <!-- MATERIAL COLORS COLLETCTIONS-->
+
+    <color name="redPrimary">#f44336</color>
+    <color name="readDark">#d32f2f</color>
+
+
+    <color name="bluePrimary">#2196f3</color>
+    <color name="blueDark">#1976d2</color>
+
+    <color name="tealPrimary">#009688</color>
+    <color name="tealDark">#00796b</color>
+
+    <color name="greenPrimary">#388e3c</color>
+    <color name="greenDark">#1b5e20</color>
+
+    <color name="greyPrimary">#795548</color>
+    <color name="greyDark">#5d4037</color>
+
 </resources>

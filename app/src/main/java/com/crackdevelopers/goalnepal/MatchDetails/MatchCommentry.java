@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class MatchCommentry extends Fragment
     ///API KEY ATTRIBUTES
     private static final String URL="http://www.goalnepal.com/json_livecommentary_2015.php?match_id=";
     private static final String IMAGE_PATH="http://www.goalnepal.com/";
-    private static final String MATCH_ID="1875";
+    private long MATCH_ID;
     private static final String MATCH_COMMENTARY="comments";
     private static final String MATCH_MINUTE="minute";
     private static final String MATCH_TEXT="text";
@@ -51,6 +52,15 @@ public class MatchCommentry extends Fragment
     private final int  REFRESH_DELAY = 1500;
     private ComentaryAdapter commentaryAdapter;
     private Context context;
+    private RequestQueue queue;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        MATCH_ID=MatchActivity.MATCH_ID;
+        queue= VolleySingleton.getInstance().getQueue();
+    }
 
     @Nullable
     @Override
@@ -97,6 +107,22 @@ public class MatchCommentry extends Fragment
         sendCommentryRequest();
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onPause();
+        sendCommentryRequest();
+
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onResume();
+        queue.cancelAll(this);
+
+    }
+
     private void sendCommentryRequest()
     {
         CacheRequest commntrCacheRequest=new CacheRequest(Request.Method.GET, URL+MATCH_ID,
@@ -132,7 +158,7 @@ public class MatchCommentry extends Fragment
 
             }
         });
-        RequestQueue queue= VolleySingleton.getInstance().getQueue();
+
         commntrCacheRequest.setTag(this);
         queue.add(commntrCacheRequest);
     }

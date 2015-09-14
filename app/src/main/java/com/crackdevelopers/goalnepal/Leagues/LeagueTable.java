@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class LeagueTable extends Fragment
 {
 
     private static final String URL="http://www.goalnepal.com/json_scoreBoard_2015.php?tournament_id=";
-    private final long TOURNAMENT_ID=LeagueActivity.TOURNAMENT_ID;
+    private long TOURNAMENT_ID;
     private static final String TEAMS="teams";
     private static final String GROUP="pgroup";
     private static final String NAME="short_name";
@@ -54,7 +55,16 @@ public class LeagueTable extends Fragment
 
     private RecyclerView leagueTable;
     private Context context;
+    private RequestQueue queue;
     private LeagueTableAdapter leagueTableAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        TOURNAMENT_ID=LeagueActivity.TOURNAMENT_ID;
+        queue= VolleySingleton.getInstance().getQueue();
+    }
 
     @Nullable
     @Override
@@ -81,11 +91,9 @@ public class LeagueTable extends Fragment
         ///STICKY ADAPTER THAT MANAGES THE STICKY
         leagueTableAdapter.registerAdapterDataObserver
                 (
-                        new RecyclerView.AdapterDataObserver()
-                        {
+                        new RecyclerView.AdapterDataObserver() {
                             @Override
-                            public void onChanged()
-                            {
+                            public void onChanged() {
                                 decoration.invalidateHeaders();
                             }
                         }
@@ -95,6 +103,22 @@ public class LeagueTable extends Fragment
         sendTableReuest();
     }
 
+
+    @Override
+    public void onStart()
+    {
+        super.onPause();
+        sendTableReuest();
+
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onResume();
+        queue.cancelAll(this);
+
+    }
 
     private void sendTableReuest()
     {
@@ -129,8 +153,7 @@ public class LeagueTable extends Fragment
 
                     }
                 });
-
-        RequestQueue queue= VolleySingleton.getInstance().getQueue();
+        recentMatchCacheRequest.setTag(this);
         queue.add(recentMatchCacheRequest);
     }
 
