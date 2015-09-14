@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,10 +19,14 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.yalantis.phoenix.PullToRefreshView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +55,9 @@ public class RecentMatchFragment extends Fragment
     private Context contex;
     RecentMatchAdapter mAdapter;
     private RequestQueue queue;
+    private CircularProgressView progressView;
+    private PullToRefreshView mPullToRefreshView;
+    private final int  REFRESH_DELAY = 1500;
 
     public RecentMatchFragment()
     {
@@ -85,33 +92,54 @@ public class RecentMatchFragment extends Fragment
         scoreList.setLayoutManager(new LinearLayoutManager(getActivity()));
         scoreList.addItemDecoration(decoration);
 
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view);
+        progressView.startAnimation();
+
         ///STICKY ADAPTER THAT MANAGES THE STICKY
         mAdapter.registerAdapterDataObserver
-        (
-            new RecyclerView.AdapterDataObserver()
-            {
-                @Override
-                public void onChanged()
-                {
-                    decoration.invalidateHeaders();
+                (
+                        new RecyclerView.AdapterDataObserver() {
+                            @Override
+                            public void onChanged() {
+                                decoration.invalidateHeaders();
+                            }
+                        }
+                );
+
+
+        /////################################# PULLL TO REFRESH ########################################
+        mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh_recent);
+        mPullToRefreshView.setOnRefreshListener(
+
+                new PullToRefreshView.OnRefreshListener() {
+                    @Override
+                    public void onRefresh()
+                    {
+                        // do what you want to do when refreshing
+                        sendRecentMatchRequest();
+                        mPullToRefreshView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPullToRefreshView.setRefreshing(false);
+                            }
+                        }, REFRESH_DELAY);
+                    }
                 }
-            }
         );
 
-        sendRecentMatchRequest();
     }
 
     @Override
-    public void onPause()
+    public void onStop()
     {
-        super.onPause();
+        super.onStop();
         queue.cancelAll(this);
     }
 
     @Override
-    public void onResume()
+    public void onStart()
     {
-        super.onResume();
+        super.onStart();
         sendRecentMatchRequest();
 
     }
@@ -119,6 +147,7 @@ public class RecentMatchFragment extends Fragment
     ///THIS METHOD TRIES TO PULL THE DATA FROM RECENT MATCH API AND CALLS THE ADAPTER TO SET THE RECYCLER
     private void sendRecentMatchRequest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest recentMatchCacheRequest=new CacheRequest(Request.Method.GET, URL,
 
         new Response.Listener<NetworkResponse>()
@@ -131,6 +160,7 @@ public class RecentMatchFragment extends Fragment
                     final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                     JSONObject responseJson=new JSONObject(jsonResponseString);
                     mAdapter.setData(parseData(responseJson));
+                    progressView.setVisibility(View.GONE);
                 }
                 catch (UnsupportedEncodingException e)
                 {
