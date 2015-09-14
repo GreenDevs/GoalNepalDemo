@@ -113,7 +113,13 @@ import co.mobiwise.library.RadioManager;
             /**
              * Remember to disconnect from manager.
              */
-            mRadioManager.disconnect();
+            try
+            {
+                mRadioManager.disconnect();
+            } catch (Exception e)
+            {
+                startActivity(new Intent(this, RadioActivity.class));
+            }
         }
 
         //@Override
