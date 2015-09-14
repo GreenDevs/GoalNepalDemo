@@ -62,6 +62,6 @@
     <string name="title_activity_preference">Select Cups</string>
 
     <string name="album_image_des">album</string>
-    <string name="title_activity_photos">PhotosActivity</string>
-    <string name="title_activity_photos_pager">PhotosPagerActivity</string>
+    <string name="title_activity_photos">Photos</string>
+    <string name="title_activity_photos_pager">Photos Viewer</string>
 </resources>

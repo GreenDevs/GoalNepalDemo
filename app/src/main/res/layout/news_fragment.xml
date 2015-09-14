@@ -22,11 +22,6 @@
 
     </com.yalantis.phoenix.PullToRefreshView>
 
-
-
-
-</LinearLayout>
-
     <com.github.rahatarmanahmed.cpv.CircularProgressView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:visibility="gone"

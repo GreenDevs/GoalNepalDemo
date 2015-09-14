@@ -20,6 +20,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import org.json.JSONArray;
@@ -57,6 +58,8 @@ public class LeagueTable extends Fragment
     private Context context;
     private RequestQueue queue;
     private LeagueTableAdapter leagueTableAdapter;
+    private CircularProgressView progressView;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -99,8 +102,10 @@ public class LeagueTable extends Fragment
                         }
                 );
 
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_table);
+        progressView.startAnimation();
 
-        sendTableReuest();
     }
 
 
@@ -122,6 +127,7 @@ public class LeagueTable extends Fragment
 
     private void sendTableReuest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest recentMatchCacheRequest=new CacheRequest(Request.Method.GET, URL+TOURNAMENT_ID,
 
                 new Response.Listener<NetworkResponse>()
@@ -134,6 +140,7 @@ public class LeagueTable extends Fragment
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             leagueTableAdapter.setData(parseData(responseJson));
+                            progressView.setVisibility(View.GONE);
                         }
                         catch (UnsupportedEncodingException e)
                         {

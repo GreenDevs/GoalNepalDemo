@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,12 +22,11 @@ import com.crackdevelopers.goalnepal.Latest.NewsSingleRow;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -78,12 +76,10 @@ public class LeagueNews extends Fragment
     private PullToRefreshView mPullToRefreshView;
     private final int  REFRESH_DELAY = 1500;
     private Context context;
-    private LayoutInflater inflater;
     private RequestQueue requestQueue;
-    private ArrayList<NewsSingleRow> newsData;
     private LatestNewsAdapter latestNewsAdapter;
     private boolean loading = true;
-
+    private CircularProgressView progressView;
 
 
     public LeagueNews()
@@ -104,7 +100,6 @@ public class LeagueNews extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
-        this.inflater=inflater;
         View v=inflater.inflate(R.layout.league_news_fragment, container, false);
         latestNews=(RecyclerView)v.findViewById(R.id.leagueNewsRecyceler);
         return v;
@@ -116,13 +111,14 @@ public class LeagueNews extends Fragment
         super.onActivityCreated(savedInstanceState);
         this.context=getActivity();
 
-
-        newsData=new ArrayList<>();
         final LinearLayoutManager manager=new LinearLayoutManager(context);
         latestNews.setLayoutManager(manager);
         latestNewsAdapter = new LatestNewsAdapter(context);
         latestNews.setAdapter(latestNewsAdapter);
 
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_leg_news);
+        progressView.startAnimation();
 
         /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
 
@@ -199,6 +195,7 @@ public class LeagueNews extends Fragment
 
     private void sendNewsRequest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest newsRequest=new CacheRequest(Request.Method.GET, NEWS_URL+TOURNAMENT_ID+PAGE_FLAG+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()
@@ -211,11 +208,9 @@ public class LeagueNews extends Fragment
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             latestNewsAdapter.setData(parseNews(responseJson));
+                            progressView.setVisibility(View.GONE);
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        } catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }
@@ -242,7 +237,7 @@ public class LeagueNews extends Fragment
     private void sendNewsScrollRequest()
     {
         PAGE_N0++;
-
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest newsScrollRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()
@@ -256,11 +251,9 @@ public class LeagueNews extends Fragment
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             latestNewsAdapter.setScrollUpdate(parseNews(responseJson));
                             loading=true;
+                            progressView.setVisibility(View.GONE);
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        } catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }

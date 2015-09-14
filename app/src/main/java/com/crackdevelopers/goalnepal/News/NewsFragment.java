@@ -2,7 +2,6 @@ package com.crackdevelopers.goalnepal.News;
 
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,12 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,11 +26,9 @@ import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -94,7 +88,6 @@ public class NewsFragment extends Fragment
         this.inflater=inflater;
         View v=inflater.inflate(R.layout.news_fragment, container, false);
         news=(RecyclerView)v.findViewById(R.id.newsList);
-//        cPV=(CircularProgressView)v.findViewById(R.id.pbar);
         return v;
     }
 
@@ -113,8 +106,6 @@ public class NewsFragment extends Fragment
 
 
         ///###################### PROGRESS BAR
-
-
         progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_latest);
         progressView.startAnimation();
 
@@ -198,9 +189,7 @@ public class NewsFragment extends Fragment
     private void sendNewsRequest()
     {
 
-
-
-        progressView.setVisibility(View.VISIBLE);
+       progressView.setVisibility(View.VISIBLE);
 
         CacheRequest newsRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_N0,
 

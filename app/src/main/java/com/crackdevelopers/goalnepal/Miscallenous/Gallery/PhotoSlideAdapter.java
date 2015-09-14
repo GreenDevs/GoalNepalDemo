@@ -1,5 +1,6 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import java.util.List;
 
@@ -69,6 +71,7 @@ public class PhotoSlideAdapter extends PagerAdapter
         View itemView = mLayoutInflater.inflate(R.layout.photo_pager_item, container, false);
         String imageUrl=imageUrls.get(position);
         final ImageView imageView = (ImageView) itemView.findViewById(R.id.slide_pager_image);
+        ((PhotosPagerActivity)(mContext)).setPVisibility(true);
 
         if(imageUrl!= null)
         {
@@ -81,12 +84,13 @@ public class PhotoSlideAdapter extends PagerAdapter
 
                     imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     imageView.setImageBitmap(response.getBitmap());
+                    ((PhotosPagerActivity)(mContext)).setPVisibility(false);
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError error)
                 {
-                    Toast.makeText(mContext,"Volley Error="+error,Toast.LENGTH_LONG).show();
+
                 }
             });
         }
