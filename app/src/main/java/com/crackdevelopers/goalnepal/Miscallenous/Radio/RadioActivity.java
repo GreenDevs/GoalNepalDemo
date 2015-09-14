@@ -17,6 +17,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.crackdevelopers.goalnepal.R;
+import com.melnykov.fab.FloatingActionButton;
 
 import co.mobiwise.library.RadioListener;
 import co.mobiwise.library.RadioManager;
@@ -35,7 +36,7 @@ import co.mobiwise.library.RadioManager;
          */
         RadioManager mRadioManager = RadioManager.with(this);
 
-        Button mButtonControl;
+        FloatingActionButton mButtonplay,mButtonPause;
         TextView mTextViewControl;
 
         @Override
@@ -60,16 +61,39 @@ import co.mobiwise.library.RadioManager;
         }
 
         public void initializeUI(){
-            mButtonControl = (Button) findViewById(R.id.playRadio);
+
+            mButtonPause = (FloatingActionButton) findViewById(R.id.pauseRadio);
+            mButtonplay = (FloatingActionButton) findViewById(R.id.playRadio);
             mTextViewControl = (TextView) findViewById(R.id.progressbarRadio);
 
-            mButtonControl.setOnClickListener(new View.OnClickListener() {
+            mButtonplay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!mRadioManager.isPlaying())
+                    if (!mRadioManager.isPlaying()) {
+                        mButtonplay.setVisibility(View.GONE);
+                        mButtonPause.setVisibility(View.VISIBLE);
                         mRadioManager.startRadio(RADIO_URL);
-                    else
+                    }
+
+
+                    /*else{
                         mRadioManager.stopRadio();
+                        mButtonPause.setVisibility(View.VISIBLE);
+                        mButtonplay.setVisibility(View.GONE);
+
+                    }*/
+                }
+            });
+
+            mButtonPause.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mRadioManager.isPlaying()) {
+                        mRadioManager.stopRadio();
+                        mButtonPause.setVisibility(View.GONE);
+                        mButtonplay.setVisibility(View.VISIBLE);
+                    }
+
                 }
             });
         }
@@ -98,31 +122,22 @@ import co.mobiwise.library.RadioManager;
             // mRadioManager.startRadio(RADIO_URL);
         }
 
-        @Override
-        public void onRadioStarted() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
 
-
-
-
-                    mTextViewControl.setText("RADIO STATE : PLAYING...");
-                    setNotification();
-                }
-            });
-
-                 }
 
         private void setNotification() {
 
 
+
             RemoteViews remoteViews = new RemoteViews(getPackageName(),
                     R.layout.notification_layout);
+
             NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(
-                    this).setSmallIcon(R.mipmap.ic_launcher).setContent(
+                    this).setSmallIcon(R.drawable.check_circle).setContent(
                     remoteViews);
             mBuilder.setOngoing(true);
+
+
+
 
 
             // Creates an explicit intent for an Activity in your app
@@ -143,6 +158,7 @@ import co.mobiwise.library.RadioManager;
 
 
             mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
             // mId allows you to update the notification later on.
             mNotificationManager.notify(100, mBuilder.build());
 
@@ -155,10 +171,31 @@ import co.mobiwise.library.RadioManager;
                 @Override
                 public void run() {
                     //TODO Do UI works here
-                    mTextViewControl.setText("RADIO STATE : STOPPED.");
+                    mTextViewControl.setText("Play Goal Nepal FM...");
+                    mButtonPause.setVisibility(View.GONE);
+                    mButtonplay.setVisibility(View.VISIBLE);
+
                 }
             });
             mNotificationManager.cancelAll();
+        }
+
+        @Override
+        public void onRadioStarted() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+
+                    mButtonPause.setVisibility(View.VISIBLE);
+                    mButtonplay.setVisibility(View.GONE);
+
+
+                    mTextViewControl.setText("Goal Nepal FM is Playing");
+                    setNotification();
+                }
+            });
+
         }
 
         @Override
@@ -180,4 +217,23 @@ import co.mobiwise.library.RadioManager;
             return super.onOptionsItemSelected(item);
         }
 
+        @Override
+        protected void onResume() {
+            super.onResume();
+
+           try {
+               if (mRadioManager.isPlaying()) {
+                   // mRadioManager.stopRadio();
+                   mButtonPause.setVisibility(View.VISIBLE);
+                   mButtonplay.setVisibility(View.GONE);
+               } else {
+                   mButtonPause.setVisibility(View.GONE);
+                   mButtonplay.setVisibility(View.VISIBLE);
+
+
+               }
+           }catch (Exception e ){
+
+           }
+        }
     }

@@ -1,44 +1,92 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.crackdevelopers.goalnepal.Miscallenous.RadioActivity"
-    >
+    tools:context="com.crackdevelopers.goalnepal.Miscallenous.RadioActivity">
+
     <include
         android:id="@+id/app_bar"
-        layout="@layout/app_bar"
-       />
-
+        layout="@layout/app_bar" />
 
 
     <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/app_bar"
+
+        android:background="#004088"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/playPauseButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerInParent="true">
+
+            <com.melnykov.fab.FloatingActionButton
+                android:id="@+id/playRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="bottom|right"
+
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_play_arrow_white_24dp"
+                fab:fab_colorNormal="@color/primaryColorfab"
+                fab:fab_colorPressed="@color/primaryDarkfab"
+                fab:fab_colorRipple="@color/ripple" />
+
+            <com.melnykov.fab.FloatingActionButton
+                android:id="@+id/pauseRadio"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="bottom|right"
+
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_pause_white_24dp"
+                android:visibility="gone"
+                fab:fab_colorNormal="@color/primaryColorfab"
+                fab:fab_colorPressed="@color/primaryDarkfab"
+                fab:fab_colorRipple="@color/ripple" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/playPauseButtons"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:id="@+id/progressbarRadio"
+
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/playRadio"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="Play Goal Nepal Radio"
+
+                android:textColor="#fff"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/radio_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/app_bar"
-
-        >
-    <Button
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:id="@+id/playRadio"
-        android:text="play"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:id="@+id/pauseRadio"
-        android:text="pause"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressbarRadio"
-        android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/radio_logo" />
 
 </RelativeLayout>
