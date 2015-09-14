@@ -111,46 +111,43 @@ public class PreferenceActivity extends AppCompatActivity
 
     ///API WORKOUT HERE
 
-    private void setJsonRequest()
-    {
-        CacheRequest menuRequest=new CacheRequest(Request.Method.GET, URL,
+    private void setJsonRequest() {
+        try {
+            CacheRequest menuRequest = new CacheRequest(Request.Method.GET, URL,
 
-                new Response.Listener<NetworkResponse>()
-                {
-                    @Override
-                    public void onResponse(NetworkResponse response)
-                    {
-                        try
-                        {
-                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                            JSONObject menuJson=new JSONObject(jsonResponseString);
-                            mAdapter.updateMenu(pareseMenu(menuJson));
 
-                            ///WRITING THE INTERNET DATA TO THE FILE
-                            FileManager fileManager=new FileManager(context);
-                            fileManager.writeToFile(jsonResponseString);
+                    new Response.Listener<NetworkResponse>() {
+                        @Override
+                        public void onResponse(NetworkResponse response) {
+                            try {
+                                final String jsonResponseString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                                JSONObject menuJson = new JSONObject(jsonResponseString);
+                                mAdapter.updateMenu(pareseMenu(menuJson));
 
-                        }
-                        catch (UnsupportedEncodingException | JSONException e)
-                        {
-                            e.printStackTrace();
+                                ///WRITING THE INTERNET DATA TO THE FILE
+                                FileManager fileManager = new FileManager(context);
+                                fileManager.writeToFile(jsonResponseString);
+
+                            } catch (UnsupportedEncodingException | JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-                ,
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+                    ,
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
+                        }
+                    });
 
 
-        menuRequest.setTag(this);
-        VolleySingleton.getInstance().getQueue().add(menuRequest);
+            menuRequest.setTag(this);
+            VolleySingleton.getInstance().getQueue().add(menuRequest);
 
+        }catch (Exception e) {
+
+        }
     }
 
 
