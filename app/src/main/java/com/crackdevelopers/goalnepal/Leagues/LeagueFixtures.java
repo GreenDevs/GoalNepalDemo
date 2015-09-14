@@ -6,11 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -21,6 +19,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import org.json.JSONArray;
@@ -57,6 +56,8 @@ public class LeagueFixtures extends Fragment
     private LeagueFixtureAdapter leagueFixtureAdapter;
     private RequestQueue queue;
 
+    private CircularProgressView progressView;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -87,6 +88,9 @@ public class LeagueFixtures extends Fragment
         final StickyRecyclerHeadersDecoration decoration=new StickyRecyclerHeadersDecoration(leagueFixtureAdapter);
         leagueFixtures.addItemDecoration(decoration);
 
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_fixture);
+        progressView.startAnimation();
+
 
         ///STICKY ADAPTER THAT MANAGES THE STICKY
         leagueFixtureAdapter.registerAdapterDataObserver
@@ -105,6 +109,7 @@ public class LeagueFixtures extends Fragment
     }
     private void sendFixtureReuest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest fixtureRequest=new CacheRequest(Request.Method.GET, URL+TOURNAMENT_ID,
 
                 new Response.Listener<NetworkResponse>()
@@ -117,6 +122,7 @@ public class LeagueFixtures extends Fragment
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             leagueFixtureAdapter.setData(parseData(responseJson));
+                            progressView.setVisibility(View.GONE);
                         }
                         catch (UnsupportedEncodingException e)
                         {
