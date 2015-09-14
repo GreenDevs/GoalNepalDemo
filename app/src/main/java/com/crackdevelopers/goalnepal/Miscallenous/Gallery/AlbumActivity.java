@@ -1,5 +1,6 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -88,6 +89,12 @@ public class AlbumActivity extends AppCompatActivity
 
     private void sendJsonRequest()
     {
+        final ProgressDialog progress=new ProgressDialog(this);
+        progress.setMessage("Downloading Music");
+        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setIndeterminate(true);
+        progress.setProgress(0);
+        progress.show();
         CacheRequest albumRequest=new CacheRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
 
                 new Response.Listener<NetworkResponse>()
@@ -100,6 +107,7 @@ public class AlbumActivity extends AppCompatActivity
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             mAdapter.setData(parseJson(responseJson));
+                            progress.hide();
                         }
                         catch (UnsupportedEncodingException | JSONException e)
                         {
