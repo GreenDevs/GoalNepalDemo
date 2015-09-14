@@ -42,19 +42,19 @@ dependencies {
     compile 'com.yalantis:phoenix:1.2.2'
     // pull to refresh
     compile 'com.github.iammert:RadioPlayerService:4ab6bafbbf'
-<<<<<<< HEAD
+
     compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
     ////EXPANDABLE RECYCLER VIEW
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     // fab
     compile files('libs/jsoup-1.8.3.jar')
-=======
+
 
     compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3' ////EXPANDABLE RECYCLER VIEW
     compile 'com.melnykov:floatingactionbutton:1.3.0' // fab
 
     compile 'com.github.rahatarmanahmed:circularprogressview:2.3.2' //THIS IS FOR PROGRESS BAR
->>>>>>> bcfc79536067e4fd5d644da2fd00672e3099a6e5
+
 }
 
 

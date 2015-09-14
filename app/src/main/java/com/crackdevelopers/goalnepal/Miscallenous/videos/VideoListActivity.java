@@ -224,10 +224,6 @@ public class VideoListActivity extends AppCompatActivity
         playLiveTv.setVisibility(View.VISIBLE);
         mYouTubeThumbnailView.setVisibility(View.VISIBLE);
 
-
-
-
-
     }
 
 
