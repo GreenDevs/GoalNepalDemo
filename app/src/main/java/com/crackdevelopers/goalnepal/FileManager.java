@@ -17,6 +17,7 @@ public class FileManager
 {
     private Context context;
     private static final String FILE_NAME="menu.json";
+    OutputStreamWriter writer ;
 
     public FileManager(Context context)
     {
@@ -27,7 +28,7 @@ public class FileManager
     {
         try
         {
-            OutputStreamWriter writer=new OutputStreamWriter(context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
+            writer=new OutputStreamWriter(context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE));
             writer.write(data);
             writer.close();
         }

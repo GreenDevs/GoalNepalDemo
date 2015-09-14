@@ -4,6 +4,9 @@
     <!--- hamro theme part here -->
     <color name="primaryColor">#c62828</color>
     <color name="primaryDark">#b71c1c</color>
+    <color name="primaryColorfab">#c62828</color>
+    <color name="primaryDarkfab">#b71c1c</color>
+    <color name="ripple">#b21a1a</color>
     <color name="secondaryText">#888</color>
     <color name="primaryText">#000</color>
     <color name="unselected_tabs">#ffaeae</color>
