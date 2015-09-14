@@ -9,77 +9,45 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
 
-    <LinearLayout
 
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/app_bar"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/tvlogo" />
+    <com.google.android.youtube.player.YouTubeThumbnailView
+        android:id="@+id/videoThumbalil"
+        android:onClick="videoClicked"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:background="#ddd"
-            android:layout_margin="5dp"
-            android:layout_height="wrap_content"
-            android:onClick="videoClicked">
-
-            <com.google.android.youtube.player.YouTubeThumbnailView
-                android:layout_height="100dp"
-                android:id="@+id/videoThumbalil"
-                android:layout_width="100dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=" Youtube Video" />
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
 
 
-        </LinearLayout>
+    <TextView
+        android:id="@+id/goalNepalLiveText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text=" Watch Goal Nepal Live"
+        android:textColor="#222"
+        android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:background="#ddd"
-            android:layout_margin="5dp"
-            android:onClick="videoClicked"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/ic_launcher" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=" Youtube Video" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:background="#ddd"
-            android:layout_margin="5dp"
-            android:onClick="videoClicked"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/ic_launcher" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=" Youtube Video" />
-
-
-        </LinearLayout>
-    </LinearLayout>
-
+    <ImageButton
+        android:layout_centerInParent="true"
+        android:id="@+id/playLive"
+        android:onClick="videoClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_play_arrow_white_24dp"/>
 
 
 </RelativeLayout>

@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String NAV_BUNDLE_TAG="nav_item_pos";
     private DrawerLayout mDrawerLayout;
+    NagivationDrawer mNagivationDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_for_webpage);
-        NagivationDrawer mNagivationDrawer = (NagivationDrawer) getSupportFragmentManager().findFragmentById(R.id.nagivation_drawer);
+        mNagivationDrawer = (NagivationDrawer) getSupportFragmentManager().findFragmentById(R.id.nagivation_drawer);
         mNagivationDrawer.setup(mDrawerLayout,toolbar);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity
         tabs.setViewPager(viewPager);
         tabs.setTextColorResource(R.color.unselected_tabs);
 
+
     }
 
 
@@ -54,6 +56,11 @@ public class MainActivity extends AppCompatActivity
     {
         switch(v.getId())
         {
+
+            case R.id.profileLogin : mDrawerLayout.closeDrawers();
+            case R.id.user_icon : mDrawerLayout.closeDrawers() ;break;
+            case R.id.text_user_name : mDrawerLayout.closeDrawers() ;break;
+
             case R.id.gal:
                 startActivity(new Intent(this, AlbumActivity.class));
                 break;

@@ -1,27 +1,71 @@
 package com.crackdevelopers.goalnepal.Miscallenous.videos;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.crackdevelopers.goalnepal.R;
+import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
-public class VideoListActivity extends AppCompatActivity {
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+
+public class VideoListActivity extends AppCompatActivity
+{
+    private static final String Url="http://www.goalnepal.com/json_tv.php/";
+    private  String livetvUrl;
+
     YouTubeThumbnailView mYouTubeThumbnailView;
     YouTubeThumbnailLoader mYouTubeThumbnailLoader;
+    private RequestQueue queue;
+    private Context mContext;
+    private  String [] temp;
+    ImageButton playLiveTv;
+
+
+    public VideoListActivity()
+    {
+        this.mContext=this;
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_list);
-        Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
+        queue= VolleySingleton.getInstance().getQueue();
+        sendVideoRequest();
+        playLiveTv = (ImageButton)findViewById(R.id.playLive);
+        playLiveTv.setVisibility(View.GONE);
+
+
+
+
+
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         mYouTubeThumbnailLoader = new YouTubeThumbnailLoader() {
             @Override
             public void setOnThumbnailLoadedListener(OnThumbnailLoadedListener onThumbnailLoadedListener) {
@@ -74,39 +118,20 @@ public class VideoListActivity extends AppCompatActivity {
             }
         };
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mYouTubeThumbnailView = (YouTubeThumbnailView)findViewById(R.id.videoThumbalil);
-        mYouTubeThumbnailView.setTag("Cvfvn27Akxk");
-
-
-        mYouTubeThumbnailView.initialize("AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI", new YouTubeThumbnailView.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-
-               /* String videoId = (String) view.getTag();
-                loaders.put(youTubeThumbnailView, youTubeThumbnailLoader);*/
-
-                youTubeThumbnailView.setImageResource(R.drawable.chelse);
-                youTubeThumbnailLoader.setVideo("Cvfvn27Akxk");
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        });
-
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mYouTubeThumbnailView = (YouTubeThumbnailView) findViewById(R.id.videoThumbalil);
 
 
     }
 
 
-    public void videoClicked(View v) {
 
 
+    public void videoClicked(View v)
+    {
 
 
-      Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI", "Cvfvn27Akxk");
+        Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI",temp[1] );
 
 
         startActivity(intent);
@@ -119,20 +144,17 @@ public class VideoListActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id=item.getItemId();
-        if(id==android.R.id.home)
-        {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             this.finish();
-            return  true;
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         super.onStop();
         mYouTubeThumbnailLoader.release();
 
@@ -144,4 +166,65 @@ public class VideoListActivity extends AppCompatActivity {
         super.onDestroy();
 
     }
+
+
+
+
+    private void sendVideoRequest()
+    {
+        StringRequest request=new StringRequest(Request.Method.GET, Url, new Response.Listener<String>()
+        {
+            @Override
+            public void onResponse(String response)
+            {
+               livetvUrl = response;
+                doafterloadingUrl();
+            }
+        }
+        ,
+
+        new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+
+            }
+        });
+
+
+        queue.add(request);
+    }
+
+
+    private  void doafterloadingUrl() {
+
+         temp = livetvUrl.split("=");
+
+
+        mYouTubeThumbnailView.setTag(temp[1]);
+
+
+        mYouTubeThumbnailView.initialize("AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI", new YouTubeThumbnailView.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+
+               /* String videoId = (String) view.getTag();
+                loaders.put(youTubeThumbnailView, youTubeThumbnailLoader);*/
+
+                youTubeThumbnailView.setImageResource(R.drawable.tvlogo);
+                youTubeThumbnailLoader.setVideo(temp[1]);
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        });
+        playLiveTv.setVisibility(View.VISIBLE);
+        mYouTubeThumbnailView.setVisibility(View.VISIBLE);
+
+    }
+
+
 }
