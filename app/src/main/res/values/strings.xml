@@ -63,4 +63,5 @@
 
     <string name="album_image_des">album</string>
     <string name="title_activity_photos">PhotosActivity</string>
+    <string name="title_activity_photos_pager">PhotosPagerActivity</string>
 </resources>

@@ -1,13 +1,16 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -15,13 +18,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotosActivity extends AppCompatActivity
+public class PhotosActivity extends AppCompatActivity implements View.OnClickListener
 {
 
     static final String ALBUM_PHOTOS_URL="http://goalnepal.com/json_photos_2015.php?gal_id=";
@@ -34,6 +39,7 @@ public class PhotosActivity extends AppCompatActivity
 
     private static final String ALBUM_NAME_KEY="album_name";
     private static final String ALBUM_ID_KEY="album_id";
+    static List<String> allUrls;
 
     private static long ALBUM_ID=0;
     private static String ALBUM_NAME="";
@@ -97,6 +103,7 @@ public class PhotosActivity extends AppCompatActivity
     private List<PhotosItem> parseJson(JSONObject rootJson)
     {
         List<PhotosItem> tempList=new ArrayList<>();
+        allUrls=new ArrayList<>();
 
         if(rootJson!=null)
         {
@@ -120,6 +127,7 @@ public class PhotosActivity extends AppCompatActivity
                         if(photo.has(IMAGE_ID)) image_id=photo.getLong(IMAGE_ID);
 
                         tempList.add(new PhotosItem(location, created_date, image_path, image_id));
+                        allUrls.add(image_path);
                     }
                 }
                 catch(JSONException e)
@@ -157,4 +165,9 @@ public class PhotosActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onClick(View v)
+    {
+        startActivity(new Intent(this, PhotosPagerActivity.class));
+    }
 }

@@ -1,21 +1,16 @@
 package com.crackdevelopers.goalnepal.News;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +22,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.crackdevelopers.goalnepal.Latest.*;
-import com.crackdevelopers.goalnepal.MainActivity;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
-import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
@@ -41,11 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 
 public class NewsFragment extends Fragment
@@ -298,12 +285,11 @@ public class NewsFragment extends Fragment
 
                             ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
                             ArrayList<NewsSingleRow> featuredImages=parseFeaturedNews(responseJson);
-
-                            FrameLayout fl=(FrameLayout)inflater.inflate(R.layout.news_header_image, news, false);
-                            TextView title=(TextView)fl.findViewById(R.id.news_header_text);
+                            ViewPager viewPager=(ViewPager)inflater.inflate(R.layout.news_header_image, news, false);
+                            TextView title=(TextView)viewPager.findViewById(R.id.news_header_text);
 
                             title.setText(featuredImages.get(0).title);
-                            final ImageView header_image=(ImageView)fl.findViewById(R.id.news_header_image);
+                            final ImageView header_image=(ImageView)viewPager.findViewById(R.id.news_header_image);
                             imageLoader.get(featuredImages.get(0).imageUrl,
                                     new ImageLoader.ImageListener() {
                                         @Override
@@ -316,7 +302,7 @@ public class NewsFragment extends Fragment
                                             header_image.setImageResource(R.mipmap.ic_launcher);
                                         }
                                     });
-                            newsAdapter.setParallaxHeader(fl, news);
+                            newsAdapter.setParallaxHeader(viewPager, news);
                         }
                         catch (UnsupportedEncodingException e)
                         {
