@@ -29,7 +29,6 @@
             <ImageView
                 android:id="@+id/match_iconA"
                 android:contentDescription="team A"
-                android:src="@drawable/chelse"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
 
@@ -74,7 +73,6 @@
             <ImageView
                 android:id="@+id/match_iconB"
                 android:contentDescription="team B"
-                android:src="@drawable/bayren"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
 

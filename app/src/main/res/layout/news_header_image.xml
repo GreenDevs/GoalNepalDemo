@@ -6,7 +6,6 @@
      >
     <ImageView
       android:id="@+id/news_header_image"
-      android:src="@drawable/front_image"
       android:layout_width="match_parent"
       android:layout_height="250dp"
       android:scaleType="centerCrop" />

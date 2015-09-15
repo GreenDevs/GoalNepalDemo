@@ -19,6 +19,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +50,8 @@ public class LeagueTeams extends Fragment
     private LeagueTeamsAdapter mAdapter;
     private RequestQueue queue;
 
+    private CircularProgressView progressView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -61,8 +64,7 @@ public class LeagueTeams extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view=inflater.inflate(R.layout.league_teams_fragment, container, false);
-        return view;
+        return inflater.inflate(R.layout.league_teams_fragment, container, false);
     }
 
     @Override
@@ -74,7 +76,10 @@ public class LeagueTeams extends Fragment
         RecyclerView teamList=(RecyclerView)getActivity().findViewById(R.id.team_list);
         teamList.setLayoutManager(new LinearLayoutManager(getActivity()));
         teamList.setAdapter(mAdapter);
-        sendTeamsRequest();
+
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_teams);
+        progressView.startAnimation();
     }
 
 
@@ -96,6 +101,7 @@ public class LeagueTeams extends Fragment
 
     private void sendTeamsRequest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest teamsRequest=new CacheRequest(Request.Method.GET, URL+TOURNAMENT_ID,
 
                 new Response.Listener<NetworkResponse>()
@@ -110,12 +116,9 @@ public class LeagueTeams extends Fragment
                             List<ParticipatingTeamsRow> teams=parseResponse(jsonObject);
 
                             mAdapter.updateData(teams);
+                            progressView.setVisibility(View.GONE);
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }

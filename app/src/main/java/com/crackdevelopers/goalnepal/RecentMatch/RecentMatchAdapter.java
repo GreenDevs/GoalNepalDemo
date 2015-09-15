@@ -50,8 +50,6 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         this.context = context;
         data = new ArrayList<>();
         imageLoader= VolleySingleton.getInstance().getmImageLoader();
-        setData();
-
 
     }
 
@@ -83,13 +81,14 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         holder.nameA.setText(name1);
         holder.nameB.setText(name2);
         holder.score.setText(score);
-        holder.iconA.setImageResource(R.drawable.chelse);
-        holder.iconB.setImageResource(R.drawable.bayren);
+        holder.iconA.setImageResource(R.drawable.soccer_black);
+        holder.iconB.setImageResource(R.drawable.soccer_black);
 
         ///THIS WILL SET THE CLUBA ICON
         imageLoader.get(iconA,
 
-                new ImageLoader.ImageListener() {
+                new ImageLoader.ImageListener()
+                {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate)
                     {
@@ -97,7 +96,8 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
                     }
 
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onErrorResponse(VolleyError error)
+                    {
 
                     }
                 });
@@ -196,15 +196,6 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         holder.name.setText(stickyData.get(position));
 
     }
-
-    private void setData()
-    {
-        stickyData = new ArrayList<>();
-        stickyData.add("L");
-        stickyData.add("L");
-
-    }
-
 
     class StickyHolder extends RecyclerView.ViewHolder
     {

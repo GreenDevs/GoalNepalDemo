@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Utility.Utility;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +47,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
     private static String ALBUM_NAME="";
     private PhotosAdapter mAdapter;
     private Context context;
+    private CircularProgressView progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,6 +80,10 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
         }
         mAdapter=new PhotosAdapter(context);
         photosGrid.setAdapter(mAdapter);
+
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)findViewById(R.id.progress_view_album);
+        progressView.startAnimation();
         sendJsonRequest();
 
     }
@@ -85,6 +91,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
 
     private void sendJsonRequest()
     {
+        progressView.setVisibility(View.VISIBLE);
         JsonObjectRequest albumRequest=new JsonObjectRequest(Request.Method.GET, ALBUM_PHOTOS_URL+ ALBUM_ID,
 
                 new Response.Listener<JSONObject>()
@@ -93,6 +100,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                     public void onResponse(JSONObject response)
                     {
                         mAdapter.setData(parseJson(response));
+                        progressView.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener()

@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
@@ -53,6 +54,8 @@ public class MatchCommentry extends Fragment
     private ComentaryAdapter commentaryAdapter;
     private Context context;
     private RequestQueue queue;
+
+    private CircularProgressView progressView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
@@ -104,7 +107,9 @@ public class MatchCommentry extends Fragment
                 }
         );
 
-        sendCommentryRequest();
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_commentry);
+        progressView.startAnimation();
     }
 
     @Override
@@ -125,6 +130,8 @@ public class MatchCommentry extends Fragment
 
     private void sendCommentryRequest()
     {
+
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest commntrCacheRequest=new CacheRequest(Request.Method.GET, URL+MATCH_ID,
 
         new Response.Listener<NetworkResponse>()
@@ -137,12 +144,9 @@ public class MatchCommentry extends Fragment
                       final String jsonString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                       JSONObject jsonObject=new JSONObject(jsonString);
                       commentaryAdapter.setData(parseData(jsonObject));
+                      progressView.setVisibility(View.GONE);
                   }
-                  catch (UnsupportedEncodingException e)
-                  {
-                      e.printStackTrace();
-                  }
-                  catch (JSONException e)
+                  catch (UnsupportedEncodingException | JSONException e)
                   {
                       e.printStackTrace();
                   }

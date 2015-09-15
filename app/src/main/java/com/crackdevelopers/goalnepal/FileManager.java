@@ -32,7 +32,7 @@ public class FileManager
             writer.write(data);
             writer.close();
         }
-        catch (IOException e)
+        catch (IOException | NullPointerException e)
         {
             Log.e("EXCEPTION", "File write failed");
             e.printStackTrace();

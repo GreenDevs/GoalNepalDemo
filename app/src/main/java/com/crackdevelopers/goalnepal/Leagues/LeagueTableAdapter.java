@@ -77,7 +77,7 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
         holder.goal_accepted.setText(item.goal_accepted);
         holder.goal_diff.setText(item.goal_diff);
         holder.points.setText(item.points);
-        holder.team_icon.setImageResource(R.drawable.chelse);
+        holder.team_icon.setImageResource(R.drawable.soccer_black);
 
         imageLoader.get(item.club_icon_url,
 
@@ -92,7 +92,7 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                holder.team_icon.setImageResource(R.drawable.chelse);
+                holder.team_icon.setImageResource(R.drawable.soccer_black);
             }
         });
     }

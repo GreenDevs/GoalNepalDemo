@@ -24,6 +24,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
@@ -48,6 +49,8 @@ public class MatchStats extends Fragment
     private MatchStatsAdapter mAdapter;
     private RequestQueue queue;
 
+    private CircularProgressView progressView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -60,8 +63,7 @@ public class MatchStats extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.match_stats_fragment, container, false);
-        return v;
+        return  inflater.inflate(R.layout.match_stats_fragment, container, false);
     }
 
     @Override
@@ -73,8 +75,10 @@ public class MatchStats extends Fragment
         RecyclerView statsList=(RecyclerView)getActivity().findViewById(R.id.score_holder_recycler);
         statsList.setLayoutManager(new LinearLayoutManager(getActivity()));
         statsList.setAdapter(mAdapter);
-        sendScoreRequest();
 
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_stats);
+        progressView.startAnimation();
     }
 
 
@@ -95,6 +99,7 @@ public class MatchStats extends Fragment
     }
     private void sendScoreRequest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest goalsRequest=new CacheRequest(Request.Method.GET, URL+MATCH_ID,
 
                 new Response.Listener<NetworkResponse>()
@@ -107,14 +112,10 @@ public class MatchStats extends Fragment
                             final String jsonString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject jsonObject=new JSONObject(jsonString);
                             List<GoalScoredRow> goals=parseResponse(jsonObject);
-
                             mAdapter.updateData(goals);
+                            progressView.setVisibility(View.GONE);
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }

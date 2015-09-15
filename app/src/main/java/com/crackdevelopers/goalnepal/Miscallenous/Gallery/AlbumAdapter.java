@@ -65,7 +65,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                holder.thumnail.setImageResource(R.drawable.chelse);
+                holder.thumnail.setImageResource(R.drawable.goalnepal_white);
             }
         });
     }

@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,11 +26,9 @@ import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -81,6 +78,8 @@ public class NewsFragment extends Fragment
         super.onCreate(savedInstanceState);
         VolleySingleton singleton=VolleySingleton.getInstance();
         requestQueue=singleton.getQueue();
+
+
     }
 
     @Override
@@ -105,8 +104,11 @@ public class NewsFragment extends Fragment
         newsAdapter = new NewsAdapter(newsData,context);
         news.setAdapter(newsAdapter);
 
+
+        ///###################### PROGRESS BAR
         progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_latest);
         progressView.startAnimation();
+
 
         /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
 
@@ -186,7 +188,9 @@ public class NewsFragment extends Fragment
 
     private void sendNewsRequest()
     {
-        progressView.setVisibility(View.VISIBLE);
+
+       progressView.setVisibility(View.VISIBLE);
+
         CacheRequest newsRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()

@@ -60,7 +60,7 @@ public class ComentaryAdapter extends RecyclerView.Adapter<ComentaryAdapter.MyVi
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                ((ImageView)holder.icon).setImageResource(R.drawable.chelse);
+                ((ImageView)holder.icon).setImageResource(R.drawable.soccer_black);
             }
         });
 

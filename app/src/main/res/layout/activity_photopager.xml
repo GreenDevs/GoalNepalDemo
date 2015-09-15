@@ -2,17 +2,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relativeLayout">
+    android:id="@+id/relativeLayout"
+    >
 
 
     <include
-        layout="@layout/app_bar"/>
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar"
+        />
 
-    <android.support.v4.view.ViewPager
-        android:background="#000"
-        android:id="@+id/photo_view_pager"
+    <FrameLayout
+        android:layout_below="@id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="#000"
+        >
 
+
+        <android.support.v4.view.ViewPager
+            android:background="#fff"
+            android:id="@+id/photo_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:visibility="visible"
+            android:background="#fff"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/progress_view_slide_show"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cpv_animAutostart="true"
+            app:cpv_indeterminate="true"
+            />
+
+    </FrameLayout>
 
 </RelativeLayout>

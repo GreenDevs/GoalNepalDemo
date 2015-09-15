@@ -63,7 +63,7 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.My
             NewsSingleRow item=data.get(i);
             viewHolder.title.setText(item.subtitle);
             viewHolder.details.setText(item.title);
-            viewHolder.image.setImageResource(R.mipmap.ic_launcher);
+            viewHolder.image.setImageResource(R.drawable.goalnepal_white);
 
             ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
 
@@ -84,13 +84,13 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.My
                             @Override
                             public void onErrorResponse(VolleyError error)
                             {
-                                viewHolder.image.setImageResource(R.mipmap.ic_launcher);
+                                viewHolder.image.setImageResource(R.drawable.goalnepal_white);
                             }
                         });
             }
             else
             {
-                viewHolder.image.setImageResource(R.mipmap.ic_launcher);
+                viewHolder.image.setImageResource(R.drawable.goalnepal_white);
             }
 
 

@@ -1,5 +1,6 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -20,6 +22,7 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Utility.Utility;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,9 +40,6 @@ public class AlbumActivity extends AppCompatActivity
      */
 
     static final String ALBUM_URL="http://goalnepal.com/json_albums_2015.php?page=";
-    static final String ALBUM_PHOTOS_URL="http://goalnepal.com/json_photos_2015.php?gal_id=";
-    static final String SINGLE_PHOTO_URL="http://goalnepal.com/json_show_photo_2015?image_id=";
-
     private static final String ALBUMS="photo_album";
     private static final String ALBUM_NAME="gallery_name";
     private static final String ALBUM_ID="gallery_id";
@@ -50,6 +50,7 @@ public class AlbumActivity extends AppCompatActivity
 
     private AlbumAdapter mAdapter;
     private Context context;
+    private CircularProgressView progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -81,13 +82,20 @@ public class AlbumActivity extends AppCompatActivity
 
         mAdapter=new AlbumAdapter(context);
         albumGrid.setAdapter(mAdapter);
+
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)findViewById(R.id.progress_view_album);
+        progressView.startAnimation();
         sendJsonRequest();
+
+
 
     }
 
 
     private void sendJsonRequest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest albumRequest=new CacheRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
 
                 new Response.Listener<NetworkResponse>()
@@ -100,6 +108,7 @@ public class AlbumActivity extends AppCompatActivity
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             mAdapter.setData(parseJson(responseJson));
+                            progressView.setVisibility(View.GONE);
                         }
                         catch (UnsupportedEncodingException | JSONException e)
                         {

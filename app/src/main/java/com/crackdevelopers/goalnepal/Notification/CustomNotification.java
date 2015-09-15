@@ -46,8 +46,8 @@ public class CustomNotification implements Runnable
                 .setContentTitle("And Thats a Goal!")
                 .setContentText("Barcelona 1 - 0 Athletico ")
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.travel100)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.front_image))
+                .setSmallIcon(R.drawable.soccer_black)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.goalnepal_white))
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})  //Vibration
                 .setLights(Color.RED, 3000, 3000)       // LED
                 ;

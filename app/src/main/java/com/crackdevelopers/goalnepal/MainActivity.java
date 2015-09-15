@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 
 import com.crackdevelopers.goalnepal.Adapters.MainPagerAdapter;
 import com.crackdevelopers.goalnepal.Miscallenous.Gallery.AlbumActivity;
@@ -50,32 +51,4 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-    public void galleryClicked(View v)
-    {
-        switch(v.getId())
-        {
-
-            case R.id.profileLogin : mDrawerLayout.closeDrawers();
-            case R.id.user_icon : mDrawerLayout.closeDrawers() ;break;
-            case R.id.text_user_name : mDrawerLayout.closeDrawers() ;break;
-
-            case R.id.gal:
-                startActivity(new Intent(this, AlbumActivity.class));
-                break;
-
-            case R.id.pref:
-                startActivity(new Intent(this, PreferenceActivity.class));
-                break;
-
-            case R.id.radio :
-                startActivity(new Intent(this, RadioActivity.class));
-                break;
-
-            case R.id.videos :
-                startActivity(new Intent(this, VideoListActivity.class));
-
-        }
-
-    }
 }

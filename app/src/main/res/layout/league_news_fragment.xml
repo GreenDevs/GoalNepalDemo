@@ -23,7 +23,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:visibility="visible"
         android:layout_centerHorizontal="true"
-        android:id="@+id/progress_view"
+        android:id="@+id/progress_view_leg_news"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:cpv_animAutostart="true"

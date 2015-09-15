@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -10,11 +10,23 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar"/>
 
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:layout_below="@+id/app_bar"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progress_view_album"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true" />
+
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/app_bar"
         android:padding="10dp"
         android:id="@+id/album_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,53 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#f5f5f5"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:layout_margin="1px"
+    >
+
+    <TextView
+        android:textColor="@color/nav_icon_color"
+        android:textSize="25sp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:id="@+id/pref_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        />
+    <TextView
+
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/nav_icon_color"
+        android:textStyle="bold"
+        android:text="parent"
+        android:id="@+id/header_title"
+        android:textSize="15sp"
+        android:gravity="center_vertical"
+        android:layout_width="0dp"
+        android:layout_marginLeft="30dp"
+        android:layout_height="48dp"
+        android:layout_weight="8"
+
+        />
+
+    <FrameLayout
+        android:id="@+id/check_button_parent"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        >
+
+        <View
+            android:id="@+id/check_button"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:background="@drawable/check_circle"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            />
+    </FrameLayout>
+
+</LinearLayout>
