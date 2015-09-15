@@ -41,7 +41,7 @@
                 <ImageView
                     android:id="@+id/club_a_icon"
                     android:contentDescription="team A"
-                    android:src="@drawable/chelse"
+                    android:src="@drawable/soccer_black"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
 
@@ -94,7 +94,7 @@
                 <ImageView
                     android:id="@+id/club_b_icon"
                     android:contentDescription="team B"
-                    android:src="@drawable/bayren"
+                    android:src="@drawable/soccer_black"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
 

@@ -73,7 +73,6 @@ public class PreferenceActivity extends AppCompatActivity
         tormntList.setLayoutManager(new LinearLayoutManager(context));
         mAdapter=new PreferenceAdapter(context);
         tormntList.setAdapter(mAdapter);
-        sendJsonRequest();
 
     }
 
@@ -137,6 +136,20 @@ public class PreferenceActivity extends AppCompatActivity
             VolleySingleton.getInstance().getQueue().add(menuRequest);
     }
 
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        sendJsonRequest();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        VolleySingleton.getInstance().getQueue().cancelAll(this);
+    }
 
     private List<PreferenceRow> pareseMenu(JSONObject menuJson)
     {

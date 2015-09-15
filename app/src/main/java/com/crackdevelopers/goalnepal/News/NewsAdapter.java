@@ -61,7 +61,7 @@ public class NewsAdapter extends ParallaxRecyclerAdapter
     {
         ((MyViewHolder)viewHolder).title.setText(data.get(i).subtitle);
         ((MyViewHolder)viewHolder).details.setText(data.get(i).title);
-        ((MyViewHolder) viewHolder).image.setImageResource(R.mipmap.ic_launcher);
+        ((MyViewHolder) viewHolder).image.setImageResource(R.drawable.goalnepal_white);
 
         //IMAGE BINDING USING VOLLEY IMAGE LOADER
         String imageUrl=data.get(i).imageUrl;
@@ -80,13 +80,13 @@ public class NewsAdapter extends ParallaxRecyclerAdapter
                         @Override
                         public void onErrorResponse(VolleyError error)
                         {
-                            ((MyViewHolder) viewHolder).image.setImageResource(R.mipmap.ic_launcher);
+                            ((MyViewHolder) viewHolder).image.setImageResource(R.drawable.goalnepal_white);
                         }
                     });
         }
         else
         {
-            ((MyViewHolder) viewHolder).image.setImageResource(R.mipmap.ic_launcher);
+            ((MyViewHolder) viewHolder).image.setImageResource(R.drawable.goalnepal_white);
         }
 
 

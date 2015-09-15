@@ -48,7 +48,7 @@ public class LeagueTeamsAdapter extends RecyclerView.Adapter<LeagueTeamsAdapter.
         ParticipatingTeamsRow item=data.get(position);
         holder.teamShortName.setText(item.team_short_name);
         holder.teamName.setText(item.team_name);
-        holder.icon.setImageResource(R.drawable.chelse);
+        holder.icon.setImageResource(R.drawable.soccer_black);
 
         ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
         imageLoader.get(item.icon_url, new ImageLoader.ImageListener() {
@@ -61,7 +61,7 @@ public class LeagueTeamsAdapter extends RecyclerView.Adapter<LeagueTeamsAdapter.
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                holder.icon.setImageResource(R.drawable.chelse);
+                holder.icon.setImageResource(R.drawable.soccer_black);
             }
         });
     }

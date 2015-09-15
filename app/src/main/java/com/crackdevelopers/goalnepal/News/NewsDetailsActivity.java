@@ -77,7 +77,7 @@ public class NewsDetailsActivity extends ActionBarActivity
                 @Override
                 public void onErrorResponse(VolleyError error)
                 {
-                    newsImage.setImageResource(R.drawable.front_image);
+                    newsImage.setImageResource(R.drawable.goalnepal_white);
                 }
             });
 

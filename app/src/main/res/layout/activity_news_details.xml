@@ -24,7 +24,7 @@
 
                 <ImageView
                     android:id="@+id/news_image"
-                    android:src="@drawable/front_image"
+                    android:src="@drawable/goalnepal_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="centerCrop"

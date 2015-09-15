@@ -85,8 +85,8 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
         holder.nameB.setText(name2);
         holder.score.setText(score);
         holder.date.setText(date);
-        holder.iconA.setImageResource(R.drawable.chelse);
-        holder.iconB.setImageResource(R.drawable.bayren);
+        holder.iconA.setImageResource(R.drawable.soccer_black);
+        holder.iconB.setImageResource(R.drawable.soccer_black);
 
         ///THIS WILL SET THE CLUBA ICON
         ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
@@ -102,7 +102,7 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        holder.iconA.setImageResource(R.drawable.chelse);
+                        holder.iconA.setImageResource(R.drawable.soccer_black);
 
                     }
                 });
@@ -121,7 +121,7 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        holder.iconB.setImageResource(R.drawable.bayren);
+                        holder.iconB.setImageResource(R.drawable.soccer_black);
                     }
                 });
     }

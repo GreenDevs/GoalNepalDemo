@@ -88,7 +88,7 @@ public class MatchActivity extends ActionBarActivity
             @Override
             public void onErrorResponse(VolleyError error) 
             {
-                ((ImageView)toolbar.findViewById(R.id.match_iconA)).setImageResource(R.drawable.bayren);
+                ((ImageView)toolbar.findViewById(R.id.match_iconA)).setImageResource(R.drawable.soccer_black);
             }
         });
 
@@ -106,7 +106,7 @@ public class MatchActivity extends ActionBarActivity
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-                        ((ImageView)toolbar.findViewById(R.id.match_iconB)).setImageResource(R.drawable.bayren);
+                        ((ImageView)toolbar.findViewById(R.id.match_iconB)).setImageResource(R.drawable.soccer_black);
                     }
                 });
         
