@@ -2,15 +2,11 @@ package com.crackdevelopers.goalnepal.splash;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-
 
 import com.crackdevelopers.goalnepal.MainActivity;
 import com.crackdevelopers.goalnepal.R;
@@ -19,7 +15,8 @@ import com.crackdevelopers.goalnepal.R;
 /**
  * Created by adventure on 9/14/15.
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends Activity
+{
     private static final long SPLASH_DURATION = 2000L;
 
     private Handler mHandler;

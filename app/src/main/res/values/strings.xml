@@ -65,4 +65,15 @@
     <string name="album_image_des">album</string>
     <string name="title_activity_photos">Photos</string>
     <string name="title_activity_photos_pager">Photos Viewer</string>
+
+
+
+    <string name="banner_large_txt">Goal Nepal</string>
+    <string name="banner_small_txt">v1.0</string>
+    <string name="fblink_tv">Website:   http://www.goalnepal.com/</string>
+    <string name="emaillink_tv">Email:  greendeev@gmail.com</string>
+    <string name="footer_txt_copyright">© Goal Nepal</string>
+    <string name="footer_txt_developedby">Developed By: Softlica Inc.</string>
+    <string name="footer_txt_tgif_team">TGIF Team</string>
+    <string name="title_activity_testsd">testsd</string>
 </resources>
