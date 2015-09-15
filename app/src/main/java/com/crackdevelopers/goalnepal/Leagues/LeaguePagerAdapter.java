@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class LeaguePagerAdapter extends FragmentStatePagerAdapter {
 
-    private final String[] TITLES = {"Match Day", "TABLE", "TEAMS", "NEWS"};
+    private final String[] TITLES = {"FIXTURE", "TABLE", "TEAMS", "NEWS"};
 
     public LeaguePagerAdapter(FragmentManager fm) {
         super(fm);

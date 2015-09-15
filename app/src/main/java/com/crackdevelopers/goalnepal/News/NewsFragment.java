@@ -25,6 +25,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
@@ -66,6 +67,8 @@ public class NewsFragment extends Fragment
     private NewsAdapter newsAdapter;
     private boolean loading = true;
 
+    private CircularProgressView progressView;
+
     public NewsFragment()
     {
         // Required empty public constructor
@@ -102,7 +105,8 @@ public class NewsFragment extends Fragment
         newsAdapter = new NewsAdapter(newsData,context);
         news.setAdapter(newsAdapter);
 
-
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_latest);
+        progressView.startAnimation();
 
         /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
 
@@ -182,6 +186,7 @@ public class NewsFragment extends Fragment
 
     private void sendNewsRequest()
     {
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest newsRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()
@@ -194,12 +199,10 @@ public class NewsFragment extends Fragment
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             newsAdapter.setData(parseNews(responseJson));
+                            progressView.setVisibility(View.GONE);
 
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        } catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }
@@ -225,7 +228,7 @@ public class NewsFragment extends Fragment
     private void sendNewsScrollRequest()
     {
         PAGE_N0++;
-
+        progressView.setVisibility(View.VISIBLE);
         CacheRequest newsScrollRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()
@@ -239,11 +242,9 @@ public class NewsFragment extends Fragment
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             newsAdapter.setScrollUpdate(parseNews(responseJson));
                             loading=true;
+                            progressView.setVisibility(View.GONE);
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        } catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }
@@ -304,10 +305,7 @@ public class NewsFragment extends Fragment
                                     });
                             newsAdapter.setParallaxHeader(viewPager, news);
                         }
-                        catch (UnsupportedEncodingException e)
-                        {
-                            e.printStackTrace();
-                        } catch (JSONException e)
+                        catch (UnsupportedEncodingException | JSONException e)
                         {
                             e.printStackTrace();
                         }
@@ -334,42 +332,41 @@ public class NewsFragment extends Fragment
     private ArrayList<NewsSingleRow> parseNews(JSONObject rootObj)
     {
         ArrayList<NewsSingleRow> tempList=new ArrayList<>();
-        if(rootObj==null || rootObj.length()==0)
+        if(rootObj!=null)
         {
 
-        }
-        else
-        {
-
-            try
+            if(rootObj.length()!=0)
             {
-                if(rootObj.has(NEWS))
+                try
                 {
-                    JSONArray newsArray = rootObj.getJSONArray(NEWS);
-
-                    for(int i=0;i<newsArray.length();i++)
+                    if(rootObj.has(NEWS))
                     {
-                        JSONObject news=newsArray.getJSONObject(i);
-                        String imageId="", subtitle="", title="", imageUrl="", description="", date="";
-                        if(news.has(NEWS_SUB_TITLE)) subtitle=news.getString(NEWS_SUB_TITLE);
-                        if(news.has(NEWS_TITLE))     title=news.getString(NEWS_TITLE);
-                        if(news.has(NEWS_IMAGE_ID))      imageId=news.getString(NEWS_IMAGE_ID); imageUrl+=IMAGE_PATH_THUMNAIL+imageId;
-                        if(news.has(NEWS_DESCRIPTIOIN)) description=news.getString(NEWS_DESCRIPTIOIN);
-                        if(news.has(NEWS_DATE)) date=news.getString(NEWS_DATE);
-                        tempList.add(new NewsSingleRow(imageUrl, subtitle, title,description, date, imageId));
+                        JSONArray newsArray = rootObj.getJSONArray(NEWS);
+
+                        for(int i=0;i<newsArray.length();i++)
+                        {
+                            JSONObject news=newsArray.getJSONObject(i);
+                            String imageId="", subtitle="", title="", imageUrl="", description="", date="";
+                            if(news.has(NEWS_SUB_TITLE)) subtitle=news.getString(NEWS_SUB_TITLE);
+                            if(news.has(NEWS_TITLE))     title=news.getString(NEWS_TITLE);
+                            if(news.has(NEWS_IMAGE_ID))      imageId=news.getString(NEWS_IMAGE_ID); imageUrl+=IMAGE_PATH_THUMNAIL+imageId;
+                            if(news.has(NEWS_DESCRIPTIOIN)) description=news.getString(NEWS_DESCRIPTIOIN);
+                            if(news.has(NEWS_DATE)) date=news.getString(NEWS_DATE);
+                            tempList.add(new NewsSingleRow(imageUrl, subtitle, title,description, date, imageId));
 
 //                                Toast.makeText(context, "subtitle:"+subtitle+"\ntitle:"+title+"\nimage_url:"+imageUrl, Toast.LENGTH_LONG).show();
+                        }
+
                     }
 
+
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
                 }
 
-
             }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-
         }
 
         return tempList;
