@@ -1,4 +1,4 @@
-package com.crackdevelopers.goalnepal.News;
+package com.crackdevelopers.goalnepal.Latest;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,23 +12,24 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.crackdevelopers.goalnepal.MainActivity;
+import com.crackdevelopers.goalnepal.News.*;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
+
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by trees on 8/31/15.
+ * Created by trees on 9/15/15.
  */
-public class NewsAdapter extends ParallaxRecyclerAdapter
+public class LatestNewParallexAdapter extends ParallaxRecyclerAdapter
 {
     private LayoutInflater inflater;
     private Context context;
     private List<NewsSingleRow> data= Collections.emptyList();
     private ImageLoader mImageLoader;
-    public NewsAdapter(List<NewsSingleRow> data, Context context)
+    public LatestNewParallexAdapter(List<NewsSingleRow> data, Context context)
     {
         super(data);
         inflater=LayoutInflater.from(context);

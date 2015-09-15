@@ -9,11 +9,11 @@ public class MatchItem
 {
 
     String iconA, iconB, nameA, nameB, match_time,match_venue, scoreA, scoreB, match_status;
-    Date date;
+    String date;
     long match_id;
 
     public MatchItem(String iconA, String iconB, String nameA, String nameB, String match_time,
-                     String match_venue, String scoreA, String scoreB, String match_status, Date date, long match_id)
+                     String match_venue, String scoreA, String scoreB, String match_status, String date, long match_id)
     {
         this.iconA = iconA;
         this.iconB = iconB;

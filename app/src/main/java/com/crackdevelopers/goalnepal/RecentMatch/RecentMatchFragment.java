@@ -203,10 +203,10 @@ public class RecentMatchFragment extends Fragment
                         {
                             JSONObject match=matches.getJSONObject(i);
                             String iconA="", iconB="", nameA="", nameB="", match_time="",match_venue="", scoreA="-", scoreB="-", match_status="";
-                            Date date=null;
+                            String date="";
                             long match_id=-1;
                             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-                            if(match.has(MATCH_DATE)) date=sdf.parse(match.getString(MATCH_DATE));
+                            if(match.has(MATCH_DATE)) date=match.getString(MATCH_DATE);
 
                             if(match.has(CLUB_A_ICON)) iconA=match.getString(CLUB_A_ICON);
                             if(match.has(CLUB_B_ICON)) iconB=match.getString(CLUB_B_ICON);
@@ -230,7 +230,7 @@ public class RecentMatchFragment extends Fragment
 
                         }
                     }
-                    catch (JSONException | ParseException e)
+                    catch (JSONException e)
                     {
                         e.printStackTrace();
                     }

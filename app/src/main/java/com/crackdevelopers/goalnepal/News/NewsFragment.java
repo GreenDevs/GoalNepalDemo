@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -313,13 +314,16 @@ public class NewsFragment extends Fragment
 
                             ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
                             ArrayList<NewsSingleRow> featuredImages=parseFeaturedNews(responseJson);
-                            ViewPager viewPager=(ViewPager)inflater.inflate(R.layout.news_header_image, news, false);
-                            TextView title=(TextView)viewPager.findViewById(R.id.news_header_text);
+
+                            FrameLayout fl=(FrameLayout)inflater.inflate(R.layout.news_header_image, news, false);
+                            TextView title=(TextView)fl.findViewById(R.id.news_header_text);
 
                             title.setText(featuredImages.get(0).title);
-                            final ImageView header_image=(ImageView)viewPager.findViewById(R.id.news_header_image);
+                            final ImageView header_image=(ImageView)fl.findViewById(R.id.news_header_image);
+
                             imageLoader.get(featuredImages.get(0).imageUrl,
-                                    new ImageLoader.ImageListener() {
+                                    new ImageLoader.ImageListener()
+                                    {
                                         @Override
                                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
                                             header_image.setImageBitmap(response.getBitmap());
@@ -330,7 +334,7 @@ public class NewsFragment extends Fragment
                                             header_image.setImageResource(R.mipmap.ic_launcher);
                                         }
                                     });
-                            newsAdapter.setParallaxHeader(viewPager, news);
+                            newsAdapter.setParallaxHeader(fl, news);
                         }
                         catch (UnsupportedEncodingException | JSONException e)
                         {

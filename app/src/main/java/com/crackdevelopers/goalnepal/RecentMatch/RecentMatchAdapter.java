@@ -59,7 +59,7 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         stickyData=new ArrayList<>();
         for(MatchItem item:data)
         {
-            stickyData.add((item.date).toString());
+            stickyData.add(item.date);
         }
         notifyItemRangeChanged(0, data.size());
     }
@@ -150,16 +150,16 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         {
             Intent intent=new Intent(context, MatchActivity.class);
             Bundle bundle=new Bundle();
+            MatchItem item=data.get(getAdapterPosition());
+            bundle.putString(MATCH_CLUB_NAME_A, item.nameA);
+            bundle.putString(MATCH_CLUB_NAME_B, item.nameB);
 
-            bundle.putString(MATCH_CLUB_NAME_A, data.get(getPosition()).nameA);
-            bundle.putString(MATCH_CLUB_NAME_B, data.get(getPosition()).nameB);
+            bundle.putString(MATCH_ICON_A, item.iconA);
+            bundle.putString(MATCH_ICON_B, item.iconB);
 
-            bundle.putString(MATCH_ICON_A, data.get(getPosition()).iconA);
-            bundle.putString(MATCH_ICON_B, data.get(getPosition()).iconB);
-
-            bundle.putString(MATCH_SCORE_A, data.get(getPosition()).scoreA);
-            bundle.putString(MATCH_SCORE_B, data.get(getPosition()).scoreB);
-            bundle.putLong(MATCH_ID, data.get(getPosition()).match_id);
+            bundle.putString(MATCH_SCORE_A, item.scoreA);
+            bundle.putString(MATCH_SCORE_B, item.scoreB);
+            bundle.putLong(MATCH_ID, item.match_id);
             intent.putExtra(MATCH_BUNDLE, bundle);
 
             context.startActivity(intent);
@@ -173,13 +173,16 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
     {
         if (position == -1)
         {
-
             return -1;
         }
         else
         {
-
-            return stickyData.get(position).charAt(0);
+            char returnchar=':';
+            for(char c:stickyData.get(position).toCharArray())
+            {
+                returnchar+=c;
+            }
+            return returnchar;
         }
     }
 
