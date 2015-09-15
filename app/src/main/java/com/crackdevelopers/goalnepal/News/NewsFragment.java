@@ -3,6 +3,7 @@ package com.crackdevelopers.goalnepal.News;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,6 +54,8 @@ public class NewsFragment extends Fragment
     private static final String FEATURED_SUB_TITLE="top_sub_heading";
     private static final String FEATURED_TITLE="sub_heading";
     private static int PAGE_N0=1;
+    private static final String RECYCLER_STATE_KEY="recycler state";
+    private Parcelable listStateParcable;
 
     private RecyclerView news;
     private RequestQueue requestQueue;
@@ -62,6 +65,7 @@ public class NewsFragment extends Fragment
     private LayoutInflater inflater;
     private ArrayList<NewsSingleRow> newsData;
     private NewsAdapter newsAdapter;
+    private LinearLayoutManager mManager;
     private boolean loading = true;
 
     private CircularProgressView progressView;
@@ -78,6 +82,7 @@ public class NewsFragment extends Fragment
         super.onCreate(savedInstanceState);
         VolleySingleton singleton=VolleySingleton.getInstance();
         requestQueue=singleton.getQueue();
+        if(savedInstanceState!=null) {  listStateParcable=savedInstanceState.getParcelable(RECYCLER_STATE_KEY);}
 
 
     }
@@ -99,8 +104,8 @@ public class NewsFragment extends Fragment
 
 
         newsData=new ArrayList<>();
-        final LinearLayoutManager manager=new LinearLayoutManager(context);
-        news.setLayoutManager(manager);
+        mManager=new LinearLayoutManager(context);
+        news.setLayoutManager(mManager);
         newsAdapter = new NewsAdapter(newsData,context);
         news.setAdapter(newsAdapter);
 
@@ -123,8 +128,8 @@ public class NewsFragment extends Fragment
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
                         visibleItemsCount = news.getChildCount();
-                        totalItemsCount = manager.getItemCount();
-                        pastVisiblesItems = manager.findFirstVisibleItemPosition();
+                        totalItemsCount = mManager.getItemCount();
+                        pastVisiblesItems = mManager.findFirstVisibleItemPosition();
 
 
                         if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount)) {
@@ -178,11 +183,29 @@ public class NewsFragment extends Fragment
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (listStateParcable!=null)
+        {
+            mManager.onRestoreInstanceState(listStateParcable);
+        }
+    }
+
+    @Override
     public void onStop()
     {
         super.onResume();
         requestQueue.cancelAll(this);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        listStateParcable=mManager.onSaveInstanceState();
+        outState.putParcelable(RECYCLER_STATE_KEY, listStateParcable);
     }
 
 

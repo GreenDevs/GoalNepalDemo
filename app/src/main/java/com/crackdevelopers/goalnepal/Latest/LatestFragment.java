@@ -2,6 +2,7 @@ package com.crackdevelopers.goalnepal.Latest;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -68,9 +69,11 @@ public class LatestFragment extends Fragment
     private static final String NEWS="news";
     private static final String NEWS_DESCRIPTIOIN="description";
     private static int PAGE_N0=1;
-
+    private static final String RECYCLER_STATE_KEY="recycler state";
+    private Parcelable listStateParcable;
 
     private RecyclerView latestNews;
+    private LinearLayoutManager mManager;
     private PullToRefreshView mPullToRefreshView;
     private final int  REFRESH_DELAY = 1500;
     private Context context;
@@ -92,6 +95,7 @@ public class LatestFragment extends Fragment
         super.onCreate(savedInstanceState);
         VolleySingleton singleton=VolleySingleton.getInstance();
         requestQueue=singleton.getQueue();
+        if(savedInstanceState!=null) {  listStateParcable=savedInstanceState.getParcelable(RECYCLER_STATE_KEY);}
     }
 
     @Override
@@ -108,8 +112,8 @@ public class LatestFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         this.context=getActivity();
 
-        final LinearLayoutManager manager=new LinearLayoutManager(context);
-        latestNews.setLayoutManager(manager);
+        mManager=new LinearLayoutManager(context);
+        latestNews.setLayoutManager(mManager);
         latestNewsAdapter = new LatestNewsAdapter(context);
         latestNews.setAdapter(latestNewsAdapter);
 
@@ -130,8 +134,8 @@ public class LatestFragment extends Fragment
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
                         visibleItemsCount = latestNews.getChildCount();
-                        totalItemsCount = manager.getItemCount();
-                        pastVisiblesItems = manager.findFirstVisibleItemPosition();
+                        totalItemsCount = mManager.getItemCount();
+                        pastVisiblesItems = mManager.findFirstVisibleItemPosition();
 
 
                         if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount))
@@ -184,6 +188,10 @@ public class LatestFragment extends Fragment
     public void onResume()
     {
         super.onResume();
+        if (listStateParcable!=null)
+        {
+            mManager.onRestoreInstanceState(listStateParcable);
+        }
     }
 
     @Override
@@ -192,6 +200,16 @@ public class LatestFragment extends Fragment
         super.onResume();
         requestQueue.cancelAll(this);
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        listStateParcable=mManager.onSaveInstanceState();
+        outState.putParcelable(RECYCLER_STATE_KEY, listStateParcable);
+    }
+
 
     private void sendNewsRequest()
     {
@@ -220,8 +238,7 @@ public class LatestFragment extends Fragment
                 new Response.ErrorListener()
                 {
                     @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+                    public void onErrorResponse(VolleyError error) {
 
                     }
                 });
@@ -238,7 +255,6 @@ public class LatestFragment extends Fragment
     {
         PAGE_N0++;
         progressView.setVisibility(View.VISIBLE);
-
         CacheRequest newsScrollRequest=new CacheRequest(Request.Method.GET, LATEST_NEWS_URL+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()
