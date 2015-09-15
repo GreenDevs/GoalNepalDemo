@@ -1,8 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceActivity">
 
 
@@ -11,10 +10,24 @@
         layout="@layout/app_bar"
         />
 
+
+
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/app_bar"
         android:background="#ddd"
         android:id="@+id/pref_list_recyler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-</LinearLayout>
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:layout_below="@+id/app_bar"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progress_view_preferences"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true"
+        />
+</RelativeLayout>

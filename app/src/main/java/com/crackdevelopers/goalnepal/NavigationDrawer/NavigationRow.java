@@ -5,11 +5,13 @@ package com.crackdevelopers.goalnepal.NavigationDrawer;
  */
 public class NavigationRow
 {
-    String name; long tournamet_id;
+    String name, icon, stickyTitle; long tournamet_id;
 
-    public NavigationRow(String name, long tournamet_id)
+    public NavigationRow(String name, String icon, String stickyTitle, long tournamet_id)
     {
         this.name=name;
         this.tournamet_id=tournamet_id;
+        this.icon=icon;
+        this.stickyTitle=stickyTitle;
     }
 }

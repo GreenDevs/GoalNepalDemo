@@ -58,7 +58,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.MyViewHold
         public MyViewHolder(View itemView)
         {
             super(itemView);
-            navItem=(TextView)itemView.findViewById(R.id.navig_item);
+//            navItem=(TextView)itemView.findViewById(R.id.navig_item);
             itemView.setOnClickListener(this);
         }
 

@@ -2,6 +2,7 @@ package com.crackdevelopers.goalnepal.NavigationDrawer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -28,17 +29,16 @@ public class NagivationDrawer extends Fragment
     private final static String INTERNATIONAL="internationals";
     private final static String DOMESTICS="domestics";
     private final static String TOURNAMENT_TITLE="title";
-    private final static String HAS_CHILD="hasChild";
     private final static String TOURNAMENT_ID="id";
     private final static String TOURNAMENTS="tournaments";
     private final static String START_DATE="start_date";
-    private final static String END_DATE="end_date";
 
     private RecyclerView navList;
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout thisDrawerLayout;
     private Context context;
-    private DrawerAdapter mAdapter;
+    private NavStickyAdapter mAdapter;
+    private List<NavigationRow> navigationRowList;
 
 
     public NagivationDrawer()
@@ -81,18 +81,28 @@ public class NagivationDrawer extends Fragment
         try
         {
             JSONObject reciviedJson=new JSONObject(fileManager.readFromFile());
-            List<NavigationRow> navigationRowList=pareseMenu(reciviedJson);
-            mAdapter=new DrawerAdapter(context, navigationRowList);
+            navigationRowList=pareseMenu(reciviedJson);
+            mAdapter=new NavStickyAdapter(context, navigationRowList);
             navList.setAdapter(mAdapter);
         }
         catch (JSONException e)
         {
+            navigationRowList=new ArrayList<>();
+            Resources res=context.getResources();
+            navigationRowList.add(new NavigationRow("Home", res.getString(R.string.home), "Features", -1));
+            navigationRowList.add(new NavigationRow("Radio", res.getString(R.string.radio),"Features", -1));
+            navigationRowList.add(new NavigationRow("Video", res.getString(R.string.video),"Features", -1));
+            navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
+            navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
+            mAdapter=new NavStickyAdapter(context,navigationRowList);
+            navList.setAdapter(mAdapter);
             e.printStackTrace();
         }
     }
 
 
-    public void setup(DrawerLayout mDrawerLayout, Toolbar mToolbar) {
+    public void setup(DrawerLayout mDrawerLayout, Toolbar mToolbar)
+    {
 
 
         thisDrawerLayout = mDrawerLayout;
@@ -128,11 +138,18 @@ public class NagivationDrawer extends Fragment
       
         private List<NavigationRow> pareseMenu(JSONObject menuJson)
         {
-            List<NavigationRow> menuList= new ArrayList<>();
+            navigationRowList=new ArrayList<>();
+            Resources res=context.getResources();
+            navigationRowList.add(new NavigationRow("Home", res.getString(R.string.home), "Features", -1));
+            navigationRowList.add(new NavigationRow("Radio", res.getString(R.string.radio),"Features", -1));
+            navigationRowList.add(new NavigationRow("Video", res.getString(R.string.video),"Features", -1));
+            navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
+            navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
             if (menuJson != null)
                 try
                 {
                     String TYPE = "";
+                    String tornmntIcon=res.getString(R.string.leagues);
                     SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
                     for (int z = 0; z < 2; z++) {
                         if (z == 0) TYPE = INTERNATIONAL;
@@ -173,7 +190,7 @@ public class NagivationDrawer extends Fragment
 
                                             boolean checked = preferences.getBoolean(child_id + "", false);          //PULLING PREFERRED SETTIG FROM DATA
                                             if (checked)
-                                                menuList.add(new NavigationRow(child_title, child_id));
+                                                navigationRowList.add(new NavigationRow(child_title, tornmntIcon, "Tournaments",child_id));
                                         }
 
                                     }
@@ -191,7 +208,7 @@ public class NagivationDrawer extends Fragment
                 {
                     e.printStackTrace();
                 }
-            return menuList;
+            return navigationRowList;
 
         }
     }

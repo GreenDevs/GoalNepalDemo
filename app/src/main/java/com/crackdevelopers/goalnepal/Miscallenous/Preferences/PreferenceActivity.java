@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -19,6 +21,8 @@ import com.crackdevelopers.goalnepal.FileManager;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +47,7 @@ public class PreferenceActivity extends AppCompatActivity
     private final static String END_DATE="end_date";
     private PreferenceAdapter mAdapter;
     private Context context;
+    private CircularProgressView progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,6 +61,10 @@ public class PreferenceActivity extends AppCompatActivity
 
     private void init()
     {
+        progressView = (CircularProgressView)findViewById(R.id.progress_view_preferences);
+        progressView.startAnimation();
+        progressView.setVisibility(View.VISIBLE);
+
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,29 +73,7 @@ public class PreferenceActivity extends AppCompatActivity
         tormntList.setLayoutManager(new LinearLayoutManager(context));
         mAdapter=new PreferenceAdapter(context);
         tormntList.setAdapter(mAdapter);
-
-        ////READING DATA FROM THE FILE
-        FileManager fileManager=new FileManager(context);
-        String recivedString=fileManager.readFromFile();
-
-        if(recivedString.length()==0)
-        {
-            setJsonRequest();
-            Log.i("FILE OPERATION", " DIDN'T FOUND REQUIRED DATA ON THE FILE");
-        }
-        else
-        {
-            try
-            {
-                JSONObject jsonObject=new JSONObject(recivedString);
-                mAdapter.updateMenu(pareseMenu(jsonObject));
-                Log.i("FILE OPERATION", "TRYING TO PULL DATA FROM THE FILE");
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-        }
+        sendJsonRequest();
 
     }
 
@@ -111,8 +98,9 @@ public class PreferenceActivity extends AppCompatActivity
 
     ///API WORKOUT HERE
 
-    private void setJsonRequest() {
-        try {
+    private void sendJsonRequest()
+    {
+            progressView.setVisibility(View.VISIBLE);
             CacheRequest menuRequest = new CacheRequest(Request.Method.GET, URL,
 
 
@@ -127,8 +115,11 @@ public class PreferenceActivity extends AppCompatActivity
                                 ///WRITING THE INTERNET DATA TO THE FILE
                                 FileManager fileManager = new FileManager(context);
                                 fileManager.writeToFile(jsonResponseString);
+                                progressView.setVisibility(View.GONE);
 
-                            } catch (UnsupportedEncodingException | JSONException e) {
+                            }
+                            catch (UnsupportedEncodingException | JSONException e)
+                            {
                                 e.printStackTrace();
                             }
                         }
@@ -144,10 +135,6 @@ public class PreferenceActivity extends AppCompatActivity
 
             menuRequest.setTag(this);
             VolleySingleton.getInstance().getQueue().add(menuRequest);
-
-        }catch (Exception e) {
-
-        }
     }
 
 

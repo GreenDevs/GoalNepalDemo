@@ -50,8 +50,6 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         this.context = context;
         data = new ArrayList<>();
         imageLoader= VolleySingleton.getInstance().getmImageLoader();
-        setData();
-
 
     }
 
@@ -196,15 +194,6 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         holder.name.setText(stickyData.get(position));
 
     }
-
-    private void setData()
-    {
-        stickyData = new ArrayList<>();
-        stickyData.add("L");
-        stickyData.add("L");
-
-    }
-
 
     class StickyHolder extends RecyclerView.ViewHolder
     {

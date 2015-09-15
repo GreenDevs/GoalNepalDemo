@@ -51,32 +51,4 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-    public void galleryClicked(View v)
-    {
-        switch(v.getId())
-        {
-
-            case R.id.profileLogin : mDrawerLayout.closeDrawers();
-            case R.id.user_icon : mDrawerLayout.closeDrawers() ;break;
-            case R.id.text_user_name : mDrawerLayout.closeDrawers() ;break;
-
-            case R.id.gal:
-                startActivity(new Intent(this, AlbumActivity.class));
-                break;
-
-            case R.id.pref:
-                startActivity(new Intent(this, PreferenceActivity.class));
-                break;
-
-            case R.id.radio :
-                startActivity(new Intent(this, RadioActivity.class));
-                break;
-
-            case R.id.videos :
-                startActivity(new Intent(this, VideoListActivity.class));
-
-        }
-
-    }
 }

@@ -59,6 +59,7 @@
     <string name="video">&#xe602;</string>
     <string name="gallery">&#xe601;</string>
     <string name="leagues">&#xe604;</string>
+    <string name="preferences">&#xe605;</string>
     <string name="title_activity_preference">Select Cups</string>
 
     <string name="album_image_des">album</string>
