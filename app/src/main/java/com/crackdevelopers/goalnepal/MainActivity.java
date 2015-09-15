@@ -75,6 +75,18 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+
+        if (id == R.id.action_share)
+        {
+            vibrate(20);
+            String shareBody = "Hello I am using New goalnepal app for android , give it a try    https://play.google.com/store/apps/details?id=com.crackdevelopers.goalnepal";
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Goal Nepal");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.Share)));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
