@@ -1,6 +1,7 @@
 package com.crackdevelopers.goalnepal.MatchDetails;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,7 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.yalantis.phoenix.PullToRefreshView;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,24 +34,25 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 /**
  * Created by trees on 8/25/15.
  */
-public class MatchCommentry extends Fragment
-{
+public class MatchCommentry extends Fragment {
 
     ///API KEY ATTRIBUTES
-    private static final String URL="http://www.goalnepal.com/json_livecommentary_2015.php?match_id=";
-    private static final String IMAGE_PATH="http://www.goalnepal.com/";
+    private static final String URL = "http://www.goalnepal.com/json_livecommentary_2015.php?match_id=";
+    private static final String IMAGE_PATH = "http://www.goalnepal.com/";
     private long MATCH_ID;
-    private static final String MATCH_COMMENTARY="comments";
-    private static final String MATCH_MINUTE="minute";
-    private static final String MATCH_TEXT="text";
-    private static final String ICON_URL="icon";
+    private static final String MATCH_COMMENTARY = "comments";
+    private static final String MATCH_MINUTE = "minute";
+    private static final String MATCH_TEXT = "text";
+    private static final String ICON_URL = "icon";
 
 
-    private PullToRefreshView mPullToRefreshView;
-    private final int  REFRESH_DELAY = 1500;
+    private WaveSwipeRefreshLayout mPullToRefreshView;
+    private final int REFRESH_DELAY = 1500;
     private ComentaryAdapter commentaryAdapter;
     private Context context;
     private RequestQueue queue;
@@ -58,48 +60,43 @@ public class MatchCommentry extends Fragment
     private CircularProgressView progressView;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        MATCH_ID=MatchActivity.MATCH_ID;
-        queue= VolleySingleton.getInstance().getQueue();
+        MATCH_ID = MatchActivity.MATCH_ID;
+        queue = VolleySingleton.getInstance().getQueue();
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.match_commentry_fragment, container, false);
 
     }
 
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        this.context=getActivity();
-        RecyclerView commentryList=(RecyclerView)getActivity().findViewById(R.id.commentryList);
-        commentaryAdapter=new ComentaryAdapter(getActivity());
+        this.context = getActivity();
+        RecyclerView commentryList = (RecyclerView) getActivity().findViewById(R.id.commentryList);
+        commentaryAdapter = new ComentaryAdapter(getActivity());
         commentryList.setAdapter(commentaryAdapter);
         commentryList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh_commentry);
+        mPullToRefreshView = (WaveSwipeRefreshLayout) getActivity().findViewById(R.id.pull_to_refresh_commentry);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+
         mPullToRefreshView.setOnRefreshListener(
 
-                new PullToRefreshView.OnRefreshListener()
-                {
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
                     @Override
-                    public void onRefresh()
-                    {
+                    public void onRefresh() {
                         // do what you want to do when refreshing
-                        Toast.makeText(getActivity(), "Refresh", Toast.LENGTH_SHORT).show();
-                        mPullToRefreshView.postDelayed(new Runnable()
-                        {
+                        mPullToRefreshView.postDelayed(new Runnable() {
                             @Override
-                            public void run()
-                            {
+                            public void run() {
                                 mPullToRefreshView.setRefreshing(false);
                             }
                         }, REFRESH_DELAY);
@@ -108,92 +105,76 @@ public class MatchCommentry extends Fragment
         );
 
         ///###################### PROGRESS BAR
-        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_commentry);
+        progressView = (CircularProgressView) getActivity().findViewById(R.id.progress_view_commentry);
         progressView.startAnimation();
     }
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onPause();
         sendCommentryRequest();
 
     }
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onResume();
         queue.cancelAll(this);
 
     }
 
-    private void sendCommentryRequest()
-    {
+    private void sendCommentryRequest() {
 
         progressView.setVisibility(View.VISIBLE);
-        CacheRequest commntrCacheRequest=new CacheRequest(Request.Method.GET, URL+MATCH_ID,
+        CacheRequest commntrCacheRequest = new CacheRequest(Request.Method.GET, URL + MATCH_ID,
 
-        new Response.Listener<NetworkResponse>()
-        {
-              @Override
-              public void onResponse(NetworkResponse response)
-              {
-                  try
-                  {
-                      final String jsonString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                      JSONObject jsonObject=new JSONObject(jsonString);
-                      commentaryAdapter.setData(parseData(jsonObject));
-                      progressView.setVisibility(View.GONE);
-                  }
-                  catch (UnsupportedEncodingException | JSONException e)
-                  {
-                      e.printStackTrace();
-                  }
-              }
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            final String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            JSONObject jsonObject = new JSONObject(jsonString);
+                            commentaryAdapter.setData(parseData(jsonObject));
+                            progressView.setVisibility(View.GONE);
+                        } catch (UnsupportedEncodingException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-        }
-        ,
-        new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse(VolleyError error)
-            {
+                }
+                ,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-            }
-        });
+                    }
+                });
 
         commntrCacheRequest.setTag(this);
         queue.add(commntrCacheRequest);
     }
 
 
-    private List<CommentaryItem> parseData(JSONObject rootJson)
-    {
-        List<CommentaryItem> tempList=new ArrayList<>();
-        if(rootJson!=null)
-        {
-            if(rootJson.length()!=0)
-            {
-                if(rootJson.has(MATCH_COMMENTARY))
-                {
-                    try
-                    {
-                        JSONArray commentaries=rootJson.getJSONArray(MATCH_COMMENTARY);
-                        for(int i=0;i<commentaries.length();i++)
-                        {
-                            JSONObject commentary=commentaries.getJSONObject(i);
-                            String time="", icon_url="", text="";
+    private List<CommentaryItem> parseData(JSONObject rootJson) {
+        List<CommentaryItem> tempList = new ArrayList<>();
+        if (rootJson != null) {
+            if (rootJson.length() != 0) {
+                if (rootJson.has(MATCH_COMMENTARY)) {
+                    try {
+                        JSONArray commentaries = rootJson.getJSONArray(MATCH_COMMENTARY);
+                        for (int i = 0; i < commentaries.length(); i++) {
+                            JSONObject commentary = commentaries.getJSONObject(i);
+                            String time = "", icon_url = "", text = "";
 
-                            if(commentary.has(MATCH_MINUTE)) time=commentary.getString(MATCH_MINUTE);
-                            if(commentary.has(MATCH_TEXT))   text=commentary.getString(MATCH_TEXT);
-                            if(commentary.has(ICON_URL))     icon_url=IMAGE_PATH+commentary.getString(ICON_URL);
+                            if (commentary.has(MATCH_MINUTE))
+                                time = commentary.getString(MATCH_MINUTE);
+                            if (commentary.has(MATCH_TEXT)) text = commentary.getString(MATCH_TEXT);
+                            if (commentary.has(ICON_URL))
+                                icon_url = IMAGE_PATH + commentary.getString(ICON_URL);
 
                             tempList.add(new CommentaryItem(time, icon_url, text));
                         }
-                    }
-                    catch (JSONException e)
-                    {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
