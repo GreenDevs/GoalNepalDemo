@@ -39,7 +39,8 @@ dependencies {
     compile files('libs/YouTubeAndroidPlayerApi.jar')
     compile 'com.android.support:design:22.2.0'
     ///Collapsing toobar
-    compile 'com.yalantis:phoenix:1.2.2'
+
+    compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.2'
     // pull to refresh
     compile 'com.github.iammert:RadioPlayerService:4ab6bafbbf'
 

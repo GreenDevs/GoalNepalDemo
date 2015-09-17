@@ -1,6 +1,7 @@
 package com.crackdevelopers.goalnepal.Latest;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,6 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,11 +32,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 /**
  * Created by trees on 8/21/15.
  */
-public class LatestFragment extends Fragment
-{
+public class LatestFragment extends Fragment {
 
     /*
     VARIABLE INTRODUCTION
@@ -60,21 +61,21 @@ public class LatestFragment extends Fragment
     *
      *
      */
-    private static final String LATEST_NEWS_URL="http://www.goalnepal.com/json_news_2015.php?page=";
-    private static final String IMAGE_PATH_THUMNAIL="http://www.goalnepal.com/graphics/article/thumb/";
+    private static final String LATEST_NEWS_URL = "http://www.goalnepal.com/json_news_2015.php?page=";
+    private static final String IMAGE_PATH_THUMNAIL = "http://www.goalnepal.com/graphics/article/thumb/";
 
-    private static final String NEWS_DATE="pubdate";
-    private static final String NEWS_SUB_TITLE="sub_heading";
-    private static final String NEWS_TITLE="title";
-    private static final String NEWS_IMAGE_ID="inner_image";
-    private static final String NEWS="news";
-    private static final String NEWS_DESCRIPTIOIN="description";
-    private static int PAGE_N0=1;
-    private static final String RECYCLER_STATE_KEY="recycler state";
+    private static final String NEWS_DATE = "pubdate";
+    private static final String NEWS_SUB_TITLE = "sub_heading";
+    private static final String NEWS_TITLE = "title";
+    private static final String NEWS_IMAGE_ID = "inner_image";
+    private static final String NEWS = "news";
+    private static final String NEWS_DESCRIPTIOIN = "description";
+    private static int PAGE_N0 = 1;
+    private static final String RECYCLER_STATE_KEY = "recycler state";
 
     private RecyclerView latestNews;
-    private PullToRefreshView mPullToRefreshView;
-    private final int  REFRESH_DELAY = 1500;
+    private WaveSwipeRefreshLayout mPullToRefreshView;
+    private final int REFRESH_DELAY = 1500;
     private Context context;
     private RequestQueue requestQueue;
     private LatestNewsAdapter latestNewsAdapter;
@@ -84,39 +85,35 @@ public class LatestFragment extends Fragment
     Bundle outState;
 
 
-    public LatestFragment() 
-    {
+    public LatestFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        VolleySingleton singleton=VolleySingleton.getInstance();
-        requestQueue=singleton.getQueue();
+        VolleySingleton singleton = VolleySingleton.getInstance();
+        requestQueue = singleton.getQueue();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
-    {
-        View v=inflater.inflate(R.layout.latest_fragment, container, false);
-        latestNews=(RecyclerView)v.findViewById(R.id.latestNewsList);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.latest_fragment, container, false);
+        latestNews = (RecyclerView) v.findViewById(R.id.latestNewsList);
         return v;
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.context=getActivity();
+        this.context = getActivity();
         latestNews.setLayoutManager(new LinearLayoutManager(context));
         latestNewsAdapter = new LatestNewsAdapter(context);
         latestNews.setAdapter(latestNewsAdapter);
 
 
-        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view);
+        progressView = (CircularProgressView) getActivity().findViewById(R.id.progress_view);
         progressView.startAnimation();
         sendNewsRequest();
 
@@ -129,7 +126,8 @@ public class LatestFragment extends Fragment
 
                     private int pastVisiblesItems, visibleItemsCount, totalItemsCount;
 
-                    LinearLayoutManager manager=(LinearLayoutManager)latestNews.getLayoutManager();
+                    LinearLayoutManager manager = (LinearLayoutManager) latestNews.getLayoutManager();
+
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
@@ -149,10 +147,12 @@ public class LatestFragment extends Fragment
                 });
 
         /////################################# PULLL TO REFRESH ########################################
-        mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh_latest);
+        mPullToRefreshView = (WaveSwipeRefreshLayout) getActivity().findViewById(R.id.pull_to_refresh_latest);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
         mPullToRefreshView.setOnRefreshListener(
 
-                new PullToRefreshView.OnRefreshListener() {
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
                         // do what you want to do when refreshing
@@ -173,8 +173,7 @@ public class LatestFragment extends Fragment
 
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onResume();
 
         Log.i("Methods", "onStop()");
@@ -182,33 +181,26 @@ public class LatestFragment extends Fragment
     }
 
 
-    private void sendNewsRequest()
-    {
+    private void sendNewsRequest() {
         progressView.setVisibility(View.VISIBLE);
-        CacheRequest newsRequest=new CacheRequest(Request.Method.GET, LATEST_NEWS_URL+PAGE_N0,
+        CacheRequest newsRequest = new CacheRequest(Request.Method.GET, LATEST_NEWS_URL + PAGE_N0,
 
-                new Response.Listener<NetworkResponse>()
-                {
+                new Response.Listener<NetworkResponse>() {
                     @Override
-                    public void onResponse(NetworkResponse response)
-                    {
-                        try
-                        {
-                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                            JSONObject responseJson=new JSONObject(jsonResponseString);
-                            totalList=parseNews(responseJson);
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            final String jsonResponseString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            JSONObject responseJson = new JSONObject(jsonResponseString);
+                            totalList = parseNews(responseJson);
                             latestNewsAdapter.setData(totalList);
                             progressView.setVisibility(View.GONE);
-                        }
-                        catch (UnsupportedEncodingException | JSONException e)
-                        {
+                        } catch (UnsupportedEncodingException | JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 }
                 ,
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
@@ -223,42 +215,33 @@ public class LatestFragment extends Fragment
 
     ////THIS TRIES TO UPDATE THE NEWS AFTER LIST SCROLLING FINISHED
 
-    private void sendNewsScrollRequest()
-    {
+    private void sendNewsScrollRequest() {
         PAGE_N0++;
         progressView.setVisibility(View.VISIBLE);
-        CacheRequest newsScrollRequest=new CacheRequest(Request.Method.GET, LATEST_NEWS_URL+PAGE_N0,
+        CacheRequest newsScrollRequest = new CacheRequest(Request.Method.GET, LATEST_NEWS_URL + PAGE_N0,
 
-                new Response.Listener<NetworkResponse>()
-                {
+                new Response.Listener<NetworkResponse>() {
                     @Override
-                    public void onResponse(NetworkResponse response)
-                    {
-                        try
-                        {
-                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                            JSONObject responseJson=new JSONObject(jsonResponseString);
-                            List<NewsSingleRow> tmp=parseNews(responseJson);
-                            for(NewsSingleRow item:tmp)
-                            {
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            final String jsonResponseString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            JSONObject responseJson = new JSONObject(jsonResponseString);
+                            List<NewsSingleRow> tmp = parseNews(responseJson);
+                            for (NewsSingleRow item : tmp) {
                                 totalList.add(item);
                             }
                             latestNewsAdapter.setScrollUpdate(parseNews(responseJson));
-                            loading=true;
+                            loading = true;
                             progressView.setVisibility(View.GONE);
-                        }
-                        catch (UnsupportedEncodingException | JSONException e)
-                        {
+                        } catch (UnsupportedEncodingException | JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 }
                 ,
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+                    public void onErrorResponse(VolleyError error) {
 
                     }
                 });
@@ -268,53 +251,44 @@ public class LatestFragment extends Fragment
         requestQueue.add(newsScrollRequest);
 
 
-
     }
 
 
+    private ArrayList<NewsSingleRow> parseNews(JSONObject rootObj) {
+        ArrayList<NewsSingleRow> tempList = new ArrayList<>();
+        if (rootObj == null || rootObj.length() == 0) {
+            Log.i("Methods", "API LENGTH IS 0");
+        } else {
 
-    private ArrayList<NewsSingleRow> parseNews(JSONObject rootObj)
-    {
-           ArrayList<NewsSingleRow> tempList=new ArrayList<>();
-            if(rootObj==null || rootObj.length()==0)
-            {
-                Log.i("Methods", "API LENGTH IS 0");
-            }
-            else
-            {
+            try {
+                if (rootObj.has(NEWS)) {
+                    JSONArray newsArray = rootObj.getJSONArray(NEWS);
 
-                    try
-                    {
-                        if(rootObj.has(NEWS))
-                        {
-                            JSONArray newsArray = rootObj.getJSONArray(NEWS);
+                    for (int i = 0; i < newsArray.length(); i++) {
+                        JSONObject news = newsArray.getJSONObject(i);
+                        String imageId = "", subtitle = "", title = "", imageUrl = "", description = "", date = "";
 
-                            for(int i=0;i<newsArray.length();i++)
-                            {
-                                JSONObject news=newsArray.getJSONObject(i);
-                                String imageId="", subtitle="", title="", imageUrl="", description="", date="";
-
-                                if(news.has(NEWS_SUB_TITLE)) subtitle=news.getString(NEWS_SUB_TITLE);
-                                if(news.has(NEWS_TITLE))     title=news.getString(NEWS_TITLE);
-                                if(news.has(NEWS_IMAGE_ID))      imageId=news.getString(NEWS_IMAGE_ID); imageUrl+=IMAGE_PATH_THUMNAIL+imageId;
-                                if(news.has(NEWS_DESCRIPTIOIN)) description=news.getString(NEWS_DESCRIPTIOIN);
-                                if(news.has(NEWS_DATE)) date=news.getString(NEWS_DATE);
-                                tempList.add(new NewsSingleRow(imageUrl, subtitle, title,description, date, imageId));
+                        if (news.has(NEWS_SUB_TITLE)) subtitle = news.getString(NEWS_SUB_TITLE);
+                        if (news.has(NEWS_TITLE)) title = news.getString(NEWS_TITLE);
+                        if (news.has(NEWS_IMAGE_ID)) imageId = news.getString(NEWS_IMAGE_ID);
+                        imageUrl += IMAGE_PATH_THUMNAIL + imageId;
+                        if (news.has(NEWS_DESCRIPTIOIN))
+                            description = news.getString(NEWS_DESCRIPTIOIN);
+                        if (news.has(NEWS_DATE)) date = news.getString(NEWS_DATE);
+                        tempList.add(new NewsSingleRow(imageUrl, subtitle, title, description, date, imageId));
 
 
 //                                Log.i("Methods", "subtitle:"+subtitle+"\ntitle:"+title+"\nimage_url:"+imageUrl);
-                            }
-
-                        }
-
-
-                    }
-                    catch (JSONException e)
-                    {
-                        e.printStackTrace();
                     }
 
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
+        }
 
         return tempList;
     }
