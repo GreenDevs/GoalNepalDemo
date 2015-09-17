@@ -212,7 +212,7 @@ public class VideoListActivity extends AppCompatActivity
                /* String videoId = (String) view.getTag();
                 loaders.put(youTubeThumbnailView, youTubeThumbnailLoader);*/
 
-                youTubeThumbnailView.setImageResource(R.drawable.tvlogo);
+                youTubeThumbnailView.setImageResource(R.drawable.goalnepaltv);
                 youTubeThumbnailLoader.setVideo(temp[1]);
             }
 

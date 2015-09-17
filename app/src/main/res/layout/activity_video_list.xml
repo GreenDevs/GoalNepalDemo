@@ -19,7 +19,7 @@
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:background="@drawable/tvlogo" />
+        android:background="@drawable/goalnepaltv" />
     <com.google.android.youtube.player.YouTubeThumbnailView
         android:id="@+id/videoThumbalil"
         android:onClick="videoClicked"
