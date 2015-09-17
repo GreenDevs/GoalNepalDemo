@@ -14,9 +14,10 @@ import com.crackdevelopers.goalnepal.MainActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Gallery.AlbumActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Radio.RadioActivity;
-import com.crackdevelopers.goalnepal.Miscallenous.videos.VideoListActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.Ranking.RankingActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.video.gallery.VideoGallery;
+import com.crackdevelopers.goalnepal.Miscallenous.liveTV.LiveTVActivity;
 import com.crackdevelopers.goalnepal.R;
-import com.crackdevelopers.goalnepal.RecentMatch.MatchItem;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.ArrayList;
@@ -140,14 +141,22 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
                     break;
 
                 case 2:
-                    context.startActivity(new Intent(context,VideoListActivity.class));
+                    context.startActivity(new Intent(context,LiveTVActivity.class));
                     break;
 
                 case 3:
-                    context.startActivity(new Intent(context, AlbumActivity.class));
+                    context.startActivity(new Intent(context,VideoGallery.class));
                     break;
 
                 case 4:
+                    context.startActivity(new Intent(context, AlbumActivity.class));
+                    break;
+
+                case 5:
+                    context.startActivity(new Intent(context, RankingActivity.class));
+                    break;
+
+                case 6:
                     context.startActivity(new Intent(context, PreferenceActivity.class));
                     break;
 
