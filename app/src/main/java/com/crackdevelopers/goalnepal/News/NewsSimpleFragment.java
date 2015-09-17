@@ -1,8 +1,12 @@
 package com.crackdevelopers.goalnepal.News;
 
 import android.content.Context;
+
 import android.content.Intent;
 import android.opengl.Visibility;
+
+import android.graphics.Color;
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -28,13 +32,15 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.yalantis.phoenix.PullToRefreshView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 /**
  * Created by trees on 9/17/15.
@@ -66,7 +72,7 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
 
     private RecyclerView news;
     private RequestQueue requestQueue;
-    private PullToRefreshView mPullToRefreshView;
+    private WaveSwipeRefreshLayout mPullToRefreshView;
     private final int  REFRESH_DELAY = 1500;
     private Context context;
     private NewsSimpleAdapter newsAdapter;
@@ -147,10 +153,13 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
                 });
 
         /////################################# PULLL TO REFRESH ########################################
-        mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh_news);
+        mPullToRefreshView = (WaveSwipeRefreshLayout) getActivity().findViewById(R.id.pull_to_refresh_news);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+
         mPullToRefreshView.setOnRefreshListener(
 
-                new PullToRefreshView.OnRefreshListener() {
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
                         // do what you want to do when refreshing

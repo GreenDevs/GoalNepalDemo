@@ -1,15 +1,13 @@
-package com.crackdevelopers.goalnepal.Miscallenous.videos;
+package com.crackdevelopers.goalnepal.Miscallenous.liveTV;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,14 +21,7 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-
-public class VideoListActivity extends AppCompatActivity
+public class LiveTVActivity extends AppCompatActivity
 {
     private static final String Url="http://www.goalnepal.com/json_tv.php/";
     private  String livetvUrl;
@@ -43,7 +34,7 @@ public class VideoListActivity extends AppCompatActivity
     ImageButton playLiveTv;
 
 
-    public VideoListActivity()
+    public LiveTVActivity()
     {
         this.mContext=this;
     }

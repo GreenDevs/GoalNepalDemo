@@ -17,17 +17,26 @@
         app:cpv_animAutostart="true"
         app:cpv_indeterminate="true" />
 
-    <com.yalantis.phoenix.PullToRefreshView
+
+
+
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:id="@+id/pull_to_refresh_commentry"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/commentryList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="vertical"
             />
-    </com.yalantis.phoenix.PullToRefreshView>
+
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+
+
+
 
 
 

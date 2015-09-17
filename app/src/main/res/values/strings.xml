@@ -77,4 +77,6 @@
     <string name="footer_txt_tgif_team">TGIF Team</string>
     <string name="title_activity_testsd">testsd</string>
     <string name="Share">share</string>
+    <string name="title_activity_ranking">RankingActivity</string>
+    <string name="title_activity_video_gallery">VideoGallery</string>
 </resources>

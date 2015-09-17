@@ -95,8 +95,10 @@ public class NagivationDrawer extends Fragment
             Resources res=context.getResources();
             navigationRowList.add(new NavigationRow("Home", res.getString(R.string.home), "Features", -1));
             navigationRowList.add(new NavigationRow("Radio", res.getString(R.string.radio),"Features", -1));
-            navigationRowList.add(new NavigationRow("Video", res.getString(R.string.video),"Features", -1));
+            navigationRowList.add(new NavigationRow("Live TV", res.getString(R.string.video),"Features", -1));
+            navigationRowList.add(new NavigationRow("Video Gallery", res.getString(R.string.video),"Features", -1));
             navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
+            navigationRowList.add(new NavigationRow("World Ranking", res.getString(R.string.gallery),"Features", -1));
             navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
             mAdapter=new NavStickyAdapter(context,navigationRowList);
             navList.setAdapter(mAdapter);
@@ -146,8 +148,10 @@ public class NagivationDrawer extends Fragment
             Resources res=context.getResources();
             navigationRowList.add(new NavigationRow("Home", res.getString(R.string.home), "Features", -1));
             navigationRowList.add(new NavigationRow("Radio", res.getString(R.string.radio),"Features", -1));
-            navigationRowList.add(new NavigationRow("Video", res.getString(R.string.video),"Features", -1));
+            navigationRowList.add(new NavigationRow("Live TV", res.getString(R.string.video),"Features", -1));
+            navigationRowList.add(new NavigationRow("Video Gallery", res.getString(R.string.video),"Features", -1));
             navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
+            navigationRowList.add(new NavigationRow("World Ranking", res.getString(R.string.gallery),"Features", -1));
             navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
             if (menuJson != null)
                 try
