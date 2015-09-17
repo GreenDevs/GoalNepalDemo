@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by trees on 8/21/15.
@@ -70,10 +71,8 @@ public class LatestFragment extends Fragment
     private static final String NEWS_DESCRIPTIOIN="description";
     private static int PAGE_N0=1;
     private static final String RECYCLER_STATE_KEY="recycler state";
-    private Parcelable listStateParcable;
 
     private RecyclerView latestNews;
-    private LinearLayoutManager mManager;
     private PullToRefreshView mPullToRefreshView;
     private final int  REFRESH_DELAY = 1500;
     private Context context;
@@ -81,6 +80,8 @@ public class LatestFragment extends Fragment
     private LatestNewsAdapter latestNewsAdapter;
     private boolean loading = true;
     private CircularProgressView progressView;
+    private List<NewsSingleRow> totalList;
+    Bundle outState;
 
 
     public LatestFragment() 
@@ -110,37 +111,36 @@ public class LatestFragment extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
         this.context=getActivity();
-
-        mManager=new LinearLayoutManager(context);
-        latestNews.setLayoutManager(mManager);
+        latestNews.setLayoutManager(new LinearLayoutManager(context));
         latestNewsAdapter = new LatestNewsAdapter(context);
         latestNews.setAdapter(latestNewsAdapter);
 
+
         progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view);
         progressView.startAnimation();
+        sendNewsRequest();
 
         /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
 
 
         latestNews.addOnScrollListener(
 
-                new RecyclerView.OnScrollListener()
-                {
+                new RecyclerView.OnScrollListener() {
 
                     private int pastVisiblesItems, visibleItemsCount, totalItemsCount;
 
+                    LinearLayoutManager manager=(LinearLayoutManager)latestNews.getLayoutManager();
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
                         visibleItemsCount = latestNews.getChildCount();
-                        totalItemsCount = mManager.getItemCount();
-                        pastVisiblesItems = mManager.findFirstVisibleItemPosition();
+                        totalItemsCount = manager.getItemCount();
+                        pastVisiblesItems = manager.findFirstVisibleItemPosition();
 
 
-                        if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount))
-                        {
+                        if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount)) {
                             Log.i("last", " LAST");
-                            loading=false;
+                            loading = false;
                             sendNewsScrollRequest();
                         }
 
@@ -152,20 +152,16 @@ public class LatestFragment extends Fragment
         mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh_latest);
         mPullToRefreshView.setOnRefreshListener(
 
-                new PullToRefreshView.OnRefreshListener()
-                {
+                new PullToRefreshView.OnRefreshListener() {
                     @Override
-                    public void onRefresh()
-                    {
+                    public void onRefresh() {
                         // do what you want to do when refreshing
-                        PAGE_N0=1;
-                        if(requestQueue!=null) requestQueue.cancelAll(this);
+                        PAGE_N0 = 1;
+                        if (requestQueue != null) requestQueue.cancelAll(this);
                         sendNewsRequest();
-                        mPullToRefreshView.postDelayed(new Runnable()
-                        {
+                        mPullToRefreshView.postDelayed(new Runnable() {
                             @Override
-                            public void run()
-                            {
+                            public void run() {
                                 mPullToRefreshView.setRefreshing(false);
                             }
                         }, REFRESH_DELAY);
@@ -177,50 +173,12 @@ public class LatestFragment extends Fragment
 
 
     @Override
-    public void onViewStateRestored(Bundle savedInstanceState)
-    {
-        super.onViewStateRestored(savedInstanceState);
-        if(savedInstanceState!=null) {  listStateParcable=savedInstanceState.getParcelable(RECYCLER_STATE_KEY);}
-        Log.i("Methods", "onViewStateRestore()");
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onPause();
-        sendNewsRequest();
-        Log.i("Methods", "onViewStateRestore()");
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        if (listStateParcable!=null)
-        {
-            mManager.onRestoreInstanceState(listStateParcable);
-            Log.i("Methods", "called manager");
-        }
-        Log.i("Methods", "onViewResume()");
-        Toast.makeText(context, "onResume()", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void onStop()
     {
         super.onResume();
-        requestQueue.cancelAll(this);
+
         Log.i("Methods", "onStop()");
-    }
-
-
-    @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
-        listStateParcable=mManager.onSaveInstanceState();
-        outState.putParcelable(RECYCLER_STATE_KEY, listStateParcable);
-        Log.i("Methods", "onSavedInstaceState()");
+        requestQueue.cancelAll(this);
     }
 
 
@@ -238,7 +196,8 @@ public class LatestFragment extends Fragment
                         {
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
-                            latestNewsAdapter.setData(parseNews(responseJson));
+                            totalList=parseNews(responseJson);
+                            latestNewsAdapter.setData(totalList);
                             progressView.setVisibility(View.GONE);
                         }
                         catch (UnsupportedEncodingException | JSONException e)
@@ -279,6 +238,11 @@ public class LatestFragment extends Fragment
                         {
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
+                            List<NewsSingleRow> tmp=parseNews(responseJson);
+                            for(NewsSingleRow item:tmp)
+                            {
+                                totalList.add(item);
+                            }
                             latestNewsAdapter.setScrollUpdate(parseNews(responseJson));
                             loading=true;
                             progressView.setVisibility(View.GONE);

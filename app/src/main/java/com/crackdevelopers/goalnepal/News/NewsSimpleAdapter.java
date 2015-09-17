@@ -1,4 +1,4 @@
-package com.crackdevelopers.goalnepal.Latest;
+package com.crackdevelopers.goalnepal.News;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,57 +12,58 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.crackdevelopers.goalnepal.News.*;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
-import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by trees on 9/15/15.
+ * Created by trees on 9/17/15.
  */
-public class LatestNewParallexAdapter extends ParallaxRecyclerAdapter
+public class NewsSimpleAdapter extends RecyclerView.Adapter<NewsSimpleAdapter.MyViewHolder>
 {
     private LayoutInflater inflater;
     private Context context;
     private List<NewsSingleRow> data= Collections.emptyList();
     private ImageLoader mImageLoader;
-    public LatestNewParallexAdapter(List<NewsSingleRow> data, Context context)
+
+    public NewsSimpleAdapter(Context context)
     {
-        super(data);
         inflater=LayoutInflater.from(context);
         this.context=context;
         mImageLoader= VolleySingleton.getInstance().getmImageLoader();
 
     }
-
-
-    @Override
-    public void setData(List data)
+    public void setData(List<NewsSingleRow> data)
     {
-        super.setData(data);
         this.data=data;
         notifyItemRangeChanged(0, data.size());
     }
 
-    public void setScrollUpdate(List scrollData)
+    public void setScrollUpdate(List<NewsSingleRow> scrollData)
     {
         int previousSize=data.size();
-        for(Object scrollItem:scrollData)
+        for(NewsSingleRow scrollItem:scrollData)
         {
-            data.add((NewsSingleRow)scrollItem);
+            data.add(scrollItem);
         }
-        notifyItemRangeInserted(previousSize+1,scrollData.size());
+        notifyItemRangeInserted(previousSize,scrollData.size());
     }
 
     @Override
-    public void onBindViewHolderImpl(final RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i)
+    public NewsSimpleAdapter.MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i)
     {
-        ((MyViewHolder)viewHolder).title.setText(data.get(i).subtitle);
-        ((MyViewHolder)viewHolder).details.setText(data.get(i).title);
-        ((MyViewHolder) viewHolder).image.setImageResource(R.drawable.goalnepal_white);
+        return new MyViewHolder(inflater.inflate(R.layout.news_row, viewGroup, false));
+    }
+
+    @Override
+    public void onBindViewHolder(final NewsSimpleAdapter.MyViewHolder viewHolder, int i)
+    {
+
+        viewHolder.title.setText(data.get(i).subtitle);
+        viewHolder.details.setText(data.get(i).title);
+        viewHolder.image.setImageResource(R.drawable.goalnepal_white);
 
         //IMAGE BINDING USING VOLLEY IMAGE LOADER
         String imageUrl=data.get(i).imageUrl;
@@ -75,32 +76,26 @@ public class LatestNewParallexAdapter extends ParallaxRecyclerAdapter
                         @Override
                         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate)
                         {
-                            ((MyViewHolder) viewHolder).image.setImageBitmap(response.getBitmap());
+                            viewHolder.image.setImageBitmap(response.getBitmap());
                         }
 
                         @Override
                         public void onErrorResponse(VolleyError error)
                         {
-                            ((MyViewHolder) viewHolder).image.setImageResource(R.drawable.goalnepal_white);
+                            viewHolder.image.setImageResource(R.drawable.goalnepal_white);
                         }
                     });
         }
         else
         {
-            ((MyViewHolder) viewHolder).image.setImageResource(R.drawable.goalnepal_white);
+             viewHolder.image.setImageResource(R.drawable.goalnepal_white);
         }
 
 
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i)
-    {
-        return new MyViewHolder(inflater.inflate(R.layout.news_row, viewGroup, false));
-    }
-
-    @Override
-    public int getItemCountImpl(ParallaxRecyclerAdapter parallaxRecyclerAdapter)
+    public int getItemCount() 
     {
         return data.size();
     }
@@ -125,7 +120,7 @@ public class LatestNewParallexAdapter extends ParallaxRecyclerAdapter
             try {
                 Intent intent=new Intent(context, NewsDetailsActivity.class);
                 Bundle bundle=new Bundle();
-                NewsSingleRow row=data.get(getAdapterPosition()-1);
+                NewsSingleRow row=data.get(getAdapterPosition());
                 bundle.putString(NewsDetailsActivity.IMAGE_ID, row.imageId);
                 bundle.putString(NewsDetailsActivity.NEWS_DATE, row.date);
                 bundle.putString(NewsDetailsActivity.NEWS_TITLE, row.subtitle);
@@ -139,7 +134,4 @@ public class LatestNewParallexAdapter extends ParallaxRecyclerAdapter
 
         }
     }
-
-
-
 }

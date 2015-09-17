@@ -1,11 +1,9 @@
 package com.crackdevelopers.goalnepal.News;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,14 +27,18 @@ import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-
-public class NewsFragment extends Fragment
+/**
+ * Created by trees on 9/17/15.
+ */
+public class NewsSimpleFragment  extends Fragment
 {
     private static final String NEWS_URL="http://www.goalnepal.com/json_news_2015.php?page=";
     private static final String FEATURED_NEWS_URL="http://www.goalnepal.com/json_news_feature_2015.php?page=";
@@ -65,13 +68,13 @@ public class NewsFragment extends Fragment
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<NewsSingleRow> newsData;
-    private NewsAdapter newsAdapter;
+    private NewsSimpleAdapter newsAdapter;
     private LinearLayoutManager mManager;
     private boolean loading = true;
 
     private CircularProgressView progressView;
 
-    public NewsFragment()
+    public NewsSimpleFragment()
     {
         // Required empty public constructor
     }
@@ -107,7 +110,7 @@ public class NewsFragment extends Fragment
         newsData=new ArrayList<>();
         mManager=new LinearLayoutManager(context);
         news.setLayoutManager(mManager);
-        newsAdapter = new NewsAdapter(newsData,context);
+        newsAdapter = new NewsSimpleAdapter(context);
         news.setAdapter(newsAdapter);
 
 
@@ -115,7 +118,7 @@ public class NewsFragment extends Fragment
         progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_latest);
         progressView.startAnimation();
 
-        sendFeaturedNewsRequest();
+//        sendFeaturedNewsRequest();
         sendNewsRequest();
 
         /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
@@ -157,18 +160,18 @@ public class NewsFragment extends Fragment
 
                         if(requestQueue!=null) requestQueue.cancelAll(this);
                         sendNewsRequest();
-                        sendFeaturedNewsRequest();
+//                        sendFeaturedNewsRequest();
                         mPullToRefreshView.postDelayed
                                 (
 
-                        new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                mPullToRefreshView.setRefreshing(false);
-                            }
-                        }, REFRESH_DELAY);
+                                        new Runnable()
+                                        {
+                                            @Override
+                                            public void run()
+                                            {
+                                                mPullToRefreshView.setRefreshing(false);
+                                            }
+                                        }, REFRESH_DELAY);
                     }
                 }
         );
@@ -189,7 +192,7 @@ public class NewsFragment extends Fragment
     private void sendNewsRequest()
     {
 
-       progressView.setVisibility(View.VISIBLE);
+        progressView.setVisibility(View.VISIBLE);
 
         CacheRequest newsRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_N0,
 
@@ -274,63 +277,63 @@ public class NewsFragment extends Fragment
     //// THIS HEP TO DOWNLOAD THE FEATURED NEWS AND IMAGES
     private void sendFeaturedNewsRequest()
     {
-
-        CacheRequest featuredRequest=new CacheRequest(Request.Method.GET, FEATURED_NEWS_URL+PAGE_N0,
-
-                new Response.Listener<NetworkResponse>()
-                {
-                    @Override
-                    public void onResponse(NetworkResponse response)
-                    {
-                        try
-                        {
-                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                            JSONObject responseJson=new JSONObject(jsonResponseString);
-
-
-                            ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
-                            ArrayList<NewsSingleRow> featuredImages=parseFeaturedNews(responseJson);
-
-                            FrameLayout fl=(FrameLayout)inflater.inflate(R.layout.news_header_image, news, false);
-                            TextView title=(TextView)fl.findViewById(R.id.news_header_text);
-
-                            title.setText(featuredImages.get(0).title);
-                            final ImageView header_image=(ImageView)fl.findViewById(R.id.news_header_image);
-
-                            imageLoader.get(featuredImages.get(0).imageUrl,
-                                    new ImageLoader.ImageListener()
-                                    {
-                                        @Override
-                                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
-                                            header_image.setImageBitmap(response.getBitmap());
-                                        }
-
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            header_image.setImageResource(R.mipmap.ic_launcher);
-                                        }
-                                    });
-                            newsAdapter.setParallaxHeader(fl, news);
-                        }
-                        catch (UnsupportedEncodingException | JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                ,
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-
-                    }
-                });
-
-
-        featuredRequest.setTag(this);
-        requestQueue.add(featuredRequest);
+//
+//        CacheRequest featuredRequest=new CacheRequest(Request.Method.GET, FEATURED_NEWS_URL+PAGE_N0,
+//
+//                new Response.Listener<NetworkResponse>()
+//                {
+//                    @Override
+//                    public void onResponse(NetworkResponse response)
+//                    {
+//                        try
+//                        {
+//                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+//                            JSONObject responseJson=new JSONObject(jsonResponseString);
+//
+//
+//                            ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
+//                            ArrayList<NewsSingleRow> featuredImages=parseFeaturedNews(responseJson);
+//
+//                            FrameLayout fl=(FrameLayout)inflater.inflate(R.layout.news_header_image, news, false);
+//                            TextView title=(TextView)fl.findViewById(R.id.news_header_text);
+//
+//                            title.setText(featuredImages.get(0).title);
+//                            final ImageView header_image=(ImageView)fl.findViewById(R.id.news_header_image);
+//
+//                            imageLoader.get(featuredImages.get(0).imageUrl,
+//                                    new ImageLoader.ImageListener()
+//                                    {
+//                                        @Override
+//                                        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+//                                            header_image.setImageBitmap(response.getBitmap());
+//                                        }
+//
+//                                        @Override
+//                                        public void onErrorResponse(VolleyError error) {
+//                                            header_image.setImageResource(R.mipmap.ic_launcher);
+//                                        }
+//                                    });
+//                            newsAdapter.setParallaxHeader(fl, news);
+//                        }
+//                        catch (UnsupportedEncodingException | JSONException e)
+//                        {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//                ,
+//                new Response.ErrorListener()
+//                {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error)
+//                    {
+//
+//                    }
+//                });
+//
+//
+//        featuredRequest.setTag(this);
+//        requestQueue.add(featuredRequest);
 
     }
 
@@ -423,3 +426,4 @@ public class NewsFragment extends Fragment
     }
 
 }
+
