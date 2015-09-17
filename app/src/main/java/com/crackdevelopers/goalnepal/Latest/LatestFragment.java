@@ -95,7 +95,6 @@ public class LatestFragment extends Fragment
         super.onCreate(savedInstanceState);
         VolleySingleton singleton=VolleySingleton.getInstance();
         requestQueue=singleton.getQueue();
-        if(savedInstanceState!=null) {  listStateParcable=savedInstanceState.getParcelable(RECYCLER_STATE_KEY);}
     }
 
     @Override
@@ -178,10 +177,19 @@ public class LatestFragment extends Fragment
 
 
     @Override
+    public void onViewStateRestored(Bundle savedInstanceState)
+    {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState!=null) {  listStateParcable=savedInstanceState.getParcelable(RECYCLER_STATE_KEY);}
+        Log.i("Methods", "onViewStateRestore()");
+    }
+
+    @Override
     public void onStart()
     {
         super.onPause();
         sendNewsRequest();
+        Log.i("Methods", "onViewStateRestore()");
     }
 
     @Override
@@ -191,7 +199,10 @@ public class LatestFragment extends Fragment
         if (listStateParcable!=null)
         {
             mManager.onRestoreInstanceState(listStateParcable);
+            Log.i("Methods", "called manager");
         }
+        Log.i("Methods", "onViewResume()");
+        Toast.makeText(context, "onResume()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -199,6 +210,7 @@ public class LatestFragment extends Fragment
     {
         super.onResume();
         requestQueue.cancelAll(this);
+        Log.i("Methods", "onStop()");
     }
 
 
@@ -208,6 +220,7 @@ public class LatestFragment extends Fragment
         super.onSaveInstanceState(outState);
         listStateParcable=mManager.onSaveInstanceState();
         outState.putParcelable(RECYCLER_STATE_KEY, listStateParcable);
+        Log.i("Methods", "onSavedInstaceState()");
     }
 
 
@@ -301,7 +314,7 @@ public class LatestFragment extends Fragment
            ArrayList<NewsSingleRow> tempList=new ArrayList<>();
             if(rootObj==null || rootObj.length()==0)
             {
-                Toast.makeText(context, "API LENGTH IS 0", Toast.LENGTH_LONG).show();
+                Log.i("Methods", "API LENGTH IS 0");
             }
             else
             {
@@ -325,7 +338,7 @@ public class LatestFragment extends Fragment
                                 tempList.add(new NewsSingleRow(imageUrl, subtitle, title,description, date, imageId));
 
 
-//                                Toast.makeText(context, "subtitle:"+subtitle+"\ntitle:"+title+"\nimage_url:"+imageUrl, Toast.LENGTH_LONG).show();
+//                                Log.i("Methods", "subtitle:"+subtitle+"\ntitle:"+title+"\nimage_url:"+imageUrl);
                             }
 
                         }

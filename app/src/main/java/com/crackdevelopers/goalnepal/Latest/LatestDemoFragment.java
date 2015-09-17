@@ -82,6 +82,7 @@ public class LatestDemoFragment extends Fragment
     private boolean loading = true;
     private CircularProgressView progressView;
     private ArrayList<NewsSingleRow> newsData;
+    private Bundle outState;
 
 
     public LatestDemoFragment()
@@ -96,7 +97,7 @@ public class LatestDemoFragment extends Fragment
         super.onCreate(savedInstanceState);
         VolleySingleton singleton=VolleySingleton.getInstance();
         requestQueue=singleton.getQueue();
-        if(savedInstanceState!=null) {  listStateParcable=savedInstanceState.getParcelable(RECYCLER_STATE_KEY);}
+        outState=new Bundle();
     }
 
     @Override
@@ -122,13 +123,7 @@ public class LatestDemoFragment extends Fragment
 
         View view=getActivity().getLayoutInflater().inflate(R.layout.garbage_parallex, latestNews, false);
         latestNewsAdapter.setParallaxHeader(view, latestNews);
-        /*
-        newsData=new ArrayList<>();
-        mManager=new LinearLayoutManager(context);
-        news.setLayoutManager(mManager);
-        newsAdapter = new NewsAdapter(newsData,context);
-        news.setAdapter(newsAdapter);
-         */
+
 
         progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view);
         progressView.startAnimation();
@@ -195,32 +190,33 @@ public class LatestDemoFragment extends Fragment
     {
         super.onPause();
         sendNewsRequest();
+        if(outState!=null) {  listStateParcable=outState.getParcelable(RECYCLER_STATE_KEY);}
+        Log.i("Methods", "onStart()");
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
+
         if (listStateParcable!=null)
         {
             mManager.onRestoreInstanceState(listStateParcable);
+            Log.i("Methods", "called manager restored chance");
         }
+
+        Log.i("Methods", "onResume()");
     }
+
 
     @Override
     public void onStop()
     {
         super.onResume();
         requestQueue.cancelAll(this);
-    }
-
-
-    @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        super.onSaveInstanceState(outState);
         listStateParcable=mManager.onSaveInstanceState();
         outState.putParcelable(RECYCLER_STATE_KEY, listStateParcable);
+        Log.i("Methods", "onStop()");
     }
 
 
