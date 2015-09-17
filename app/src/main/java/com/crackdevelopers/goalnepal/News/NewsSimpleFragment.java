@@ -10,28 +10,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.yalantis.phoenix.PullToRefreshView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -59,15 +52,12 @@ public class NewsSimpleFragment  extends Fragment
     private static final String FEATURED_TITLE="sub_heading";
     private static int PAGE_N0=1;
     private static final String RECYCLER_STATE_KEY="recycler state";
-    private Parcelable listStateParcable;
 
     private RecyclerView news;
     private RequestQueue requestQueue;
     private PullToRefreshView mPullToRefreshView;
     private final int  REFRESH_DELAY = 1500;
     private Context context;
-    private LayoutInflater inflater;
-    private ArrayList<NewsSingleRow> newsData;
     private NewsSimpleAdapter newsAdapter;
     private LinearLayoutManager mManager;
     private boolean loading = true;
@@ -86,15 +76,11 @@ public class NewsSimpleFragment  extends Fragment
         super.onCreate(savedInstanceState);
         VolleySingleton singleton=VolleySingleton.getInstance();
         requestQueue=singleton.getQueue();
-        if(savedInstanceState!=null) {  listStateParcable=savedInstanceState.getParcelable(RECYCLER_STATE_KEY);}
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
-        this.inflater=inflater;
         View v=inflater.inflate(R.layout.news_fragment, container, false);
         news=(RecyclerView)v.findViewById(R.id.newsList);
         return v;
@@ -106,8 +92,6 @@ public class NewsSimpleFragment  extends Fragment
         super.onActivityCreated(savedInstanceState);
         this.context=getActivity();
 
-
-        newsData=new ArrayList<>();
         mManager=new LinearLayoutManager(context);
         news.setLayoutManager(mManager);
         newsAdapter = new NewsSimpleAdapter(context);

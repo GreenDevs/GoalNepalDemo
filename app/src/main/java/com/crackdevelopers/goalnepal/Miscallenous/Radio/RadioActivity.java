@@ -183,6 +183,8 @@ import co.mobiwise.library.RadioManager;
 
                 }
             });
+
+            if(mNotificationManager!=null)
             mNotificationManager.cancelAll();
         }
 

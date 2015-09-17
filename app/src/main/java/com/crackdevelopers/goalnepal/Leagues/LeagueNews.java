@@ -181,8 +181,7 @@ public class LeagueNews extends Fragment
     public void onStart()
     {
         super.onPause();
-        sendNewsRequest();
-
+//        sendNewsRequest();
     }
 
     @Override
