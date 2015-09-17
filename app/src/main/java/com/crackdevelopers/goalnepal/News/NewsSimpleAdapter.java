@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceAdapter;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 
@@ -128,6 +129,8 @@ public class NewsSimpleAdapter extends RecyclerView.Adapter<NewsSimpleAdapter.My
 
                 intent.putExtra(NewsDetailsActivity.BUNDLE, bundle);
                 context.startActivity(intent);
+
+                PreferenceAdapter.hasPrefChanged=false;   ///THIS IS TO PREVENT FROM RELOADING PREFERNCES NEWS ON ON START at news fragment
             } catch (Exception e) {
                 e.printStackTrace();
             }
