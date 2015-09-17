@@ -45,6 +45,7 @@ public class PreferenceActivity extends AppCompatActivity
     private final static String TOURNAMENTS="tournaments";
     private final static String START_DATE="start_date";
     private final static String END_DATE="end_date";
+    private final static String MENU_FILE_NAME="menu.json";
     private PreferenceAdapter mAdapter;
     private Context context;
     private CircularProgressView progressView;
@@ -112,7 +113,7 @@ public class PreferenceActivity extends AppCompatActivity
                                 mAdapter.updateMenu(pareseMenu(menuJson));
 
                                 ///WRITING THE INTERNET DATA TO THE FILE
-                                FileManager fileManager = new FileManager(context);
+                                FileManager fileManager = new FileManager(context, MENU_FILE_NAME);
                                 fileManager.writeToFile(jsonResponseString);
                                 progressView.setVisibility(View.GONE);
 
@@ -154,11 +155,7 @@ public class PreferenceActivity extends AppCompatActivity
     private List<PreferenceRow> pareseMenu(JSONObject menuJson)
     {
         List<PreferenceRow> menuList= new ArrayList<>();
-        if(menuJson==null)
-        {
-
-        }
-        else
+        if (menuJson != null)
         {
 
             try

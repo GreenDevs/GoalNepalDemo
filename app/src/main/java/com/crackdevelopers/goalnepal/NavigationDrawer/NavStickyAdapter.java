@@ -13,6 +13,7 @@ import com.crackdevelopers.goalnepal.Leagues.LeagueActivity;
 import com.crackdevelopers.goalnepal.MainActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Gallery.AlbumActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceAdapter;
 import com.crackdevelopers.goalnepal.Miscallenous.Radio.RadioActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.videos.VideoListActivity;
 import com.crackdevelopers.goalnepal.R;
@@ -148,6 +149,7 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
                     break;
 
                 case 4:
+                    PreferenceAdapter.hasPrefChanged=false;
                     context.startActivity(new Intent(context, PreferenceActivity.class));
                     break;
 

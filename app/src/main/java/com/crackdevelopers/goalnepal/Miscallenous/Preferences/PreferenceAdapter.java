@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.crackdevelopers.goalnepal.FileManager;
+import com.crackdevelopers.goalnepal.News.NewsSimpleFragment;
 import com.crackdevelopers.goalnepal.R;
 
 import java.util.Collections;
@@ -22,7 +24,7 @@ import java.util.List;
 public class PreferenceAdapter extends RecyclerView.Adapter<PreferenceAdapter.MyViewHolder>
 {
     private List<PreferenceRow> data=Collections.emptyList();
-
+    public static boolean hasPrefChanged=false;
     private Context context;
     public PreferenceAdapter(Context context)
     {
@@ -99,6 +101,8 @@ public class PreferenceAdapter extends RecyclerView.Adapter<PreferenceAdapter.My
             preferences.edit().putBoolean(item.id+"",!item.checked).apply();
             item.checked=!item.checked;
             notifyItemChanged(position);
+
+            hasPrefChanged=true;
         }
     }
 }
