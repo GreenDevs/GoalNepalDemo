@@ -125,6 +125,7 @@ public class LiveTVActivity extends AppCompatActivity
         Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI",temp[1] );
 
 
+
         startActivity(intent);
     }
 
