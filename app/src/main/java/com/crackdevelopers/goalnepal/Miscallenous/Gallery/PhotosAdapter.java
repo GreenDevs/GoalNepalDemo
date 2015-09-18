@@ -1,12 +1,12 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -24,6 +24,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     private Context context;
     private LayoutInflater inflater;
     private List<PhotosItem> data= Collections.emptyList();
+    private int position;
 
     public PhotosAdapter(Context context)
     {
@@ -39,7 +40,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     @Override
     public PhotosAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return new MyViewHolder(inflater.inflate(R.layout.album_row, parent, false));
+        return new MyViewHolder(inflater.inflate(R.layout.photos_row, parent, false));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     {
         PhotosItem item=data.get(position);
         ImageLoader loader= VolleySingleton.getInstance().getmImageLoader();
-        holder.title.setText(item.location);
+
 
         loader.get(item.thumnailUrl, new ImageLoader.ImageListener()
         {
@@ -72,20 +73,34 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView title;
+        //TextView title;
         ImageView thumnail;
 
         public MyViewHolder(View itemView)
         {
             super(itemView);
 
-            itemView.setOnClickListener((PhotosActivity)context);
-            title = (TextView) itemView.findViewById(R.id.album_item_title);
+            itemView.setOnClickListener(this);
+           // title = (TextView) itemView.findViewById(R.id.album_item_title);
             thumnail = (ImageView) itemView.findViewById(R.id.album_item_image);
+
         }
 
 
+        @Override
+        public void onClick(View v)
+        {
+
+            Intent intent =new Intent(context,PhotosSlideActivity.class);
+            intent.putExtra("ImagePosition",getAdapterPosition());
+            context.startActivity(intent);
+
+        }
     }
+
+
 }
