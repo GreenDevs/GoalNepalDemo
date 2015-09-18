@@ -17,6 +17,7 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class NewsAdapter extends ParallaxRecyclerAdapter
 {
     private LayoutInflater inflater;
     private Context context;
+    Date date;
     private List<NewsSingleRow> data= Collections.emptyList();
     private ImageLoader mImageLoader;
     public NewsAdapter(List<NewsSingleRow> data, Context context)
@@ -60,8 +62,9 @@ public class NewsAdapter extends ParallaxRecyclerAdapter
     public void onBindViewHolderImpl(final RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i)
     {
         ((MyViewHolder)viewHolder).title.setText(data.get(i).subtitle);
-        ((MyViewHolder)viewHolder).details.setText(data.get(i).title);
+        ((MyViewHolder)viewHolder).details.setText("Details");//data.get(i).title);
         ((MyViewHolder) viewHolder).image.setImageResource(R.drawable.goalnepal_white);
+        ((MyViewHolder)viewHolder).date.setText(data.get(i).date);
 
         //IMAGE BINDING USING VOLLEY IMAGE LOADER
         String imageUrl=data.get(i).imageUrl;
@@ -104,9 +107,13 @@ public class NewsAdapter extends ParallaxRecyclerAdapter
         return data.size();
     }
 
+
+
+
+
     class  MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView title, details;
+        TextView title, details,date;
         ImageView image;
         public MyViewHolder(View itemView)
         {
@@ -115,6 +122,7 @@ public class NewsAdapter extends ParallaxRecyclerAdapter
             title=(TextView)itemView.findViewById(R.id.newsTitle);
             details=(TextView)itemView.findViewById(R.id.newsDetails);
             image=(ImageView)itemView.findViewById(R.id.newsImage);
+            date= (TextView) itemView.findViewById(R.id.newsDate);
 
         }
 

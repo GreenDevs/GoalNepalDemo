@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,10 @@ import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -90,6 +94,17 @@ public class NewsSimpleAdapter extends RecyclerView.Adapter<NewsSimpleAdapter.My
         {
              viewHolder.image.setImageResource(R.drawable.goalnepal_white);
         }
+        // Setting date format
+        SimpleDateFormat inputFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat outputFormat=new SimpleDateFormat("MMM dd");
+        Date date=new Date();
+        try{
+            date = inputFormat.parse(data.get(i).date);
+
+        }catch(ParseException e){
+            Log.d("Exception", "Invalid Date Format");
+        }
+        viewHolder.date.setText(outputFormat.format(date));
 
 
     }
@@ -102,7 +117,7 @@ public class NewsSimpleAdapter extends RecyclerView.Adapter<NewsSimpleAdapter.My
 
     class  MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView title, details;
+        TextView title, details,date;
         ImageView image;
         public MyViewHolder(View itemView)
         {
@@ -111,6 +126,7 @@ public class NewsSimpleAdapter extends RecyclerView.Adapter<NewsSimpleAdapter.My
             title=(TextView)itemView.findViewById(R.id.newsTitle);
             details=(TextView)itemView.findViewById(R.id.newsDetails);
             image=(ImageView)itemView.findViewById(R.id.newsImage);
+            date= (TextView) itemView.findViewById(R.id.newsDate);
 
         }
 
