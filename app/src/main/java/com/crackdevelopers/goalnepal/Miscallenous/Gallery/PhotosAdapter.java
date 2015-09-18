@@ -1,11 +1,13 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -71,7 +73,9 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+
+
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         //TextView title;
         ImageView thumnail;
@@ -80,11 +84,21 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
         {
             super(itemView);
 
-            itemView.setOnClickListener((PhotosActivity)context);
+            itemView.setOnClickListener(this);
            // title = (TextView) itemView.findViewById(R.id.album_item_title);
             thumnail = (ImageView) itemView.findViewById(R.id.album_item_image);
         }
 
 
+        @Override
+        public void onClick(View v)
+        {
+
+            Toast.makeText(context,"item clicked",Toast.LENGTH_SHORT).show();
+            context.startActivity(new Intent(context, PhotosPagerActivity.class));
+
+        }
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotosActivity extends AppCompatActivity implements View.OnClickListener
+public class PhotosActivity extends AppCompatActivity
 {
 
     static final String ALBUM_PHOTOS_URL="http://goalnepal.com/json_photos_2015.php?gal_id=";
@@ -188,10 +187,4 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-
-    @Override
-    public void onClick(View v)
-    {
-        startActivity(new Intent(this, PhotosPagerActivity.class));
-    }
 }

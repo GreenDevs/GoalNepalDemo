@@ -2,13 +2,13 @@ package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -94,6 +94,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
         @Override
         public void onClick(View v)
         {
+            Toast.makeText(context, "Sending intent", Toast.LENGTH_SHORT).show();
             AlbumItem item=data.get(getAdapterPosition());
             Intent intent=new Intent(context ,PhotosActivity.class);
             intent.putExtra(ALBUM_NAME, item.name);
@@ -102,4 +103,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
             context.startActivity(intent);
         }
     }
+
+
 }
