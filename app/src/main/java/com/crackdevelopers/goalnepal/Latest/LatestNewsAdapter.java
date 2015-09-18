@@ -63,13 +63,12 @@ public class LatestNewsAdapter extends RecyclerView.Adapter<LatestNewsAdapter.My
     @Override
     public void onBindViewHolder(final LatestNewsAdapter.MyViewHolder viewHolder, int i)
     {
+        ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
+        NewsSingleRow item=data.get(i);
 
-            NewsSingleRow item=data.get(i);
             viewHolder.title.setText(item.subtitle);
             viewHolder.details.setText(item.title);
             viewHolder.image.setImageResource(R.drawable.goalnepal_white);
-
-            ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
 
             //IMAGE BINDING USING VOLLEY IMAGE LOADER
             String imageUrl=item.imageUrl;

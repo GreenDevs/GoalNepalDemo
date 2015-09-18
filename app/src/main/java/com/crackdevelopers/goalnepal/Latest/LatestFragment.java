@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -19,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
@@ -73,6 +77,14 @@ public class LatestFragment extends Fragment {
     private static int PAGE_N0 = 1;
     private static final String RECYCLER_STATE_KEY = "recycler state";
 
+    private static final String FEATURED_NEWS_URL="http://www.goalnepal.com/json_news_feature_2015.php?page=";
+    private static final String IMAGE_PATH="http://www.goalnepal.com/graphics/article/";
+    private static final String FEATURED_NEWS="news";
+    private static final String FEATURED_IMAGE_ID="home_image";
+    private static final String FEATURED_SUB_TITLE="top_sub_heading";
+    private static final String FEATURED_TITLE="sub_heading";
+    static String FEATURED_IAMGE_URL="";
+
     private RecyclerView latestNews;
     private WaveSwipeRefreshLayout mPullToRefreshView;
     private final int REFRESH_DELAY = 1500;
@@ -115,6 +127,7 @@ public class LatestFragment extends Fragment {
 
         progressView = (CircularProgressView) getActivity().findViewById(R.id.progress_view);
         progressView.startAnimation();
+        sendFeaturedNewsRequest();
         sendNewsRequest();
 
         /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
@@ -158,6 +171,7 @@ public class LatestFragment extends Fragment {
                         // do what you want to do when refreshing
                         PAGE_N0 = 1;
                         if (requestQueue != null) requestQueue.cancelAll(this);
+                        sendFeaturedNewsRequest();
                         sendNewsRequest();
                         mPullToRefreshView.postDelayed(new Runnable() {
                             @Override
@@ -212,6 +226,47 @@ public class LatestFragment extends Fragment {
         requestQueue.add(newsRequest);
     }
 
+
+    //// THIS HEP TO DOWNLOAD THE FEATURED NEWS AND IMAGES
+    private void sendFeaturedNewsRequest()
+    {
+
+        CacheRequest featuredRequest=new CacheRequest(Request.Method.GET, FEATURED_NEWS_URL+PAGE_N0,
+
+                new Response.Listener<NetworkResponse>()
+                {
+                    @Override
+                    public void onResponse(NetworkResponse response)
+                    {
+                        try
+                        {
+                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            JSONObject responseJson=new JSONObject(jsonResponseString);
+
+                            FEATURED_IAMGE_URL=parseFeaturedNews(responseJson).get(0).imageUrl;
+
+                        }
+                        catch (UnsupportedEncodingException | JSONException | IndexOutOfBoundsException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                ,
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                });
+
+
+        featuredRequest.setTag(this);
+        requestQueue.add(featuredRequest);
+
+    }
 
     ////THIS TRIES TO UPDATE THE NEWS AFTER LIST SCROLLING FINISHED
 
@@ -286,6 +341,49 @@ public class LatestFragment extends Fragment {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+
+        }
+
+        return tempList;
+    }
+
+
+    private ArrayList<NewsSingleRow> parseFeaturedNews(JSONObject rootJson)
+    {
+
+        ArrayList<NewsSingleRow> tempList=new ArrayList<>();
+        if (rootJson != null)
+        {
+
+            if(rootJson.length()!=0)
+            {
+                try
+                {
+                    if(rootJson.has(FEATURED_NEWS))
+                    {
+                        JSONArray featuredNews = rootJson.getJSONArray(FEATURED_NEWS);
+
+                        for(int i=0;i<featuredNews.length();i++)
+                        {
+
+                            JSONObject news=featuredNews.getJSONObject(i);
+                            String imageId="", subtitle="", title="", imageUrl="", date="";
+                            if(news.has(FEATURED_SUB_TITLE)) subtitle=news.getString(FEATURED_SUB_TITLE);
+                            if(news.has(FEATURED_TITLE))     title=news.getString(FEATURED_TITLE);
+                            if(news.has(FEATURED_IMAGE_ID))      imageId=news.getString(FEATURED_IMAGE_ID); imageUrl+=IMAGE_PATH+imageId;
+                            tempList.add(new NewsSingleRow(imageUrl, subtitle, title, "", date, imageId));
+
+                        }
+
+                    }
+
+
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
             }
 
         }
