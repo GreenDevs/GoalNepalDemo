@@ -293,7 +293,7 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
                             loading=true;
                             progressView.setVisibility(View.GONE);
 
-                            if(totalList.size()<6)  { loadMore.setVisibility(View.VISIBLE);}
+                            if(totalList.size()<6)  {sendNewsRequest();}
                             else {loadMore.setVisibility(View.GONE);}
                         }
                         catch (UnsupportedEncodingException | JSONException e)
