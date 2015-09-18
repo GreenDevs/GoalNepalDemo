@@ -10,7 +10,7 @@ import com.crackdevelopers.goalnepal.RecentMatch.RecentMatchFragment;
 
 public class MainPagerAdapter extends FragmentStatePagerAdapter
 {
-    private final String[] TITLES = {"NEWS", "LATEST", "MATCHES"};
+    private final String[] TITLES = {"LATEST","NEWS","MATCHES"};
     public MainPagerAdapter(FragmentManager fm)
     {
         super(fm);
@@ -22,10 +22,11 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter
         switch(i)
         {
             case 0:
-                return new NewsSimpleFragment();
+                return new LatestFragment();
+
 
             case 1:
-                return new LatestFragment();
+                return new NewsSimpleFragment();
 
             case 2:
                 return new RecentMatchFragment();

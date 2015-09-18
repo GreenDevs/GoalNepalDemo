@@ -19,6 +19,7 @@ import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -30,13 +31,14 @@ public class NewsSimpleAdapter extends RecyclerView.Adapter<NewsSimpleAdapter.My
 {
     private LayoutInflater inflater;
     private Context context;
-    private List<NewsSingleRow> data= Collections.emptyList();
+    private List<NewsSingleRow> data;
     private ImageLoader mImageLoader;
 
     public NewsSimpleAdapter(Context context)
     {
         inflater=LayoutInflater.from(context);
         this.context=context;
+        data=new ArrayList<>();
         mImageLoader= VolleySingleton.getInstance().getmImageLoader();
 
     }
