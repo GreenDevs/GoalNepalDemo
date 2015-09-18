@@ -31,7 +31,6 @@ public class PhotoSlideAdapter extends PagerAdapter
     {
         this.mContext=context;
         mLayoutInflater=LayoutInflater.from(context);
-
     }
 
 
