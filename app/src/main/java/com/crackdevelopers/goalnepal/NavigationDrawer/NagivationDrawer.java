@@ -86,7 +86,7 @@ public class NagivationDrawer extends Fragment
         {
             JSONObject reciviedJson=new JSONObject(fileManager.readFromFile());
             navigationRowList=pareseMenu(reciviedJson);
-            mAdapter=new NavStickyAdapter(context, navigationRowList);
+            mAdapter=new NavStickyAdapter(context, navigationRowList,thisDrawerLayout);
             navList.setAdapter(mAdapter);
         }
         catch (JSONException e)
@@ -100,7 +100,7 @@ public class NagivationDrawer extends Fragment
             navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
             navigationRowList.add(new NavigationRow("World Ranking", res.getString(R.string.gallery),"Features", -1));
             navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
-            mAdapter=new NavStickyAdapter(context,navigationRowList);
+            mAdapter=new NavStickyAdapter(context,navigationRowList,thisDrawerLayout);
             navList.setAdapter(mAdapter);
             e.printStackTrace();
         }
