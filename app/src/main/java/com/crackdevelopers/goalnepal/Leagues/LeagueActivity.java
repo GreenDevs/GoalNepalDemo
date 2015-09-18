@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import com.crackdevelopers.goalnepal.NavigationDrawer.NagivationDrawer;
 
 import com.crackdevelopers.goalnepal.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import io.karim.MaterialTabs;
 
@@ -30,6 +32,7 @@ public class LeagueActivity extends AppCompatActivity
         TOURNAMENT_ID=getIntent().getLongExtra(T_ID, 0);
         TOURNAMENT_NAME=getIntent().getStringExtra(T_NAME);
         init();
+        displayads();
     }
 
 
@@ -49,6 +52,13 @@ public class LeagueActivity extends AppCompatActivity
         tabs.setViewPager(viewPager);
         tabs.setTextColorResource(R.color.unselected_tabs);
     }
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewLeague);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
+    }
+
 
 
 

@@ -16,6 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
@@ -49,11 +51,6 @@ public class LiveTVActivity extends AppCompatActivity
         sendVideoRequest();
         playLiveTv = (ImageButton)findViewById(R.id.playLive);
         playLiveTv.setVisibility(View.GONE);
-
-
-
-
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -109,8 +106,10 @@ public class LiveTVActivity extends AppCompatActivity
             }
         };
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Live TV");
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mYouTubeThumbnailView = (YouTubeThumbnailView) findViewById(R.id.videoThumbalil);
+        displayads();
 
 
     }
@@ -122,11 +121,14 @@ public class LiveTVActivity extends AppCompatActivity
     {
 
 
-        Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI",temp[1] );
+        try {
+            Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI", temp[1]);
 
 
+            startActivity(intent);
+        }catch ( Exception e) {
 
-        startActivity(intent);
+        }
     }
 
     @Override
@@ -216,6 +218,12 @@ public class LiveTVActivity extends AppCompatActivity
         playLiveTv.setVisibility(View.VISIBLE);
         mYouTubeThumbnailView.setVisibility(View.VISIBLE);
 
+    }
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewLiveTv);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
     }
 
 

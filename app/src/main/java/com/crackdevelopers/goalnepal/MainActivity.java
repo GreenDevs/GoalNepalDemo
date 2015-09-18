@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import com.crackdevelopers.goalnepal.AboutUS.AboutActivity;
 import com.crackdevelopers.goalnepal.Adapters.MainPagerAdapter;
 import com.crackdevelopers.goalnepal.NavigationDrawer.NagivationDrawer;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import io.karim.MaterialTabs;
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        displayads();
     }
 
     private void init()
@@ -98,6 +101,13 @@ public class MainActivity extends AppCompatActivity
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
         vibrator.vibrate(time);
+    }
+
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewHome);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
     }
 
 

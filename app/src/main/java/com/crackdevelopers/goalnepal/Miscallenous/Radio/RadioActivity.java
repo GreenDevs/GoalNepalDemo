@@ -17,6 +17,9 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.crackdevelopers.goalnepal.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.melnykov.fab.FloatingActionButton;
 
 import co.mobiwise.library.RadioListener;
@@ -57,6 +60,7 @@ import co.mobiwise.library.RadioManager;
              * initialize layout widgets to play, pause radio.
              */
             initializeUI();
+            displayads();
 
         }
 
@@ -243,5 +247,16 @@ import co.mobiwise.library.RadioManager;
            }catch (Exception e ){
 
            }
+
         }
+
+
+        private  void displayads() {
+            AdView mAdView = (AdView) findViewById(R.id.adViewRadio);
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+            mAdView.loadAd(adRequest);
+        }
+
     }
+
+
