@@ -74,7 +74,7 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
     {
         String name1=data.get(position).nameA;
         String name2=data.get(position).nameB;
-        String score=data.get(position).scoreA+" : "+data.get(position).scoreB;
+        String score=data.get(position).scoreA+"   :   "+data.get(position).scoreB;
         String iconA=data.get(position).iconA;
         String iconB=data.get(position).iconB;
 
