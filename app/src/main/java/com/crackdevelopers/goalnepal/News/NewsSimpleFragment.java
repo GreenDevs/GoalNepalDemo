@@ -192,7 +192,16 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
         FileManager fm=new FileManager(context, PREFERRED_FILE);
         Log.i("test in start", fm.readFromFile()+"CONTEST");
         if(fm.readFromFile().isEmpty()) { tornmntSelPrompt.setVisibility(View.VISIBLE); loadMore.setVisibility(View.GONE); }
-        else { tornmntSelPrompt.setVisibility(View.GONE); loadMore.setVisibility(View.VISIBLE);}
+        else
+        {
+            tornmntSelPrompt.setVisibility(View.GONE);
+
+            if(totalList.size()<6)
+            {
+                loadMore.setVisibility(View.VISIBLE);
+            }
+
+        }
 
         if(PreferenceAdapter.hasPrefChanged)
         {

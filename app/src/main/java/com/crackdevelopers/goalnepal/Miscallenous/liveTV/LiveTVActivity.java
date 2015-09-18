@@ -44,7 +44,7 @@ public class LiveTVActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_list);
+        setContentView(R.layout.activity_live_tv);
         queue= VolleySingleton.getInstance().getQueue();
         sendVideoRequest();
         playLiveTv = (ImageButton)findViewById(R.id.playLive);
