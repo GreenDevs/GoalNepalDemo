@@ -57,6 +57,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
 
         ALBUM_ID=getIntent().getLongExtra(ALBUM_ID_KEY, 0);
         ALBUM_NAME=getIntent().getStringExtra(ALBUM_NAME_KEY);
+
         init();
     }
 
@@ -66,9 +67,15 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
         context=this;
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setSubtitle(ALBUM_NAME);
+
+        }
 
         RecyclerView photosGrid=(RecyclerView)findViewById(R.id.album_recycler);
+
 
         if(Utility.isTablet(context))
         {
