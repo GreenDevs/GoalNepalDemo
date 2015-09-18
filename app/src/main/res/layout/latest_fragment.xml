@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
-    <com.yalantis.phoenix.PullToRefreshView
+    <!--<com.yalantis.phoenix.PullToRefreshView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </com.yalantis.phoenix.PullToRefreshView>-->
+
+
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:id="@+id/pull_to_refresh_latest"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,17 +22,16 @@
             android:id="@+id/latestNewsList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            />
-    </com.yalantis.phoenix.PullToRefreshView>
+            android:scrollbars="vertical" />
 
-    <com.github.rahatarmanahmed.cpv.CircularProgressView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+
+    <com.github.rahatarmanahmed.cpv.CircularProgressView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/progress_view"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
         app:cpv_animAutostart="true"
         app:cpv_indeterminate="true" />
 

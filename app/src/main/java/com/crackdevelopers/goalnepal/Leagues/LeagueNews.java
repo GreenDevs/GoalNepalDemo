@@ -1,6 +1,7 @@
 package com.crackdevelopers.goalnepal.Leagues;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,12 +24,14 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.yalantis.phoenix.PullToRefreshView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 /**
  * Created by trees on 8/24/15.
@@ -73,7 +76,7 @@ public class LeagueNews extends Fragment
 
 
     private RecyclerView latestNews;
-    private PullToRefreshView mPullToRefreshView;
+    private WaveSwipeRefreshLayout mPullToRefreshView;
     private final int  REFRESH_DELAY = 1500;
     private Context context;
     private RequestQueue requestQueue;
@@ -125,8 +128,7 @@ public class LeagueNews extends Fragment
 
         latestNews.addOnScrollListener(
 
-                new RecyclerView.OnScrollListener()
-                {
+                new RecyclerView.OnScrollListener() {
 
                     private int pastVisiblesItems, visibleItemsCount, totalItemsCount;
 
@@ -138,10 +140,9 @@ public class LeagueNews extends Fragment
                         pastVisiblesItems = manager.findFirstVisibleItemPosition();
 
 
-                        if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount))
-                        {
+                        if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount)) {
                             Log.i("last", " LAST");
-                            loading=false;
+                            loading = false;
                             sendNewsScrollRequest();
                         }
 
@@ -150,10 +151,13 @@ public class LeagueNews extends Fragment
                 });
 
         /////################################# PULLL TO REFRESH ########################################
-        mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh_latest);
+        mPullToRefreshView = (WaveSwipeRefreshLayout) getActivity().findViewById(R.id.pull_to_refresh_latest);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+
         mPullToRefreshView.setOnRefreshListener(
 
-                new PullToRefreshView.OnRefreshListener()
+                new WaveSwipeRefreshLayout.OnRefreshListener()
                 {
                     @Override
                     public void onRefresh()
@@ -189,7 +193,6 @@ public class LeagueNews extends Fragment
     {
         super.onResume();
         requestQueue.cancelAll(this);
-
     }
 
     private void sendNewsRequest()

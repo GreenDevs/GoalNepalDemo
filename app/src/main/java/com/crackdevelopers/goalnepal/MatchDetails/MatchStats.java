@@ -25,7 +25,6 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,6 +1,7 @@
 package com.crackdevelopers.goalnepal.RecentMatch;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,6 @@ import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import com.yalantis.phoenix.PullToRefreshView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,6 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 
 public class RecentMatchFragment extends Fragment
@@ -56,7 +58,7 @@ public class RecentMatchFragment extends Fragment
     RecentMatchAdapter mAdapter;
     private RequestQueue queue;
     private CircularProgressView progressView;
-    private PullToRefreshView mPullToRefreshView;
+    private WaveSwipeRefreshLayout mPullToRefreshView;
     private final int  REFRESH_DELAY = 1500;
 
     public RecentMatchFragment()
@@ -108,10 +110,13 @@ public class RecentMatchFragment extends Fragment
 
 
         /////################################# PULLL TO REFRESH ########################################
-        mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh_recent);
+        mPullToRefreshView = (WaveSwipeRefreshLayout) getActivity().findViewById(R.id.pull_to_refresh_recent);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+
         mPullToRefreshView.setOnRefreshListener(
 
-                new PullToRefreshView.OnRefreshListener() {
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh()
                     {
@@ -162,10 +167,7 @@ public class RecentMatchFragment extends Fragment
                     mAdapter.setData(parseData(responseJson));
                     progressView.setVisibility(View.GONE);
                 }
-                catch (UnsupportedEncodingException e)
-                {
-                    e.printStackTrace();
-                } catch (JSONException e)
+                catch (UnsupportedEncodingException | JSONException e)
                 {
                     e.printStackTrace();
                 }

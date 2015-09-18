@@ -16,12 +16,13 @@ import java.io.OutputStreamWriter;
 public class FileManager
 {
     private Context context;
-    private static final String FILE_NAME="menu.json";
+    private String FILE_NAME;
     OutputStreamWriter writer ;
 
-    public FileManager(Context context)
+    public FileManager(Context context, String filename)
     {
         this.context=context;
+        this.FILE_NAME=filename;
     }
 
     public  void writeToFile(String data)
