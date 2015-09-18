@@ -42,14 +42,16 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
     private List<NavigationRow> data = Collections.emptyList();
     private DrawerLayout thisDrawerLayout  ;
 
-    public NavStickyAdapter(Context context, List<NavigationRow> data ,DrawerLayout mDrawerLayout) {
+    public NavStickyAdapter(Context context, List<NavigationRow> data ,DrawerLayout mDrawerLayout)
+    {
         this.context = context;
         thisDrawerLayout=mDrawerLayout;
         inflater = LayoutInflater.from(context);
         this.data = data;
 
         stickyData = new ArrayList<>();
-        for (NavigationRow item : data) {
+        for (NavigationRow item : data)
+        {
             stickyData.add(item.stickyTitle);
         }
     }

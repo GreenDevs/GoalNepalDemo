@@ -11,11 +11,7 @@
     <ImageView
         android:padding="15dp"
         android:elevation="8dp"
-
         android:background="@color/primaryColor"
-
-        android:background="#e53935"
-
         android:id="@+id/user_icon"
         android:layout_width="match_parent"
         android:layout_height="150dp"
