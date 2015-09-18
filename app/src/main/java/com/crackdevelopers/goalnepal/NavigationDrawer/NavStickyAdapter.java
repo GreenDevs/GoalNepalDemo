@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.crackdevelopers.goalnepal.Leagues.LeagueActivity;
 import com.crackdevelopers.goalnepal.MainActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Gallery.AlbumActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.ExpertNews.ExpertNewsActivity;
+import com.crackdevelopers.goalnepal.Miscallenous.GuessWho.GuessWhoActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceActivity;
 import com.crackdevelopers.goalnepal.Miscallenous.Preferences.PreferenceAdapter;
 import com.crackdevelopers.goalnepal.Miscallenous.Radio.RadioActivity;
@@ -129,7 +131,8 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
             thisDrawerLayout.closeDrawers();
 
             int pos = getAdapterPosition();
-            switch (pos) {
+            switch (pos)
+            {
                 case 0:
 
                     if (!(context instanceof MainActivity)) {
@@ -162,6 +165,16 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
 
                 case 6:
 
+                    context.startActivity(new Intent(context, ExpertNewsActivity.class));
+                    break;
+
+                case 7:
+
+                    context.startActivity(new Intent(context, GuessWhoActivity.class));
+                    break;
+
+                case 8:
+
                     context.startActivity(new Intent(context, PreferenceActivity.class));
                     break;
 
@@ -172,6 +185,9 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
                     context.startActivity(intent);
 
             }
+
+//            icon.setTextColor(context.getResources().getColor(R.color.primaryColor));
+//            name.setTextColor(context.getResources().getColor(R.color.primaryColor));
 
         }
     }

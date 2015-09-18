@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_league">League</string>
 
@@ -21,12 +21,11 @@
     <!-- FOr youtube player  begining -->
 
 
-
-
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="img_desc">Image</string>
     <string name="loadmore">Load More</string>
     <string name="aboutus">About Us</string>
+    <string name="expert_news">Expert News</string>
     <string name="first">First</string>
     <!-- youtube api key -->
     <string name="youtube_api_key">AIzaSyBujbWUBbjHgLJPTtQSWGN7-EMq00b4VB0</string>
@@ -41,8 +40,6 @@
     <string name="conn_msg4">Internet Connection Error</string>
     <string name="loading">Loading..</string>
     <!-- FOr youtube player  ends -->
-
-
 
 
     <!-- for profile view begining -->
@@ -67,7 +64,6 @@
     <string name="title_activity_photos_pager">Photos Viewer</string>
 
 
-
     <string name="banner_large_txt">Goal Nepal</string>
     <string name="banner_small_txt">v1.0</string>
     <string name="fblink_tv">Website:   http://www.goalnepal.com/</string>
@@ -79,4 +75,26 @@
     <string name="Share">share</string>
     <string name="title_activity_ranking">RankingActivity</string>
     <string name="title_activity_video_gallery">VideoGallery</string>
+
+
+
+    <!-- for admob banner ads starts-->
+
+    <string name="banner_home_id">ca-app-pub-1276827419720606/2785889570</string>
+    <string name="banner_league_id">ca-app-pub-1276827419720606/2506687970</string>
+    <string name="banner_radio_id">ca-app-pub-1276827419720606/1169555577</string>
+    <string name="banner_live_tv_id">ca-app-pub-1276827419720606/8692822375</string>
+    <string name="banner_video_gallary_id">ca-app-pub-1276827419720606/2646288772</string>
+    <string name="banner_gallary_id">ca-app-pub-1276827419720606/4123021972</string>
+    <string name="banner_news_details_id">ca-app-pub-1276827419720606/8494345975</string>
+    <string name="banner_world_ranking_id">ca-app-pub-1276827419720606/3983421177</string>
+    <string name="banner_details_id">ca-app-pub-1276827419720606/4262622776</string>
+
+
+    <!-- for admob banner ads ends-->
+
+
+
+    <string name="title_activity_guess_who">Quiz</string>
+
 </resources>

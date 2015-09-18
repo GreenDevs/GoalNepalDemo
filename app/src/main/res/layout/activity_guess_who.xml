@@ -1,0 +1,164 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.crackdevelopers.goalnepal.Miscallenous.GuessWho.GuessWhoActivity">
+
+   <include
+       android:id="@id/app_bar"
+       layout="@layout/app_bar"/>
+
+    <TextView
+        android:layout_below="@id/app_bar"
+        android:id="@+id/title"
+        android:textStyle="bold"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="Guess the player name and win exciting prize from Goal Nepal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:layout_below="@+id/title"
+        android:id="@+id/player_image"
+        android:layout_width="match_parent"
+        android:src="@drawable/goalnepal_white"
+        android:layout_height="200dp" />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+       android:layout_below="@+id/player_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/p1"
+                    android:textStyle="bold"
+                    android:text="Ananta Tamang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/p2"
+                    android:textStyle="bold"
+                    android:text="Ananta Tamang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/p3"
+                    android:textStyle="bold"
+                    android:text="Ananta Tamang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/p4"
+                    android:textStyle="bold"
+                    android:text="Ananta Tamang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/radio_group"
+        android:inputType="textEmailAddress"
+        android:hint="email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/phone_number"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@id/email"
+        android:inputType="textEmailAddress"
+        android:hint="phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

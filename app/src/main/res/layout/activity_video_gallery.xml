@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="com.crackdevelopers.goalnepal.Miscallenous.video.gallery.VideoGallery">
 
    <include
@@ -26,5 +27,15 @@
         android:layout_height="40dp"
         app:cpv_animAutostart="true"
         app:cpv_indeterminate="true" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewVideoGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/banner_video_gallary_id">
+    </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>
