@@ -1,69 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/news_card_height"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
-    android:layout_marginTop="15dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
     android:clipChildren="false"
-    card_view:cardElevation="@dimen/card_view_elevation"
-     >
+    card_view:cardElevation="@dimen/card_view_elevation">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
-        >
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/newsImage"
-            android:src="@drawable/goalnepal_white"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:scaleType="centerCrop"
-            />
+            android:src="@drawable/goalnepal_white" />
+
         <LinearLayout
-            android:layout_weight="2"
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            >
-
+            android:layout_weight="2"
+            android:orientation="vertical">
 
 
             <TextView
-                android:layout_gravity="center_vertical"
                 android:id="@+id/newsTitle"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:text="transfer"
-                android:layout_weight="2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:ems="3"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="transfer"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/newsDetails"
 
-                android:text="Rahim Sterling transferred in city "
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:layout_weight="4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="4"
+                android:ems="3"
+                android:gravity="center_vertical"
+                android:maxLines="3"
+                android:text="Rahim Sterling transferred in city " />
 
             <TextView
-                android:layout_gravity="right"
                 android:id="@+id/newsDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
                 android:gravity="right"
                 android:text="date"
-                android:layout_weight="1"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 

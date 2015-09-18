@@ -1,17 +1,23 @@
 package com.crackdevelopers.goalnepal.Miscallenous.video.gallery;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.crackdevelopers.goalnepal.News.NewsDetailsActivity;
+import com.crackdevelopers.goalnepal.News.NewsSingleRow;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import java.util.Collections;
 import java.util.List;
@@ -74,6 +80,9 @@ public class VideoGalAdapter extends RecyclerView.Adapter<VideoGalAdapter.MyView
             {
                 holder.vPic.setImageResource(R.drawable.goalnepal_white);
             }
+
+
+
         });
     }
 
@@ -83,7 +92,7 @@ public class VideoGalAdapter extends RecyclerView.Adapter<VideoGalAdapter.MyView
         return data.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder
+    class MyViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener
     {
         ImageView vPic;
         TextView vTtitle;
@@ -92,6 +101,35 @@ public class VideoGalAdapter extends RecyclerView.Adapter<VideoGalAdapter.MyView
             super(itemView);
             vPic=(ImageView)itemView.findViewById(R.id.video_pic);
             vTtitle=(TextView)itemView.findViewById(R.id.video_title);
+            itemView.setOnClickListener(this);
+        }
+
+
+        @Override
+        public void onClick(View v)
+        {
+
+            Bundle bundle=new Bundle();
+            VideoItem row=data.get(getAdapterPosition());
+
+
+
+            ///  calling youtube intenet starts here
+            // everything starts here
+            String videoLink = row.vlink;
+            String [] temp = videoLink.split("/embed/");
+            String id = temp[1];
+
+
+            Intent intent = YouTubeStandalonePlayer.createVideoIntent((VideoGallery)context, "AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI", id);
+
+
+
+            context.startActivity(intent);
+
+            // eth ends here
+            // calling youtube intent ends here
+
         }
     }
 }
