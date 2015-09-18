@@ -59,7 +59,6 @@ public class NewsFragment extends Fragment
     private static int PAGE_N0=1;
     private static final String RECYCLER_STATE_KEY="recycler state";
     private Parcelable listStateParcable;
-
     private RecyclerView news;
     private RequestQueue requestQueue;
     private WaveSwipeRefreshLayout mPullToRefreshView;

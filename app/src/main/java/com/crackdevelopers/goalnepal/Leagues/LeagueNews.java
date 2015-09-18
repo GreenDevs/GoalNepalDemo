@@ -193,7 +193,6 @@ public class LeagueNews extends Fragment
     {
         super.onResume();
         requestQueue.cancelAll(this);
-
     }
 
     private void sendNewsRequest()

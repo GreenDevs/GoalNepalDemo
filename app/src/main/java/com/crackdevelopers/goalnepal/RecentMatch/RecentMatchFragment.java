@@ -167,10 +167,7 @@ public class RecentMatchFragment extends Fragment
                     mAdapter.setData(parseData(responseJson));
                     progressView.setVisibility(View.GONE);
                 }
-                catch (UnsupportedEncodingException e)
-                {
-                    e.printStackTrace();
-                } catch (JSONException e)
+                catch (UnsupportedEncodingException | JSONException e)
                 {
                     e.printStackTrace();
                 }

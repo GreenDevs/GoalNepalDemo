@@ -1,7 +1,6 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -28,7 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotosActivity extends AppCompatActivity implements View.OnClickListener
+public class PhotosActivity extends AppCompatActivity
 {
 
     static final String ALBUM_PHOTOS_URL="http://goalnepal.com/json_photos_2015.php?gal_id=";
@@ -57,6 +56,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
 
         ALBUM_ID=getIntent().getLongExtra(ALBUM_ID_KEY, 0);
         ALBUM_NAME=getIntent().getStringExtra(ALBUM_NAME_KEY);
+
         init();
     }
 
@@ -66,9 +66,15 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
         context=this;
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setSubtitle(ALBUM_NAME);
+
+        }
 
         RecyclerView photosGrid=(RecyclerView)findViewById(R.id.album_recycler);
+
 
         if(Utility.isTablet(context))
         {
@@ -181,10 +187,4 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-
-    @Override
-    public void onClick(View v)
-    {
-        startActivity(new Intent(this, PhotosPagerActivity.class));
-    }
 }

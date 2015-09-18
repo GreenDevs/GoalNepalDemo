@@ -8,7 +8,7 @@ import android.view.View;
 import com.crackdevelopers.goalnepal.R;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 
-public class PhotosPagerActivity extends AppCompatActivity
+public class PhotosSlideActivity extends AppCompatActivity
 {
     private CircularProgressView progressView;
     @Override
@@ -20,6 +20,7 @@ public class PhotosPagerActivity extends AppCompatActivity
         ViewPager pager=(ViewPager)findViewById(R.id.photo_view_pager);
         PhotoSlideAdapter mSlideAdapter=new PhotoSlideAdapter(this);
         pager.setAdapter(mSlideAdapter);
+        pager.setCurrentItem(getIntent().getIntExtra("ImagePosition",0));
 
 
         ///###################### PROGRESS BAR
