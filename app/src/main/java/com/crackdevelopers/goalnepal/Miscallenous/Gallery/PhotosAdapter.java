@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -25,6 +24,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     private Context context;
     private LayoutInflater inflater;
     private List<PhotosItem> data= Collections.emptyList();
+    private int position;
 
     public PhotosAdapter(Context context)
     {
@@ -48,7 +48,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
     {
         PhotosItem item=data.get(position);
         ImageLoader loader= VolleySingleton.getInstance().getmImageLoader();
-       // holder.title.setText(item.location);
+
 
         loader.get(item.thumnailUrl, new ImageLoader.ImageListener()
         {
@@ -87,6 +87,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
             itemView.setOnClickListener(this);
            // title = (TextView) itemView.findViewById(R.id.album_item_title);
             thumnail = (ImageView) itemView.findViewById(R.id.album_item_image);
+
         }
 
 
@@ -94,8 +95,9 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.MyViewHold
         public void onClick(View v)
         {
 
-            Toast.makeText(context,"item clicked",Toast.LENGTH_SHORT).show();
-            context.startActivity(new Intent(context, PhotosPagerActivity.class));
+            Intent intent =new Intent(context,PhotosSlideActivity.class);
+            intent.putExtra("ImagePosition",getAdapterPosition());
+            context.startActivity(intent);
 
         }
     }
