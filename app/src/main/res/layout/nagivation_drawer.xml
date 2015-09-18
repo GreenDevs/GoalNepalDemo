@@ -14,7 +14,7 @@
 
         android:background="@color/primaryColor"
 
-        android:background="#e53935"
+
 
         android:id="@+id/user_icon"
         android:layout_width="match_parent"
