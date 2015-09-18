@@ -65,7 +65,7 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
     private static final String FEATURED_IMAGE_ID="home_image";
     private static final String FEATURED_SUB_TITLE="top_sub_heading";
     private static final String FEATURED_TITLE="sub_heading";
-    private static int PAGE_N0=1;
+    private static int PAGE_N0=0;
     private static final String RECYCLER_STATE_KEY="recycler state";
     public static final String PREFERRED_FILE="pref_id.txt";
     private List<NewsSingleRow> totalList;
@@ -78,7 +78,6 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
     private NewsSimpleAdapter newsAdapter;
     private LinearLayoutManager mManager;
     private boolean loading = true;
-    private Button loadMore;
 
     private CircularProgressView progressView;
     private TextView tornmntSelPrompt;
@@ -102,11 +101,9 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
     {
         View v=inflater.inflate(R.layout.news_fragment, container, false);
         news=(RecyclerView)v.findViewById(R.id.newsList);
-        loadMore=(Button)v.findViewById(R.id.load_more);
         tornmntSelPrompt=(TextView)v.findViewById(R.id.tournament_prompt);
 
         tornmntSelPrompt.setOnClickListener(this);
-        loadMore.setOnClickListener(this);
         return v;
     }
 
@@ -124,7 +121,17 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
         progressView.startAnimation();
 
 //        sendFeaturedNewsRequest();
-        sendNewsRequest();
+        FileManager fm=new FileManager(context, PREFERRED_FILE);
+        Log.i("test in start", fm.readFromFile() + "CONTEST");
+        if(!fm.readFromFile().isEmpty())
+        {
+            totalList=new ArrayList<>();
+            PAGE_N0=0;
+            newsAdapter = new NewsSimpleAdapter(context);
+            news.setAdapter(newsAdapter);
+            sendNewsScrollRequest();
+        }
+
 
         /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
 
@@ -145,6 +152,7 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
 
                         if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount)) {
                             loading = false;
+
                             sendNewsScrollRequest();
                         }
 
@@ -165,8 +173,16 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
                         // do what you want to do when refreshing
 
                         if (requestQueue != null) requestQueue.cancelAll(this);
-                        sendNewsRequest();
-//                        sendFeaturedNewsRequest();
+                        FileManager fm=new FileManager(context, PREFERRED_FILE);
+                        Log.i("test in start", fm.readFromFile() + "CONTEST");
+                        if(!fm.readFromFile().isEmpty())
+                        {
+                            totalList=new ArrayList<>();
+                            PAGE_N0=0;
+                            newsAdapter = new NewsSimpleAdapter(context);
+                            news.setAdapter(newsAdapter);
+                            sendNewsScrollRequest();
+                        }
                         mPullToRefreshView.postDelayed
                                 (
 
@@ -190,23 +206,29 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
         super.onStart();
 
         FileManager fm=new FileManager(context, PREFERRED_FILE);
-        Log.i("test in start", fm.readFromFile()+"CONTEST");
-        if(fm.readFromFile().isEmpty()) { tornmntSelPrompt.setVisibility(View.VISIBLE); loadMore.setVisibility(View.GONE); }
+        Log.i("test in start", fm.readFromFile() + "CONTEST");
+        if(fm.readFromFile().isEmpty())
+        {
+            tornmntSelPrompt.setVisibility(View.VISIBLE);
+            newsAdapter = new NewsSimpleAdapter(context);
+            news.setAdapter(newsAdapter);
+        }
         else
         {
             tornmntSelPrompt.setVisibility(View.GONE);
 
-            if(totalList.size()<6)
+            if(PreferenceAdapter.hasPrefChanged)
             {
-                loadMore.setVisibility(View.VISIBLE);
+                totalList=new ArrayList<>();
+                PAGE_N0=0;
+                newsAdapter = new NewsSimpleAdapter(context);
+                news.setAdapter(newsAdapter);
+                sendNewsScrollRequest();
             }
 
         }
 
-        if(PreferenceAdapter.hasPrefChanged)
-        {
-            sendNewsRequest();
-        }
+
     }
 
     @Override
@@ -271,7 +293,6 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
         PAGE_N0++;
         progressView.startAnimation();
         progressView.setVisibility(View.VISIBLE);
-        loadMore.setVisibility(View.GONE);
         CacheRequest newsScrollRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()
@@ -293,8 +314,7 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
                             loading=true;
                             progressView.setVisibility(View.GONE);
 
-                            if(totalList.size()<6)  { loadMore.setVisibility(View.VISIBLE);}
-                            else {loadMore.setVisibility(View.GONE);}
+                            if(totalList.size()<6)  {sendNewsScrollRequest();}
                         }
                         catch (UnsupportedEncodingException | JSONException e)
                         {
@@ -483,9 +503,6 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
     {
         switch(v.getId())
         {
-            case R.id.load_more:
-                sendNewsScrollRequest();
-                break;
 
             case R.id.tournament_prompt:
                 PreferenceAdapter.hasPrefChanged=false;
