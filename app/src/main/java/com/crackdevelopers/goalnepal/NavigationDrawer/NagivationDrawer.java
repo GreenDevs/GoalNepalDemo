@@ -99,7 +99,10 @@ public class NagivationDrawer extends Fragment
             navigationRowList.add(new NavigationRow("Video Gallery", res.getString(R.string.video),"Features", -1));
             navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
             navigationRowList.add(new NavigationRow("World Ranking", res.getString(R.string.gallery),"Features", -1));
+            navigationRowList.add(new NavigationRow("Expert News", res.getString(R.string.preferences),"Features", -1));
+            navigationRowList.add(new NavigationRow("Guess Who", res.getString(R.string.preferences),"Features", -1));
             navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
+
             mAdapter=new NavStickyAdapter(context,navigationRowList,thisDrawerLayout);
             navList.setAdapter(mAdapter);
             e.printStackTrace();
@@ -152,6 +155,8 @@ public class NagivationDrawer extends Fragment
             navigationRowList.add(new NavigationRow("Video Gallery", res.getString(R.string.video),"Features", -1));
             navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
             navigationRowList.add(new NavigationRow("World Ranking", res.getString(R.string.gallery),"Features", -1));
+            navigationRowList.add(new NavigationRow("Expert News", res.getString(R.string.preferences),"Features", -1));
+            navigationRowList.add(new NavigationRow("Guess Who", res.getString(R.string.preferences),"Features", -1));
             navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
             if (menuJson != null)
                 try

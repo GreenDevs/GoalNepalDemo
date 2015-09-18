@@ -27,6 +27,7 @@
     <string name="img_desc">Image</string>
     <string name="loadmore">Load More</string>
     <string name="aboutus">About Us</string>
+    <string name="expert_news">Expert News</string>
     <string name="first">First</string>
     <!-- youtube api key -->
     <string name="youtube_api_key">AIzaSyBujbWUBbjHgLJPTtQSWGN7-EMq00b4VB0</string>
@@ -79,4 +80,5 @@
     <string name="Share">share</string>
     <string name="title_activity_ranking">RankingActivity</string>
     <string name="title_activity_video_gallery">VideoGallery</string>
+    <string name="title_activity_guess_who">Quiz</string>
 </resources>
