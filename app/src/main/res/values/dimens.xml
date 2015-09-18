@@ -7,7 +7,7 @@
     <dimen name="tab_elevation">10dp</dimen>
     <dimen name="news_card_height">150dp</dimen>
     <dimen name="today_score_card_height">120dp</dimen>
-    <dimen name="card_view_elevation">5dp</dimen>
+    <dimen name="card_view_elevation">3dp</dimen>
     <dimen name="toolbar_elevation">10dp</dimen>
     <dimen name="lineups_player_icon">50dp</dimen>
 

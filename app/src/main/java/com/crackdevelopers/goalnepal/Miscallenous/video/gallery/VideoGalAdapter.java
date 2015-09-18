@@ -101,6 +101,7 @@ public class VideoGalAdapter extends RecyclerView.Adapter<VideoGalAdapter.MyView
             super(itemView);
             vPic=(ImageView)itemView.findViewById(R.id.video_pic);
             vTtitle=(TextView)itemView.findViewById(R.id.video_title);
+            itemView.setOnClickListener(this);
         }
 
 
@@ -118,7 +119,7 @@ public class VideoGalAdapter extends RecyclerView.Adapter<VideoGalAdapter.MyView
             String videoLink = row.vlink;
             String [] temp = videoLink.split("/embed/");
             String id = temp[1];
-            Toast.makeText(context , "itemClicked" , Toast.LENGTH_SHORT).show();
+
 
             Intent intent = YouTubeStandalonePlayer.createVideoIntent((VideoGallery)context, "AIzaSyD2EawPYwjp7i_2Bt4APkcONoK0mQyRAgI", id);
 
