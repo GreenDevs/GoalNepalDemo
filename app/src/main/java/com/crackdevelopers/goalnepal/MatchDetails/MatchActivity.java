@@ -13,6 +13,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import io.karim.MaterialTabs;
 
@@ -39,6 +41,7 @@ public class MatchActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match);
         init();
+        displayads();
     }
 
     public void init()
@@ -76,37 +79,31 @@ public class MatchActivity extends ActionBarActivity
 
         ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
         imageLoader.get(teamAIcon,
-                
-        new ImageLoader.ImageListener() 
-        {
-            @Override
-            public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) 
-            {
-                ((ImageView)toolbar.findViewById(R.id.match_iconA)).setImageBitmap(response.getBitmap());
-            }
 
-            @Override
-            public void onErrorResponse(VolleyError error) 
-            {
-                ((ImageView)toolbar.findViewById(R.id.match_iconA)).setImageResource(R.drawable.soccer_black);
-            }
-        });
+                new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        ((ImageView) toolbar.findViewById(R.id.match_iconA)).setImageBitmap(response.getBitmap());
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ((ImageView) toolbar.findViewById(R.id.match_iconA)).setImageResource(R.drawable.soccer_black);
+                    }
+                });
 
 
         imageLoader.get(teamBIcon,
 
-                new ImageLoader.ImageListener()
-                {
+                new ImageLoader.ImageListener() {
                     @Override
-                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate)
-                    {
-                        ((ImageView)toolbar.findViewById(R.id.match_iconB)).setImageBitmap(response.getBitmap());
+                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                        ((ImageView) toolbar.findViewById(R.id.match_iconB)).setImageBitmap(response.getBitmap());
                     }
 
                     @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        ((ImageView)toolbar.findViewById(R.id.match_iconB)).setImageResource(R.drawable.soccer_black);
+                    public void onErrorResponse(VolleyError error) {
+                        ((ImageView) toolbar.findViewById(R.id.match_iconB)).setImageResource(R.drawable.soccer_black);
                     }
                 });
         
@@ -133,4 +130,14 @@ public class MatchActivity extends ActionBarActivity
 
         return false;
     }
+
+
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewMatchDetails);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
+    }
+
+
 }

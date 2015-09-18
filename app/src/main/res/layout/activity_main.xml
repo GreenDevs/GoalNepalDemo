@@ -1,50 +1,65 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout_for_webpage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.crackdevelopers.goalnepal.MainActivity">
 
-    <LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
-
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
-
-    <io.karim.MaterialTabs
-        android:id="@+id/material_tabs"
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="?attr/colorPrimary"
-        app:mtSameWeightTabs="true"
-        app:mtPaddingMiddle="false"
-        app:mtTextColorSelected="@color/selected_tab"
-        android:elevation="@dimen/tab_elevation"
-        app:mtIndicatorColor="@color/selected_tab"
-        app:mtIndicatorHeight="@dimen/underlineHeight"
-        />
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        />
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-</LinearLayout>
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/app_bar" />
+
+        <io.karim.MaterialTabs
+            android:id="@+id/material_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="?attr/colorPrimary"
+            android:elevation="@dimen/tab_elevation"
+            app:mtIndicatorColor="@color/selected_tab"
+            app:mtIndicatorHeight="@dimen/underlineHeight"
+            app:mtPaddingMiddle="false"
+            app:mtSameWeightTabs="true"
+            app:mtTextColorSelected="@color/selected_tab" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                />
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adViewHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="@string/banner_home_id">
+            </com.google.android.gms.ads.AdView>
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
     <fragment
+
 
         android:id="@+id/nagivation_drawer"
         android:name="com.crackdevelopers.goalnepal.NavigationDrawer.NagivationDrawer"
         android:layout_width="270dp"
+
         android:layout_height="match_parent"
         android:layout_gravity="start"
         tools:layout="@layout/nagivation_drawer">

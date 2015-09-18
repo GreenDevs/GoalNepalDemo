@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
 
     tools:context="com.crackdevelopers.goalnepal.Miscallenous.liveTV.LiveTVActivity">
 
@@ -36,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="60dp"
         android:text=" Watch Goal Nepal Live"
         android:textColor="#222"
         android:textSize="20sp" />
@@ -48,6 +49,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_play_arrow_white_24dp"/>
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewLiveTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/banner_live_tv_id">
+    </com.google.android.gms.ads.AdView>
 
 
 </RelativeLayout>

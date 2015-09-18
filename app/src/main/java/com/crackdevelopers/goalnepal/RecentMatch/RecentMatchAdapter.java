@@ -2,6 +2,7 @@ package com.crackdevelopers.goalnepal.RecentMatch;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,8 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
     private static final String MATCH_ICON_A="match_icon_url_a";
     private static final String MATCH_ICON_B="match_icon_url_b";
     private static final String MATCH_ID="match_id";
+    private static final String MATCH_STATUS="match_status";
+    private static final String MATCH_TIME="match_time";
 
     public RecentMatchAdapter(Context context)
     {
@@ -77,12 +80,23 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
         String score=data.get(position).scoreA+"   :   "+data.get(position).scoreB;
         String iconA=data.get(position).iconA;
         String iconB=data.get(position).iconB;
+        String status=data.get(position).match_status;
+        String time=data.get(position).match_time;
+        String date=data.get(position).date;
 
         holder.nameA.setText(name1);
         holder.nameB.setText(name2);
         holder.score.setText(score);
         holder.iconA.setImageResource(R.drawable.soccer_black);
         holder.iconB.setImageResource(R.drawable.soccer_black);
+        if(status.equals("LIVE")){
+            holder.status.setTextColor(Color.GREEN);
+            holder.status.setText(status);
+        }
+        else if(status.equals("YTP")){
+            holder.status.setText(time);
+        }
+
 
         ///THIS WILL SET THE CLUBA ICON
         imageLoader.get(iconA,
@@ -132,7 +146,7 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
     {
 
         ImageView iconA, iconB;
-        TextView nameA, nameB, score;
+        TextView nameA, nameB, score,status;
         public MyViewHolder(View itemView)
         {
             super(itemView);
@@ -142,6 +156,9 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
             score=(TextView)itemView.findViewById(R.id.today_single_row_score);
             iconA=(ImageView)itemView.findViewById(R.id.today_single_row_logo1);
             iconB=(ImageView)itemView.findViewById(R.id.today_single_row_logo2);
+            status= (TextView)itemView.findViewById(R.id.match_status);
+
+
 
         }
 
@@ -159,6 +176,10 @@ public class RecentMatchAdapter extends RecyclerView.Adapter<RecentMatchAdapter.
 
             bundle.putString(MATCH_SCORE_A, item.scoreA);
             bundle.putString(MATCH_SCORE_B, item.scoreB);
+
+            bundle.putString(MATCH_STATUS,item.match_status);
+            bundle.putString(MATCH_TIME,item.match_time);
+
             bundle.putLong(MATCH_ID, item.match_id);
             intent.putExtra(MATCH_BUNDLE, bundle);
 
