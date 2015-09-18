@@ -94,7 +94,7 @@ public class RecentMatchFragment extends Fragment
         scoreList.setLayoutManager(new LinearLayoutManager(getActivity()));
         scoreList.addItemDecoration(decoration);
 
-        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view);
+        progressView = (CircularProgressView)getActivity().findViewById(R.id.progress_view_recent);
         progressView.startAnimation();
 
         ///STICKY ADAPTER THAT MANAGES THE STICKY

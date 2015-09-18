@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import com.crackdevelopers.goalnepal.Latest.LatestFragment;
+import com.crackdevelopers.goalnepal.Latest.LatestParallexFragment;
 import com.crackdevelopers.goalnepal.News.NewsFragment;
 import com.crackdevelopers.goalnepal.News.NewsSimpleFragment;
 import com.crackdevelopers.goalnepal.RecentMatch.RecentMatchFragment;

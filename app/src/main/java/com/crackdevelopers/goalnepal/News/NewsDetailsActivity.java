@@ -111,6 +111,7 @@ public class NewsDetailsActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onBackPressed() {
 
@@ -122,5 +123,6 @@ public class NewsDetailsActivity extends AppCompatActivity
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
         mAdView.loadAd(adRequest);
     }
+
 
 }
