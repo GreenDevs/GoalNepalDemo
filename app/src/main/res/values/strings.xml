@@ -54,6 +54,17 @@
     <!-- for profile view end -->
 
 
+    <!-- home 600
+gallery 601
+videogal 602
+radio 603
+tournamnet &#xe604;
+sel tournmnt &#xe605;
+exper &#xe606;
+tv    &#xe607;
+guess &#xe608;
+ranking &#xe609;
+-->
     <!--- NAVIGATION DRAWER MENU -->
     <string name="home">&#xe600;</string>
     <string name="radio">&#xe603;</string>
@@ -61,6 +72,10 @@
     <string name="gallery">&#xe601;</string>
     <string name="leagues">&#xe604;</string>
     <string name="preferences">&#xe605;</string>
+    <string name="expert_news_icon">&#xe606;</string>
+    <string name="live_tv">&#xe607;</string>
+    <string name="guess_who">&#xe608;</string>
+    <string name="fifa_ranking">&#xe609;</string>
     <string name="title_activity_preference">Select Cups</string>
 
     <string name="album_image_des">album</string>

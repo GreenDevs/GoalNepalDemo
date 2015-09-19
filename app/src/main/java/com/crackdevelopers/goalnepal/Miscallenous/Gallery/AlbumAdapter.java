@@ -40,6 +40,17 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder
         this.data=data;
         notifyItemRangeChanged(0, data.size());
     }
+
+    public void scrollList(List<AlbumItem> data)
+    {
+        int prevSize=this.data.size();
+        for(AlbumItem item:data)
+        {
+            this.data.add(item);
+        }
+
+        notifyItemRangeChanged(prevSize, data.size());
+    }
     @Override
     public AlbumAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
