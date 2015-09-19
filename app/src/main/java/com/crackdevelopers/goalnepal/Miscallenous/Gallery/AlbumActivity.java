@@ -80,6 +80,8 @@ public class AlbumActivity extends AppCompatActivity
         if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         albumGrid=(RecyclerView)findViewById(R.id.album_recycler);
+        mAdapter=new AlbumAdapter(context);
+        albumGrid.setAdapter(mAdapter);
 
         if(Utility.isTablet(context))
         {
@@ -89,8 +91,6 @@ public class AlbumActivity extends AppCompatActivity
         {
             albumGrid.setLayoutManager(new GridLayoutManager(context, 2));
         }
-
-
         ///###################### PROGRESS BAR
         progressView = (CircularProgressView)findViewById(R.id.progress_view_album);
         progressView.startAnimation();
@@ -128,18 +128,6 @@ public class AlbumActivity extends AppCompatActivity
     private void sendJsonRequest()
     {
         PAGE_NO=1;
-        progressView.setVisibility(View.VISIBLE);
-        mAdapter=new AlbumAdapter(context);
-        albumGrid.setAdapter(mAdapter);
-
-        if(Utility.isTablet(context))
-        {
-            albumGrid.setLayoutManager(new GridLayoutManager(context,3));
-        }
-        else
-        {
-            albumGrid.setLayoutManager(new GridLayoutManager(context, 2));
-        }
 
         CacheRequest albumRequest=new CacheRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
 
@@ -155,10 +143,10 @@ public class AlbumActivity extends AppCompatActivity
                             mAdapter.setData(parseJson(responseJson));
                             progressView.setVisibility(View.GONE);
 
-                            while(PAGE_NO<5)
-                            {
-                                sendScrollRequest();
-                            }
+//                            while(PAGE_NO<5)
+//                            {
+//                                sendScrollRequest();
+//                            }
                         }
                         catch (UnsupportedEncodingException | JSONException e)
                         {

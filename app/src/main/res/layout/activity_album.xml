@@ -38,16 +38,6 @@
         app:cpv_animAutostart="true"
         app:cpv_indeterminate="true" />
 
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/app_bar"
-        android:padding="10dp"
-        android:id="@+id/album_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewGallary"
         android:layout_width="wrap_content"

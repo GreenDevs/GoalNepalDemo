@@ -83,6 +83,7 @@ public class LeagueNews extends Fragment
     private LatestNewsAdapter latestNewsAdapter;
     private boolean loading = true;
     private CircularProgressView progressView;
+    private LinearLayoutManager manager;
 
 
     public LeagueNews()
@@ -114,7 +115,7 @@ public class LeagueNews extends Fragment
         super.onActivityCreated(savedInstanceState);
         this.context=getActivity();
 
-        final LinearLayoutManager manager=new LinearLayoutManager(context);
+        manager=new LinearLayoutManager(context);
         latestNews.setLayoutManager(manager);
         latestNewsAdapter = new LatestNewsAdapter(context);
         latestNews.setAdapter(latestNewsAdapter);

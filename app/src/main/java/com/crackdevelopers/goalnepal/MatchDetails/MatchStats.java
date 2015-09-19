@@ -152,6 +152,7 @@ public class MatchStats extends Fragment
 
                         for(int i=0;i<goals.length();i++)
                         {
+
                             JSONObject goal=goals.getJSONObject(i);
 
                             String playerName="", teamGroup="", minute="";

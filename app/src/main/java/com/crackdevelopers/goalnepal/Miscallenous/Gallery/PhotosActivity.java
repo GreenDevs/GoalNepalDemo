@@ -1,6 +1,7 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,6 +30,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 public class PhotosActivity extends AppCompatActivity
 {
 
@@ -49,6 +52,9 @@ public class PhotosActivity extends AppCompatActivity
     private PhotosAdapter mAdapter;
     private Context context;
     private CircularProgressView progressView;
+
+    private WaveSwipeRefreshLayout mPullToRefreshView;
+    private final int  REFRESH_DELAY = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -95,6 +101,28 @@ public class PhotosActivity extends AppCompatActivity
         progressView = (CircularProgressView)findViewById(R.id.progress_view_album);
         progressView.startAnimation();
         sendJsonRequest();
+
+        mPullToRefreshView = (WaveSwipeRefreshLayout)findViewById(R.id.pull_to_refresh_album);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+
+        mPullToRefreshView.setOnRefreshListener(
+
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        VolleySingleton.getInstance().getQueue().cancelAll(this);
+                        sendJsonRequest();
+                        // do what you want to do when refreshing
+                        mPullToRefreshView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPullToRefreshView.setRefreshing(false);
+                            }
+                        }, REFRESH_DELAY);
+                    }
+                }
+        );
 
     }
 
