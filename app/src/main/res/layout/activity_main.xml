@@ -37,6 +37,7 @@
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="45dp"
 
                 />
             <com.google.android.gms.ads.AdView
