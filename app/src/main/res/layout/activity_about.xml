@@ -60,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:id="@+id/fblink"
-            android:text="@string/fblink_tv"
+            android:id="@+id/websitelink"
+            android:text="@string/website_tv"
             android:autoLink="web"
            />
 
@@ -78,6 +78,20 @@
             android:text="@string/emaillink_tv"
             android:autoLink="email"
           />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:textColor="#000000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fblink"
+            android:text="@string/fblink_tv"
+            android:autoLink="web"
+            />
+
+
 
 
     </LinearLayout>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.crackdevelopers.goalnepal.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by script on 9/18/15.
@@ -19,15 +20,25 @@ public class FIFARankAdapter extends  RecyclerView.Adapter<FIFARankAdapter.MyVie
 {
     private Context mContext;
     private LayoutInflater layoutInflater;
-    private ArrayList<RankingSingleRow>rankingSingleRowArrayList;
+    private ArrayList<RankingSingleRow> data;
 
-    public FIFARankAdapter(ArrayList<RankingSingleRow> rankingSingleRowArrayList, Context context)
+    public FIFARankAdapter(ArrayList<RankingSingleRow> data, Context context)
     {
         this.mContext=context;
         layoutInflater=LayoutInflater.from(context);
-        this.rankingSingleRowArrayList=rankingSingleRowArrayList;
+        this.data=data;
     }
 
+    public void scrollList(List<RankingSingleRow> data)
+    {
+        int prevSize=this.data.size();
+        for(RankingSingleRow item:data)
+        {
+            this.data.add(item);
+        }
+
+        notifyItemRangeChanged(prevSize, data.size());
+    }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -38,7 +49,7 @@ public class FIFARankAdapter extends  RecyclerView.Adapter<FIFARankAdapter.MyVie
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position)
     {
-        RankingSingleRow singleRow=rankingSingleRowArrayList.get(position);
+        RankingSingleRow singleRow=data.get(position);
         holder.rankYear.setText(singleRow.rankYear);
         holder.rank.setText(singleRow.rank);
         holder.rankMonth.setText(singleRow.rankMonth);
@@ -48,7 +59,7 @@ public class FIFARankAdapter extends  RecyclerView.Adapter<FIFARankAdapter.MyVie
     @Override
     public int getItemCount()
     {
-        return rankingSingleRowArrayList.size();
+        return data.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder

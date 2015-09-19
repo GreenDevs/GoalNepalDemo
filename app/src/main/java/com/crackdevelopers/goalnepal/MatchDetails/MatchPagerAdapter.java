@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  */
 public class MatchPagerAdapter extends FragmentStatePagerAdapter {
 
-    private final String[] TITLES = {"COMNTRY", "STATS", "LINE UPS"};
+    private final String[] TITLES = {"COMMENTARY", "STATS", "LINE UPS"};
 
     public MatchPagerAdapter(FragmentManager fm)
     {

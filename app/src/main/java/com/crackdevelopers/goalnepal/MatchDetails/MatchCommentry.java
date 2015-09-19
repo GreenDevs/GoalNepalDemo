@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -161,8 +162,12 @@ public class MatchCommentry extends Fragment {
             if (rootJson.length() != 0) {
                 if (rootJson.has(MATCH_COMMENTARY)) {
                     try {
+
                         JSONArray commentaries = rootJson.getJSONArray(MATCH_COMMENTARY);
-                        for (int i = 0; i < commentaries.length(); i++) {
+
+                        for (int i = 0; i < commentaries.length(); i++)
+                        {
+
                             JSONObject commentary = commentaries.getJSONObject(i);
                             String time = "", icon_url = "", text = "";
 

@@ -36,7 +36,12 @@
         </activity>
         <activity
             android:name=".Leagues.LeagueActivity"
-            android:label="@string/title_activity_league" />
+
+            android:label="@string/title_activity_league">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".MatchDetails.MatchActivity"
             android:label="@string/title_activity_match" />
@@ -68,7 +73,6 @@
             android:label="@string/title_activity_photos_pager"></activity>
 
 
-
         <activity
             android:name=".Miscallenous.Ranking.RankingActivity"
             android:label="@string/title_activity_ranking"></activity>
@@ -81,17 +85,16 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
 
 
-
         <activity
             android:name=".Miscallenous.GuessWho.GuessWhoActivity"
-            android:label="@string/title_activity_guess_who" >
-        </activity>
+            android:label="@string/title_activity_guess_who"></activity>
 
     </application>
 

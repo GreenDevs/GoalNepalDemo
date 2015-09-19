@@ -2,9 +2,11 @@ package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -34,6 +36,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 public class AlbumActivity extends AppCompatActivity
 {
 
@@ -47,12 +51,15 @@ public class AlbumActivity extends AppCompatActivity
     private static final String ALBUM_ID="gallery_id";
     private static final String ALBUM_THUMNAIL="thumbnail";
     private static final String ALBUM_PATH="http://goalnepal.com/";
-    private static final int PAGE_NO=1;
+    private int PAGE_NO=1;
 
 
     private AlbumAdapter mAdapter;
     private Context context;
     private CircularProgressView progressView;
+    private WaveSwipeRefreshLayout mPullToRefreshView;
+    private final int  REFRESH_DELAY = 1500;
+    private RecyclerView albumGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -72,7 +79,9 @@ public class AlbumActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView albumGrid=(RecyclerView)findViewById(R.id.album_recycler);
+        albumGrid=(RecyclerView)findViewById(R.id.album_recycler);
+        mAdapter=new AlbumAdapter(context);
+        albumGrid.setAdapter(mAdapter);
 
         if(Utility.isTablet(context))
         {
@@ -82,23 +91,44 @@ public class AlbumActivity extends AppCompatActivity
         {
             albumGrid.setLayoutManager(new GridLayoutManager(context, 2));
         }
-
-        mAdapter=new AlbumAdapter(context);
-        albumGrid.setAdapter(mAdapter);
-
         ///###################### PROGRESS BAR
         progressView = (CircularProgressView)findViewById(R.id.progress_view_album);
         progressView.startAnimation();
         sendJsonRequest();
 
+        mPullToRefreshView = (WaveSwipeRefreshLayout)findViewById(R.id.pull_to_refresh_album);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+        mPullToRefreshView.setOnRefreshListener(
 
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // do what you want to do when refreshing
+
+
+                        VolleySingleton.getInstance().getQueue().cancelAll(this);
+                        sendJsonRequest();
+                        mPullToRefreshView.postDelayed
+                                (
+
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                mPullToRefreshView.setRefreshing(false);
+                                            }
+                                        }, REFRESH_DELAY);
+                    }
+                }
+        );
 
     }
 
 
     private void sendJsonRequest()
     {
-        progressView.setVisibility(View.VISIBLE);
+        PAGE_NO=1;
+
         CacheRequest albumRequest=new CacheRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
 
                 new Response.Listener<NetworkResponse>()
@@ -111,6 +141,51 @@ public class AlbumActivity extends AppCompatActivity
                             final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             mAdapter.setData(parseJson(responseJson));
+                            progressView.setVisibility(View.GONE);
+
+//                            while(PAGE_NO<5)
+//                            {
+//                                sendScrollRequest();
+//                            }
+                        }
+                        catch (UnsupportedEncodingException | JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                ,
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        progressView.setVisibility(View.GONE);
+                    }
+                });
+
+
+        albumRequest.setTag(this);
+        RequestQueue queue=VolleySingleton.getInstance().getQueue();
+        queue.add(albumRequest);
+    }
+
+    private void sendScrollRequest()
+    {
+        PAGE_NO++;
+        progressView.setVisibility(View.VISIBLE);
+        CacheRequest albumScrollRequest=new CacheRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
+
+                new Response.Listener<NetworkResponse>()
+                {
+                    @Override
+                    public void onResponse(NetworkResponse response)
+                    {
+                        try
+                        {
+                            final String jsonResponseString=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                            JSONObject responseJson=new JSONObject(jsonResponseString);
+                            mAdapter.scrollList(parseJson(responseJson));
                             progressView.setVisibility(View.GONE);
                         }
                         catch (UnsupportedEncodingException | JSONException e)
@@ -125,14 +200,14 @@ public class AlbumActivity extends AppCompatActivity
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-
+                        progressView.setVisibility(View.GONE);
                     }
                 });
 
 
-        albumRequest.setTag(this);
+        albumScrollRequest.setTag(this);
         RequestQueue queue=VolleySingleton.getInstance().getQueue();
-        queue.add(albumRequest);
+        queue.add(albumScrollRequest);
     }
 
     private List<AlbumItem> parseJson(JSONObject rootJson)

@@ -3,12 +3,14 @@ package com.crackdevelopers.goalnepal.NavigationDrawer;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crackdevelopers.goalnepal.Leagues.LeagueActivity;
 import com.crackdevelopers.goalnepal.MainActivity;
@@ -138,7 +140,15 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
                 case 0:
 
                     if (!(context instanceof MainActivity)) {
-                        context.startActivity(new Intent(context, MainActivity.class));
+                        try {
+                            NavUtils.navigateUpFromSameTask((LeagueActivity) context);
+
+                        } catch (Exception e) {
+                            context.startActivity(new Intent(context, MainActivity.class));
+
+
+                        }
+                       //
                     }
                     break;
 

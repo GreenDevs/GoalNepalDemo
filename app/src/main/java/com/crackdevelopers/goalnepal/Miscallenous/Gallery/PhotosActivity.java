@@ -1,6 +1,7 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +20,8 @@ import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Utility.Utility;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 public class PhotosActivity extends AppCompatActivity
 {
@@ -48,6 +53,9 @@ public class PhotosActivity extends AppCompatActivity
     private Context context;
     private CircularProgressView progressView;
 
+    private WaveSwipeRefreshLayout mPullToRefreshView;
+    private final int  REFRESH_DELAY = 1500;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -57,7 +65,9 @@ public class PhotosActivity extends AppCompatActivity
         ALBUM_ID=getIntent().getLongExtra(ALBUM_ID_KEY, 0);
         ALBUM_NAME=getIntent().getStringExtra(ALBUM_NAME_KEY);
 
+
         init();
+        displayads();
     }
 
 
@@ -91,6 +101,28 @@ public class PhotosActivity extends AppCompatActivity
         progressView = (CircularProgressView)findViewById(R.id.progress_view_album);
         progressView.startAnimation();
         sendJsonRequest();
+
+        mPullToRefreshView = (WaveSwipeRefreshLayout)findViewById(R.id.pull_to_refresh_album);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+
+        mPullToRefreshView.setOnRefreshListener(
+
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        VolleySingleton.getInstance().getQueue().cancelAll(this);
+                        sendJsonRequest();
+                        // do what you want to do when refreshing
+                        mPullToRefreshView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPullToRefreshView.setRefreshing(false);
+                            }
+                        }, REFRESH_DELAY);
+                    }
+                }
+        );
 
     }
 
@@ -186,5 +218,12 @@ public class PhotosActivity extends AppCompatActivity
         super.onStop();
 
     }
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewGallary);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
+    }
+
 
 }

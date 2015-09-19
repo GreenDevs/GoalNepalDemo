@@ -41,7 +41,7 @@
         android:id="@+id/tournament_prompt"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:text="no tournaments selected"
+        android:text="no tournaments selected click here"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

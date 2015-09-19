@@ -206,7 +206,7 @@ public class LiveTVActivity extends AppCompatActivity
                /* String videoId = (String) view.getTag();
                 loaders.put(youTubeThumbnailView, youTubeThumbnailLoader);*/
 
-                youTubeThumbnailView.setImageResource(R.drawable.goalnepaltv);
+                youTubeThumbnailView.setImageResource(R.drawable.livetv);
                 youTubeThumbnailLoader.setVideo(temp[1]);
             }
 
