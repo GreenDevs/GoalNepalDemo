@@ -192,6 +192,8 @@ import co.mobiwise.library.RadioManager;
             mNotificationManager.cancelAll();
         }
 
+
+        // hellp this is just for test
         @Override
         public void onRadioStarted() {
             runOnUiThread(new Runnable() {
