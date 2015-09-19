@@ -1,12 +1,16 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Ranking;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -17,8 +21,12 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,20 +34,30 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 public class RankingActivity extends AppCompatActivity
 {
 
-    private static final String URL =  "http://www.goalnepal.com/json_fifa_ranking_2015.php?year=2015";
+    private static final String URL =  "http://www.goalnepal.com/json_fifa_ranking_2015.php?year=";
 
    private static final String RANK_ID="rank_id";
     private static final String RANK_MONTH="rank_month";
     private static final String RANK="rank";
     private static final String RANK_YEAR="rank_year";
     private static final String NEWS="news";
-
     private Context mContext;
     private RecyclerView mRecyclerView;
+    private  FIFARankAdapter rankAdapter;
+    private static final int CURRENT_YEAR=Calendar.getInstance().get(Calendar.YEAR);
+    private int YEAR_COUNT=CURRENT_YEAR;
+    private LinearLayoutManager manager;
+    private boolean loading=true;
+    private CircularProgressView progressView;
+    private WaveSwipeRefreshLayout mPullToRefreshView;
+    private final int  REFRESH_DELAY = 1500;
 
     RequestQueue mQueue;
 
@@ -53,7 +71,66 @@ public class RankingActivity extends AppCompatActivity
         initInstances();
         displayads();
 
+        ///###################### PROGRESS BAR
+        progressView = (CircularProgressView)findViewById(R.id.progress_view_ranking);
+        progressView.startAnimation();
+
+        /////################################# PULLL TO REFRESH ########################################
+        mPullToRefreshView = (WaveSwipeRefreshLayout)findViewById(R.id.pull_to_refresh_ranking);
+        mPullToRefreshView.setWaveColor(Color.parseColor("#c62828"));
+        mPullToRefreshView.setColorSchemeColors(Color.WHITE);
+        mPullToRefreshView.setOnRefreshListener(
+
+                new WaveSwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        // do what you want to do when refreshing
+
+
+                        VolleySingleton.getInstance().getQueue().cancelAll(this);
+                        sendRankRequest();
+                        mPullToRefreshView.postDelayed
+                                (
+
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                mPullToRefreshView.setRefreshing(false);
+                                            }
+                                        }, REFRESH_DELAY);
+                    }
+                }
+        );
+
         sendRankRequest();
+
+
+        /////////############################## RECYCLER VIEW LISTENER FROM MORE SCROLL########################################
+
+
+        mRecyclerView.addOnScrollListener(
+
+                new RecyclerView.OnScrollListener() {
+
+                    private int pastVisiblesItems, visibleItemsCount, totalItemsCount;
+
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                        visibleItemsCount = manager.getChildCount();
+                        totalItemsCount = manager.getItemCount();
+                        pastVisiblesItems = manager.findFirstVisibleItemPosition();
+
+
+                        if (loading && ((pastVisiblesItems + visibleItemsCount) >= totalItemsCount)) {
+                            Log.i("last", " LAST");
+                            loading = false;
+                            sendScrollRequest();
+                        }
+
+
+                    }
+                });
     }
 
     private void initInstances()
@@ -64,7 +141,7 @@ public class RankingActivity extends AppCompatActivity
         if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mRecyclerView= (RecyclerView) findViewById(R.id.fifaRanking_recycler);
-        LinearLayoutManager manager=new LinearLayoutManager(mContext);
+        manager=new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(manager);
 //        Toast.makeText(mContext,"array length="+rankingSingleRowList.size(),Toast.LENGTH_SHORT).show();
 
@@ -72,7 +149,9 @@ public class RankingActivity extends AppCompatActivity
 
     private void sendRankRequest()
     {
-        CacheRequest cacheRequest=new CacheRequest(Request.Method.GET, URL, new Response.Listener<NetworkResponse>()
+        progressView.setVisibility(View.VISIBLE);
+        YEAR_COUNT=CURRENT_YEAR;
+        CacheRequest cacheRequest=new CacheRequest(Request.Method.GET, URL+YEAR_COUNT, new Response.Listener<NetworkResponse>()
         {
             @Override
             public void onResponse(NetworkResponse response)
@@ -88,8 +167,13 @@ public class RankingActivity extends AppCompatActivity
                         rankingSingleRowList.add(singleRow);
                     }
 
-                    FIFARankAdapter rankAdapter=new FIFARankAdapter(rankingSingleRowList,mContext);
+                    rankAdapter=new FIFARankAdapter(rankingSingleRowList,mContext);
                     mRecyclerView.setAdapter(rankAdapter);
+                    progressView.setVisibility(View.GONE);
+                    while(YEAR_COUNT>=CURRENT_YEAR-2)
+                    {
+                        sendScrollRequest();
+                    }
                 }
                 catch (UnsupportedEncodingException | JSONException e)
                 {
@@ -104,9 +188,55 @@ public class RankingActivity extends AppCompatActivity
             @Override
             public void onErrorResponse(VolleyError error)
             {
-
+                progressView.setVisibility(View.GONE);
             }
         });
+
+        cacheRequest.setTag(mContext);
+        mQueue.add(cacheRequest);
+    }
+
+
+
+    private void sendScrollRequest()
+    {
+        progressView.setVisibility(View.VISIBLE);
+        YEAR_COUNT--;
+        CacheRequest cacheRequest=new CacheRequest(Request.Method.GET, URL+YEAR_COUNT, new Response.Listener<NetworkResponse>()
+        {
+            @Override
+            public void onResponse(NetworkResponse response)
+            {
+                try
+                {
+                    ArrayList<RankingSingleRow>  rankingSingleRowList=new ArrayList<>();
+                    String jsonStringResponse=new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+                    JSONObject responseJson=new JSONObject(jsonStringResponse);
+                    ArrayList<RankingSingleRow>tmp=parseRank(responseJson);
+                    for(RankingSingleRow singleRow: tmp)
+                    {
+                        rankingSingleRowList.add(singleRow);
+                    }
+                    rankAdapter.scrollList(rankingSingleRowList);
+                    loading=true;
+                    progressView.setVisibility(View.GONE);
+                }
+                catch (UnsupportedEncodingException | JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+                ,
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        progressView.setVisibility(View.GONE);
+                    }
+                });
 
         cacheRequest.setTag(mContext);
         mQueue.add(cacheRequest);
@@ -119,7 +249,6 @@ public class RankingActivity extends AppCompatActivity
         {
             try
             {
-                StringBuffer buffer=new StringBuffer();
                 JSONArray rankArray=rootObj.getJSONArray(NEWS);
                 for(int i=0;i<rankArray.length();i++)
                 {

@@ -34,15 +34,7 @@
 
         </LinearLayout>
 
-    <com.github.rahatarmanahmed.cpv.CircularProgressView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:visibility="visible"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/progress_view_stats"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:cpv_animAutostart="true"
-        app:cpv_indeterminate="true" />
+
 
 
         <android.support.v7.widget.CardView
@@ -60,5 +52,21 @@
                 />
 
         </android.support.v7.widget.CardView>
+
+
+
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:layout_below="@+id/ll"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progress_view_stats"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cpv_animAutostart="true"
+        app:cpv_indeterminate="true" />
+
+
+
 
 </RelativeLayout>

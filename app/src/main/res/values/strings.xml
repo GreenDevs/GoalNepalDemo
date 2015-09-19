@@ -50,6 +50,17 @@
     <!-- for profile view end -->
 
 
+    <!-- home 600
+gallery 601
+videogal 602
+radio 603
+tournamnet &#xe604;
+sel tournmnt &#xe605;
+exper &#xe606;
+tv    &#xe607;
+guess &#xe608;
+ranking &#xe609;
+-->
     <!--- NAVIGATION DRAWER MENU -->
     <string name="home">&#xe600;</string>
     <string name="radio">&#xe603;</string>
@@ -57,6 +68,17 @@
     <string name="gallery">&#xe601;</string>
     <string name="leagues">&#xe604;</string>
     <string name="preferences">&#xe605;</string>
+<<<<<<< HEAD
+    <string name="expert_news_icon">&#xe600;</string>
+    <string name="guess_who">&#xe602;</string>
+    <string name="live_tv">&#xe601;</string>
+    <string name="fifa_ranking">&#xe603;</string>
+=======
+    <string name="expert_news_icon">&#xe606;</string>
+    <string name="live_tv">&#xe607;</string>
+    <string name="guess_who">&#xe608;</string>
+    <string name="fifa_ranking">&#xe609;</string>
+>>>>>>> checkoutcheck
     <string name="title_activity_preference">Select Cups</string>
 
     <string name="album_image_des">album</string>
@@ -66,10 +88,16 @@
 
     <string name="banner_large_txt">GoalNepal</string>
     <string name="banner_small_txt">v1.0</string>
+<<<<<<< HEAD
+    <string name="fblink_tv">Website:   http://www.goalnepal.com/</string>
+    <string name="emaillink_tv">Email:  greendeev@gmail.com</string>
+    <string name="footer_txt_copyright">© GoalNepal</string>
+
     <string name="fblink_tv">Facebook : https://www.facebook.com/goalnepal</string>
     <string name="emaillink_tv">Email:  ceo@goalnepal.com</string>
     <string name="website_tv">Website:   http://www.goalnepal.com</string>
     <string name="footer_txt_copyright">© Goal Nepal</string>
+
     <string name="footer_txt_developedby">Developed By: Softlica Inc.</string>
     <string name="footer_txt_tgif_team">TGIF Team</string>
     <string name="title_activity_testsd">testsd</string>

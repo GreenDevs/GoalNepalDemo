@@ -27,7 +27,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
 
-            android:text=" © Goal Nepal"
+            android:text=" © GoalNepal"
             android:textColor="#222"
             android:textSize="15sp"
             android:layout_alignParentLeft="true"
