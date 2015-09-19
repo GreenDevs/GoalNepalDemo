@@ -197,18 +197,10 @@ public class RadioActivity extends AppCompatActivity implements RadioListener {
                 mButtonplay.setVisibility(View.GONE);
 
 
-
-        @Override
-        public void onRadioStarted() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
                 mTextViewControl.setText("Goal Nepal FM is Playing");
                 setNotification();
             }
         });
-
 
     }
 
