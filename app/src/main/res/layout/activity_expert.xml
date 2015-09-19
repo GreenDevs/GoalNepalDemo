@@ -15,6 +15,7 @@
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:layout_below="@id/app_bar"
         android:id="@+id/pull_to_refresh_expert"
+        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
