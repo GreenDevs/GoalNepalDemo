@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -74,6 +75,8 @@ public class PhotosActivity extends AppCompatActivity
     private void init()
     {
         context=this;
+
+        findViewById(R.id.loadmore).setVisibility(View.GONE);
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null)

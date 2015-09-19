@@ -128,7 +128,16 @@ public class AlbumActivity extends AppCompatActivity
     private void sendJsonRequest()
     {
         PAGE_NO=1;
-
+        if(Utility.isTablet(context))
+        {
+            albumGrid.setLayoutManager(new GridLayoutManager(context,3));
+        }
+        else
+        {
+            albumGrid.setLayoutManager(new GridLayoutManager(context, 2));
+        }
+        mAdapter=new AlbumAdapter(context);
+        albumGrid.setAdapter(mAdapter);
         CacheRequest albumRequest=new CacheRequest(Request.Method.GET, ALBUM_URL+PAGE_NO,
 
                 new Response.Listener<NetworkResponse>()
@@ -143,10 +152,6 @@ public class AlbumActivity extends AppCompatActivity
                             mAdapter.setData(parseJson(responseJson));
                             progressView.setVisibility(View.GONE);
 
-//                            while(PAGE_NO<5)
-//                            {
-//                                sendScrollRequest();
-//                            }
                         }
                         catch (UnsupportedEncodingException | JSONException e)
                         {
@@ -279,5 +284,9 @@ public class AlbumActivity extends AppCompatActivity
         mAdView.loadAd(adRequest);
     }
 
+    public void onClick(View v)
+    {
+        sendScrollRequest();
+    }
 
 }

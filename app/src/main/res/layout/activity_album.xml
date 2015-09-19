@@ -24,6 +24,7 @@
             android:padding="10dp"
             android:id="@+id/album_recycler"
             android:layout_width="match_parent"
+            android:scrollbars="vertical"
             android:layout_height="wrap_content"
             />
     </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
@@ -49,6 +50,19 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="@string/banner_gallary_id">
     </com.google.android.gms.ads.AdView>
+
+    <TextView
+        android:textColor="#fff"
+        android:gravity="center"
+        android:layout_marginBottom="100dp"
+        android:text="more"
+        android:onClick="onClick"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/check_circle"
+        android:id="@+id/loadmore"
+        android:layout_width="55dp"
+        android:layout_height="55dp" />
 
 
 </RelativeLayout>
