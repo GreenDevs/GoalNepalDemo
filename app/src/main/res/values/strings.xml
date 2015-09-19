@@ -89,6 +89,9 @@
     <string name="banner_news_details_id">ca-app-pub-1276827419720606/8494345975</string>
     <string name="banner_world_ranking_id">ca-app-pub-1276827419720606/3983421177</string>
     <string name="banner_details_id">ca-app-pub-1276827419720606/4262622776</string>
+    <string name="banner_photo_album_id">ca-app-pub-1276827419720606/1734631979</string>
+    <string name="banner_photo_slideshow_top_id">ca-app-pub-1276827419720606/7076488378</string>
+    <string name="banner_photo_slideshow_bottom_id">ca-app-pub-1276827419720606/8553221571</string>
 
 
     <!-- for admob banner ads ends-->

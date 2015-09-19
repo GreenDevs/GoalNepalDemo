@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.crackdevelopers.goalnepal.R;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class PhotosSlideActivity extends AppCompatActivity
 {
@@ -27,6 +29,7 @@ public class PhotosSlideActivity extends AppCompatActivity
         progressView = (CircularProgressView)findViewById(R.id.progress_view_slide_show);
         progressView.startAnimation();
         progressView.setVisibility(View.VISIBLE);
+        displayads();
     }
 
     void setPVisibility(boolean visibility)
@@ -36,6 +39,14 @@ public class PhotosSlideActivity extends AppCompatActivity
         {
             progressView.setVisibility(View.GONE);
         }
+    }
+
+
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewSlideShowBottom);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
     }
 
 }
