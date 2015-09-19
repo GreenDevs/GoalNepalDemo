@@ -57,6 +57,10 @@
     <string name="gallery">&#xe601;</string>
     <string name="leagues">&#xe604;</string>
     <string name="preferences">&#xe605;</string>
+    <string name="expert_news_icon">&#xe600;</string>
+    <string name="guess_who">&#xe602;</string>
+    <string name="live_tv">&#xe601;</string>
+    <string name="fifa_ranking">&#xe603;</string>
     <string name="title_activity_preference">Select Cups</string>
 
     <string name="album_image_des">album</string>
