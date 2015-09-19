@@ -21,8 +21,8 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 {
 
 
-    private static final String FB_LINK="https://m.facebook.com/515289881959584";
-    private static final String EMAIL="topappshacker@gmail.com";
+    private static final String FB_LINK="https://www.facebook.com/goalnepal";
+    private static final String EMAIL="ceo@goalnepal.com";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -96,7 +96,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
 
-            case R.id.fblink:
+            case R.id.websitelink:
 
 
                 Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(FB_LINK));
@@ -110,6 +110,22 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, "link out of reach", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
+            case R.id.fblink:
+
+
+                Intent mintent = new Intent(Intent.ACTION_VIEW,Uri.parse(FB_LINK));
+
+
+                try {
+                    startActivity(mintent);
+                    overridePendingTransition(R.anim.down_to_top, R.anim.static_anim);
+                    this.finish();
+                } catch (Exception e) {
+                    Toast.makeText(this, "link out of reach", Toast.LENGTH_SHORT).show();
+                }
+                break;
+
 
             default:
                 break;
