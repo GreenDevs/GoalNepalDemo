@@ -20,7 +20,7 @@
 
     <!-- FOr youtube player  begining -->
 
-
+    <string name="tournament_prompt">No Tournament Selected Click Here</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="img_desc">Image</string>
     <string name="loadmore">Load More</string>
@@ -86,14 +86,14 @@ ranking &#xe609;
     <string name="fblink_tv">Facebook : https://www.facebook.com/goalnepal</string>
     <string name="emaillink_tv">Email:  ceo@goalnepal.com</string>
     <string name="website_tv">Website:   http://www.goalnepal.com</string>
-    <string name="footer_txt_copyright">© Goal Nepal</string>
+    <string name="footer_txt_copyright">© GoalNepal</string>
 
     <string name="footer_txt_developedby">Developed By: Softlica Inc.</string>
     <string name="footer_txt_tgif_team">TGIF Team</string>
     <string name="title_activity_testsd">testsd</string>
     <string name="Share">share</string>
-    <string name="title_activity_ranking">RankingActivity</string>
-    <string name="title_activity_video_gallery">VideoGallery</string>
+    <string name="title_activity_ranking">FIFA Ranking</string>
+    <string name="title_activity_video_gallery">Video Gallery</string>
 
 
 

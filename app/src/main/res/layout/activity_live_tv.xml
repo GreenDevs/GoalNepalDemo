@@ -40,7 +40,7 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginBottom="60dp"
-        android:text=" Watch Goal Nepal Live"
+        android:text=" Watch GoalNepal Live"
         android:textColor="#ddd"
         android:textSize="20sp" />
 

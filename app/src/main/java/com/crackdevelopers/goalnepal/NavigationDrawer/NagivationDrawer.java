@@ -98,7 +98,7 @@ public class NagivationDrawer extends Fragment
             navigationRowList.add(new NavigationRow("Live TV", res.getString(R.string.live_tv),"Features", -1));
             navigationRowList.add(new NavigationRow("Video Gallery", res.getString(R.string.video),"Features", -1));
             navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
-            navigationRowList.add(new NavigationRow("World Ranking", res.getString(R.string.fifa_ranking),"Features", -1));
+            navigationRowList.add(new NavigationRow("FIFA Ranking", res.getString(R.string.fifa_ranking),"Features", -1));
             navigationRowList.add(new NavigationRow("Expert News", res.getString(R.string.expert_news_icon),"Features", -1));
             navigationRowList.add(new NavigationRow("Guess Who", res.getString(R.string.guess_who),"Features", -1));
             navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
@@ -154,10 +154,12 @@ public class NagivationDrawer extends Fragment
             navigationRowList.add(new NavigationRow("Live TV", res.getString(R.string.live_tv),"Features", -1));
             navigationRowList.add(new NavigationRow("Video Gallery", res.getString(R.string.video),"Features", -1));
             navigationRowList.add(new NavigationRow("Gallery", res.getString(R.string.gallery),"Features", -1));
-            navigationRowList.add(new NavigationRow("World Ranking", res.getString(R.string.fifa_ranking),"Features", -1));
+            navigationRowList.add(new NavigationRow("FIFA Ranking", res.getString(R.string.fifa_ranking),"Features", -1));
             navigationRowList.add(new NavigationRow("Expert News", res.getString(R.string.expert_news_icon),"Features", -1));
             navigationRowList.add(new NavigationRow("Guess Who", res.getString(R.string.guess_who),"Features", -1));
             navigationRowList.add(new NavigationRow("Select Tournaments", res.getString(R.string.preferences),"Features", -1));
+
+
             if (menuJson != null)
                 try
                 {

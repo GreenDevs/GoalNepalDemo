@@ -74,7 +74,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:text="Play Goal Nepal Radio"
+                android:text="Play GoalNepal Radio"
 
                 android:textColor="#fff"
                 android:textSize="25sp" />

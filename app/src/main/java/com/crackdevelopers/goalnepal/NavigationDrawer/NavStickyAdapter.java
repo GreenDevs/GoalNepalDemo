@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,8 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
         }
     }
 
-    public void updateData(List<NavigationRow> data) {
+    public void updateData(List<NavigationRow> data)
+    {
         this.data = data;
         stickyData = new ArrayList<>();
 
@@ -95,7 +97,9 @@ public class NavStickyAdapter extends RecyclerView.Adapter<NavStickyAdapter.MyVi
         if (position == -1) {
             return -1;
         } else {
-            return data.get(position).stickyTitle.charAt(position);
+            Log.i("sticky data", stickyData.get(position));
+            return stickyData.get(position).charAt(position);
+
         }
     }
 

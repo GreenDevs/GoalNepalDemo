@@ -60,8 +60,8 @@ public class PhotoSlideAdapter extends PagerAdapter
 
 
         final ImageView imageView = (ImageView) itemView.findViewById(R.id.slide_pager_image);
-        ((PhotosSlideActivity)(mContext)).setPVisibility(true);
 
+        imageView.setImageResource(R.drawable.wait);
         if(imageUrl!= null)
         {
             ImageLoader imageLoader=VolleySingleton.getInstance().getmImageLoader();
@@ -73,13 +73,12 @@ public class PhotoSlideAdapter extends PagerAdapter
 
                     imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                     imageView.setImageBitmap(response.getBitmap());
-                    ((PhotosSlideActivity)(mContext)).setPVisibility(false);
                 }
 
                 @Override
                 public void onErrorResponse(VolleyError error)
                 {
-
+                    imageView.setImageResource(R.drawable.wait);
                 }
             });
         }
