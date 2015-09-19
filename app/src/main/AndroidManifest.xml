@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.crackdevelopers.goalnepal" >
+    package="com.crackdevelopers.goalnepal">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
@@ -11,8 +11,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".splash.SplashActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
             android:label="@string/expert_news" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +36,12 @@
         </activity>
         <activity
             android:name=".Leagues.LeagueActivity"
-            android:label="@string/title_activity_league" />
+
+            android:label="@string/title_activity_league">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
         <activity
             android:name=".MatchDetails.MatchActivity"
             android:label="@string/title_activity_match" />
@@ -64,19 +69,33 @@
             android:label="@string/title_activity_photos" />
         <activity
             android:name=".Miscallenous.Gallery.PhotosSlideActivity"
-            android:label="@string/title_activity_photos_pager" />
+
+            android:label="@string/title_activity_photos_pager"></activity>
+
+
         <activity
             android:name=".Miscallenous.Ranking.RankingActivity"
-            android:label="@string/title_activity_ranking" >
-        </activity>
+            android:label="@string/title_activity_ranking"></activity>
         <activity
             android:name=".Miscallenous.video.gallery.VideoGallery"
-            android:label="@string/title_activity_video_gallery" >
-        </activity>
+
+            android:label="@string/title_activity_video_gallery"></activity>
+
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
+
         <activity
             android:name=".Miscallenous.GuessWho.GuessWhoActivity"
-            android:label="@string/title_activity_guess_who" >
-        </activity>
+            android:label="@string/title_activity_guess_who"></activity>
+
     </application>
 
 </manifest>

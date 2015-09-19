@@ -16,8 +16,10 @@ import com.android.volley.toolbox.ImageLoader;
 import com.crackdevelopers.goalnepal.MainActivity;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
-public class NewsDetailsActivity extends ActionBarActivity
+public class NewsDetailsActivity extends AppCompatActivity
 {
 
     public static final String IMAGE_PATH="http://www.goalnepal.com/graphics/article/";
@@ -34,6 +36,7 @@ public class NewsDetailsActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
         init();
+        displayads();
     }
 
     private void init()
@@ -107,5 +110,19 @@ public class NewsDetailsActivity extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+      super.onBackPressed();
+    }
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewNewsDetails);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
+    }
+
 
 }

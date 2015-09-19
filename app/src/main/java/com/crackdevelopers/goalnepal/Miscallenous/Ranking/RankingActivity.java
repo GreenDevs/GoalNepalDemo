@@ -21,7 +21,12 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
+
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +69,7 @@ public class RankingActivity extends AppCompatActivity
         mQueue=VolleySingleton.getInstance().getQueue();
 
         initInstances();
+        displayads();
 
         ///###################### PROGRESS BAR
         progressView = (CircularProgressView)findViewById(R.id.progress_view_ranking);
@@ -289,5 +295,14 @@ public class RankingActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private  void displayads() {
+        AdView mAdView = (AdView) findViewById(R.id.adViewRanking);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("DF748C37109613E8C305043552A7F153").build();
+        mAdView.loadAd(adRequest);
+    }
+
+
 }
 
