@@ -39,6 +39,14 @@
         app:cpv_animAutostart="true"
         app:cpv_indeterminate="true" />
 
+    <TextView
+        android:id="@+id/prompt_text"
+        android:textSize="18sp"
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        android:text="DATA NOT AVAILABLE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
 

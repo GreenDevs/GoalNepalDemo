@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -53,7 +54,8 @@ public class MatchCommentry extends Fragment {
     private ComentaryAdapter commentaryAdapter;
     private Context context;
     private RequestQueue queue;
-
+    private TextView promptText;
+    private boolean isdataAvailable=false;
     private CircularProgressView progressView;
 
     @Override
@@ -76,6 +78,8 @@ public class MatchCommentry extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         this.context = getActivity();
+
+        promptText= (TextView) getActivity().findViewById(R.id.prompt_text);
         RecyclerView commentryList = (RecyclerView) getActivity().findViewById(R.id.commentryList);
         commentaryAdapter = new ComentaryAdapter(getActivity());
         commentryList.setAdapter(commentaryAdapter);
@@ -162,10 +166,11 @@ public class MatchCommentry extends Fragment {
                     try {
 
                         JSONArray commentaries = rootJson.getJSONArray(MATCH_COMMENTARY);
-
                         for (int i = 0; i < commentaries.length(); i++)
                         {
 
+                            isdataAvailable=true;
+                            promptText.setVisibility(View.GONE);
                             JSONObject commentary = commentaries.getJSONObject(i);
                             String time = "", icon_url = "", text = "";
 
@@ -177,6 +182,8 @@ public class MatchCommentry extends Fragment {
 
                             tempList.add(new CommentaryItem(time, icon_url, text));
                         }
+
+                        if(!isdataAvailable){ promptText.setVisibility(View.VISIBLE);}
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

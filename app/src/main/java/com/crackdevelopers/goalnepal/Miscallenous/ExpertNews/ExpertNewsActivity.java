@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
@@ -61,7 +62,7 @@ public class ExpertNewsActivity extends AppCompatActivity
   *
    *
    */
-    private static final String NEWS_URL="http://www.goalnepal.com/json_news_2015.php?tournament_id=";
+    private static final String NEWS_URL="http://www.goalnepal.com/json_news_2015.php?tournament_id=3";
     private static final String IMAGE_PATH_THUMNAIL="http://www.goalnepal.com/graphics/article/thumb/";
 
     private static final String PAGE_FLAG="&page=";
@@ -71,8 +72,9 @@ public class ExpertNewsActivity extends AppCompatActivity
     private static final String NEWS_IMAGE_ID="inner_image";
     private static final String NEWS="news";
     private static final String NEWS_DESCRIPTIOIN="description";
-    private static final long TOURNAMENT_ID=137;
+//    private static final long TOURNAMENT_ID=3;
     private static int PAGE_N0=1;
+    private boolean isdataAailable=false;
 
 
     private RecyclerView latestNews;
@@ -83,6 +85,7 @@ public class ExpertNewsActivity extends AppCompatActivity
     private ExpertNewsAdapter expertNewsAdapter;
     private boolean loading = true;
     private CircularProgressView progressView;
+    private TextView prompt_text;
     
 
     @Override
@@ -100,6 +103,7 @@ public class ExpertNewsActivity extends AppCompatActivity
 
         if(getSupportActionBar()!=null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        prompt_text=(TextView)findViewById(R.id.prompt_text);
         latestNews=(RecyclerView)findViewById(R.id.leagueNewsRecyceler);
         final LinearLayoutManager manager=new LinearLayoutManager(context);
         latestNews.setLayoutManager(manager);
@@ -188,7 +192,7 @@ public class ExpertNewsActivity extends AppCompatActivity
     private void sendNewsRequest()
     {
         progressView.setVisibility(View.VISIBLE);
-        CacheRequest newsRequest=new CacheRequest(Request.Method.GET, NEWS_URL+TOURNAMENT_ID+PAGE_FLAG+PAGE_N0,
+        CacheRequest newsRequest=new CacheRequest(Request.Method.GET, NEWS_URL+PAGE_FLAG+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()
                 {
@@ -288,6 +292,8 @@ public class ExpertNewsActivity extends AppCompatActivity
 
                     if(newsArray.length()>0)
                     {
+                        isdataAailable=true;
+                        prompt_text.setVisibility(View.GONE);
                         for(int i=0;i<newsArray.length();i++)
                         {
                             JSONObject news=newsArray.getJSONObject(i);
@@ -305,6 +311,11 @@ public class ExpertNewsActivity extends AppCompatActivity
                         }
 
 
+                    }
+                    else
+                    {
+                        if(!isdataAailable)
+                            prompt_text.setVisibility(View.VISIBLE);
                     }
 
 

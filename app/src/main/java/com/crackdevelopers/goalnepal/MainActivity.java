@@ -125,11 +125,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (viewPager.getCurrentItem() != 0) {
-            viewPager.setCurrentItem(0);
-        }
-    }
 }

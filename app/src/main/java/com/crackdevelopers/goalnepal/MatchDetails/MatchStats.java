@@ -47,6 +47,8 @@ public class MatchStats extends Fragment
     private long MATCH_ID;
     private MatchStatsAdapter mAdapter;
     private RequestQueue queue;
+    private TextView promptText;
+    private boolean isdataAvailable=false;
 
     private CircularProgressView progressView;
 
@@ -70,6 +72,7 @@ public class MatchStats extends Fragment
     {
         super.onActivityCreated(savedInstanceState);
 
+        promptText= (TextView) getActivity().findViewById(R.id.prompt_text);
         mAdapter=new MatchStatsAdapter();
         RecyclerView statsList=(RecyclerView)getActivity().findViewById(R.id.score_holder_recycler);
         statsList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -153,6 +156,8 @@ public class MatchStats extends Fragment
                         for(int i=0;i<goals.length();i++)
                         {
 
+                            isdataAvailable=true;
+                            promptText.setVisibility(View.GONE);
                             JSONObject goal=goals.getJSONObject(i);
 
                             String playerName="", teamGroup="", minute="";
@@ -165,6 +170,8 @@ public class MatchStats extends Fragment
 
                             tempGoals.add(new GoalScoredRow(playerName, minute, teamGroup));
                         }
+
+                        if(!isdataAvailable){ promptText.setVisibility(View.VISIBLE);}
                     }
                     catch (JSONException e)
                     {
