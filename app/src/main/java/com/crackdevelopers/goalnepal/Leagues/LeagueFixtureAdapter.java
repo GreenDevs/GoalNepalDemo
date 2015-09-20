@@ -80,6 +80,7 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
         String iconA=item.club_a_icon;
         String iconB=item.club_b_icon;
         String date=item.match_date;
+        String time=item.match_time;
 
         holder.nameA.setText(name1);
         holder.nameB.setText(name2);
@@ -87,6 +88,7 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
         holder.date.setText(date);
         holder.iconA.setImageResource(R.drawable.soccer_black);
         holder.iconB.setImageResource(R.drawable.soccer_black);
+        holder.time.setText(time);
 
         ///THIS WILL SET THE CLUBA ICON
         ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
@@ -137,7 +139,7 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
     {
 
         ImageView iconA, iconB;
-        TextView nameA, nameB, score, date;
+        TextView nameA, nameB, score, date, time;
         public MyViewHolder(View itemView)
         {
             super(itemView);
@@ -148,6 +150,7 @@ public class LeagueFixtureAdapter extends RecyclerView.Adapter<LeagueFixtureAdap
             iconA=(ImageView)itemView.findViewById(R.id.club_a_icon);
             iconB=(ImageView)itemView.findViewById(R.id.club_b_icon);
             date=(TextView)itemView.findViewById(R.id.match_date);
+            time=(TextView)itemView.findViewById(R.id.match_time);
 
         }
 
