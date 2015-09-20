@@ -186,7 +186,9 @@ public class GuessWhoActivity extends AppCompatActivity implements View.OnClickL
                 radioButton2.setText(tmp.get(1).ansoption);
                 radioButton3.setText(tmp.get(2).ansoption);
                 radioButton4.setText(tmp.get(3).ansoption);
-            } catch (IndexOutOfBoundsException e) {
+            }
+            catch (IndexOutOfBoundsException e)
+            {
                 e.printStackTrace();
             }
 
@@ -210,6 +212,7 @@ public class GuessWhoActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.guesswhobtn_reset:
+                if(radioButton==null)               radioButton= (RadioButton) findViewById(R.id.rbutton_p1);
                 clearInputFields();
                 break;
 
