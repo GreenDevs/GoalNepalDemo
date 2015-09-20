@@ -191,6 +191,7 @@ public class LatestFragment extends Fragment {
 
 
     private void sendNewsRequest() {
+        PAGE_N0=1;
         progressView.setVisibility(View.VISIBLE);
         CacheRequest newsRequest = new CacheRequest(Request.Method.GET, LATEST_NEWS_URL + PAGE_N0,
 
@@ -228,6 +229,7 @@ public class LatestFragment extends Fragment {
     private void sendFeaturedNewsRequest()
     {
 
+        PAGE_N0=1;
         CacheRequest featuredRequest=new CacheRequest(Request.Method.GET, FEATURED_NEWS_URL+PAGE_N0,
 
                 new Response.Listener<NetworkResponse>()

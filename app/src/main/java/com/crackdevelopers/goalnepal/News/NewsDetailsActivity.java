@@ -58,7 +58,7 @@ public class NewsDetailsActivity extends AppCompatActivity
             String titlee=bundle.getString(NEWS_TITLE, "");
             String newsText=bundle.getString(NEWS);
             assert newsText != null;
-            newsText=newsText.replace("&quot;","\"").replace("&nbsp;"," ").replace("&amp;","&");
+            newsText=newsText.replace("&quot;","\"").replace("&nbsp;"," ").replace("&amp;","&").replace("&ndash;","-").replace("&mdash;","-").replace("&rsquo;","'").replace("&ldquo;","\"").replace("&rdquo;","\"").replace("&lsquo;","'");
 
 
             ImageLoader imageLoader= VolleySingleton.getInstance().getmImageLoader();
