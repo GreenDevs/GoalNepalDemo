@@ -1,14 +1,9 @@
 package com.crackdevelopers.goalnepal.News;
 
 import android.content.Context;
-
 import android.content.Intent;
-import android.opengl.Visibility;
-
 import android.graphics.Color;
-
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,6 +31,7 @@ import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -277,6 +273,8 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
+                        progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -328,6 +326,8 @@ public class NewsSimpleFragment  extends Fragment implements View.OnClickListene
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
+                        progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
 
                     }
                 });

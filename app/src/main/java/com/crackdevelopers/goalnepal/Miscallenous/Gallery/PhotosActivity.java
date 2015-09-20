@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -150,6 +150,8 @@ public class PhotosActivity extends AppCompatActivity
                     public void onErrorResponse(VolleyError error)
                     {
 
+                        progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 

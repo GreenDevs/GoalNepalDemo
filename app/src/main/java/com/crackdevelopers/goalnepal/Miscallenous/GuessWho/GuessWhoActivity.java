@@ -148,6 +148,7 @@ public class GuessWhoActivity extends AppCompatActivity implements View.OnClickL
                     public void onErrorResponse(VolleyError error)
                     {
 
+                        Toast.makeText(getApplicationContext(), "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 

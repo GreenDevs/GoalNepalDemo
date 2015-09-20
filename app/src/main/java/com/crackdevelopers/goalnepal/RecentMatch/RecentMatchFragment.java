@@ -180,6 +180,7 @@ public class RecentMatchFragment extends Fragment
             public void onErrorResponse(VolleyError error)
             {
 
+                progressView.setVisibility(View.GONE);
             }
         });
 

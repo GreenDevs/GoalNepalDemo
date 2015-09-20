@@ -1,7 +1,8 @@
 package com.crackdevelopers.goalnepal.Miscallenous.video.gallery;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -9,13 +10,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.crackdevelopers.goalnepal.News.NewsSimpleAdapter;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
 import com.crackdevelopers.goalnepal.Volley.VolleySingleton;
@@ -45,6 +46,7 @@ public class VideoGallery extends AppCompatActivity
     private boolean loading = true;
     private VideoGalAdapter mAdapter;
     private CircularProgressView progressView;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,6 +61,7 @@ public class VideoGallery extends AppCompatActivity
 
     private void init()
     {
+        context=this;
         Toolbar toolbar=(Toolbar)findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -138,6 +141,8 @@ public class VideoGallery extends AppCompatActivity
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
+                        progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -182,6 +187,8 @@ public class VideoGallery extends AppCompatActivity
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
+                        progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
 
                     }
                 });

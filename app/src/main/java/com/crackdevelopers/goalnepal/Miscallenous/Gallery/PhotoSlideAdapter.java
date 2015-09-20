@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -79,6 +80,7 @@ public class PhotoSlideAdapter extends PagerAdapter
                 public void onErrorResponse(VolleyError error)
                 {
                     imageView.setImageResource(R.drawable.wait);
+                    Toast.makeText(mContext, "couldn't load", Toast.LENGTH_SHORT).show();
                 }
             });
         }

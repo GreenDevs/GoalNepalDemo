@@ -189,6 +189,7 @@ public class RankingActivity extends AppCompatActivity
             public void onErrorResponse(VolleyError error)
             {
                 progressView.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), "couldn't load", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -235,6 +236,7 @@ public class RankingActivity extends AppCompatActivity
                     public void onErrorResponse(VolleyError error)
                     {
                         progressView.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 

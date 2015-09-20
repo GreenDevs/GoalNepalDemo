@@ -215,6 +215,7 @@ public class ExpertNewsActivity extends AppCompatActivity
                     public void onErrorResponse(VolleyError error)
                     {
                         progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -258,6 +259,8 @@ public class ExpertNewsActivity extends AppCompatActivity
                     public void onErrorResponse(VolleyError error)
                     {
 
+                        progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 

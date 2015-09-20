@@ -1,17 +1,16 @@
 package com.crackdevelopers.goalnepal.Miscallenous.Gallery;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -19,7 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.crackdevelopers.goalnepal.R;
 import com.crackdevelopers.goalnepal.Utility.Utility;
 import com.crackdevelopers.goalnepal.Volley.CacheRequest;
@@ -166,6 +164,7 @@ public class AlbumActivity extends AppCompatActivity
                     public void onErrorResponse(VolleyError error)
                     {
                         progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -192,6 +191,7 @@ public class AlbumActivity extends AppCompatActivity
                             JSONObject responseJson=new JSONObject(jsonResponseString);
                             mAdapter.scrollList(parseJson(responseJson));
                             progressView.setVisibility(View.GONE);
+
                         }
                         catch (UnsupportedEncodingException | JSONException e)
                         {
@@ -206,6 +206,7 @@ public class AlbumActivity extends AppCompatActivity
                     public void onErrorResponse(VolleyError error)
                     {
                         progressView.setVisibility(View.GONE);
+                        Toast.makeText(context, "couldn't load", Toast.LENGTH_SHORT).show();
                     }
                 });
 
